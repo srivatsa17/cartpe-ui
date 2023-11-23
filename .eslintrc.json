@@ -1,0 +1,42 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "react",
+        "@stylistic/js"
+    ],
+    "rules": {
+        "no-console": "warn",
+        "no-unused-vars": "error",
+        "no-duplicate-imports": "error",
+        "@stylistic/js/arrow-spacing": "error",
+        "@stylistic/js/indent": ["error", 4], 
+        "comma-dangle": ["error", "never"],
+        "@stylistic/js/comma-spacing": ["error", { "before": false, "after": true }],
+        "@stylistic/js/eol-last": ["error", "always"],
+        "@stylistic/js/no-extra-parens": "error",
+        "@stylistic/js/no-extra-semi": "error",
+        "@stylistic/js/no-multi-spaces": "error",
+        "@stylistic/js/no-multiple-empty-lines": "error",
+        "@stylistic/js/no-trailing-spaces": "error",
+        "@stylistic/js/semi": "error",
+        "@stylistic/js/quotes": ["error", "double"],
+        "@stylistic/js/linebreak-style": ["error", "unix"],
+        "eqeqeq": ["error", "always"],
+        "no-cond-assign": ["error", "always"],
+        "camelcase": "error"
+    }
+}
