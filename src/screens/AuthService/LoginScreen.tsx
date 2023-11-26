@@ -1,13 +1,18 @@
 import { Button, Image, Input, Spacer } from "@nextui-org/react";
-import { REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
+import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
+import { Link, useNavigate } from "react-router-dom";
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
 import { LOGIN_USER_IMAGE } from "constants/images";
-import { Link } from "react-router-dom";
 import React from "react";
+import { loginUser } from "redux/auth_service/loginSlice";
 
 function LoginScreen() {
+    const dispatch = useReduxDispatch();
+    const navigate = useNavigate();
+    const { isLoggedIn } = useReduxSelector(state => state.userLoginDetails);
 
     const [emailValue, setEmailValue] = React.useState("");
     const [passwordValue, setPasswordValue] = React.useState("");
@@ -35,12 +40,16 @@ function LoginScreen() {
         return "";
     };
 
-    // React.useEffect(() => {
-    //     navigate(HOME_SCREEN);
-    // }, []);
+    React.useEffect(() => {
+        if(isLoggedIn === true) {
+            navigate(HOME_SCREEN);
+        }
+    }, [isLoggedIn, navigate, dispatch]);
 
-    const handleLoginSubmit = () => {
-        // console.log(emailValue, passwordValue);
+    const handleLoginSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        const data = { email: emailValue, password: passwordValue};
+        dispatch(loginUser(data));
     };
 
     return (
