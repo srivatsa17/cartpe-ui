@@ -1,6 +1,6 @@
 name: Feature request
 title: "[Feature Request] YOUR_FEATURE_TITLE_HERE"
-labels: [feature request]
+labels: ["feature request"]
 description:  |
   💡 Suggest an idea for the `CartPe` project
   Examples
