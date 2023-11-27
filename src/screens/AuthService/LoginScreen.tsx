@@ -1,4 +1,7 @@
+import * as yup from "yup";
+
 import { Button, Image, Input, Spacer } from "@nextui-org/react";
+import { Field, Form, Formik } from "formik";
 import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
@@ -14,31 +17,8 @@ function LoginScreen() {
     const navigate = useNavigate();
     const { isLoggedIn } = useReduxSelector(state => state.userLoginDetails);
 
-    const [emailValue, setEmailValue] = React.useState("");
-    const [passwordValue, setPasswordValue] = React.useState("");
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
-
     const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
-
-    const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i);
-    const validatePassword = (password: string) => password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
-
-    const isEmailInvalid = React.useMemo(() => {
-        if (emailValue === "") return false;
-        return validateEmail(emailValue) ? false : true;
-    }, [emailValue]);
-
-    const isPasswordInvalid = React.useMemo(() => {
-        if(passwordValue === "") return false;
-        return validatePassword(passwordValue) ? false : true;
-    }, [passwordValue]);
-
-    const invalidPasswordMessage = () => {
-        if(passwordValue.length < 8) return "Password should be at least 8 characters long.";
-        else if (!/[a-zA-Z]/i.test(passwordValue)) return "Password should contain alphabets.";
-        else if (!/\d/.test(passwordValue)) return "Password should contain digits.";
-        return "";
-    };
 
     React.useEffect(() => {
         if(isLoggedIn === true) {
@@ -46,11 +26,23 @@ function LoginScreen() {
         }
     }, [isLoggedIn, navigate, dispatch]);
 
-    const handleLoginSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        const data = { email: emailValue, password: passwordValue};
-        dispatch(loginUser(data));
+    const initialFormData = {
+        email: "",
+        password: ""
     };
+
+    const schema = yup.object().shape({
+        email: yup.string()
+            .email("Please enter a valid email.")
+            .trim()
+            .required("Email is required."),
+        password: yup.string()
+            .trim()
+            .min(8, "Password should be at least 8 characters long.")
+            .matches(/[a-zA-Z]/i, "Password should contain alphabets.")
+            .matches(/\d/, "Password should contain digits.")
+            .required("Password is required.")
+    });
 
     return (
         <div className="container mx-auto place-content-center">
@@ -62,67 +54,82 @@ function LoginScreen() {
                     <div className="text-5xl text-center lg:text-left xl:text-left antialiased">
                         Login to <span className="font-medium">CartPe</span>!
                     </div>
-                    <div>
-                        <Spacer y={12} />
-                        <Input
-                            type="email"
-                            label="Email"
-                            variant="flat"
-                            labelPlacement="outside"
-                            description="We'll never share your email with anyone else."
-                            className="max-w-md"
-                            size="lg"
-                            isInvalid={isEmailInvalid}
-                            errorMessage={isEmailInvalid && "Please enter a valid email"}
-                            value={emailValue}
-                            onValueChange={setEmailValue}
-                            color={emailValue ? isEmailInvalid ? "danger" : "success" : "default"}
-                            isRequired
-                        />
-                        <Spacer y={3} />
-                        <Input
-                            type={isPasswordVisible ? "text" : "password"}
-                            label="Password"
-                            variant="flat"
-                            labelPlacement="outside"
-                            description="We'll never share your password with anyone else."
-                            className="max-w-md"
-                            size="lg"
-                            isInvalid={isPasswordInvalid}
-                            errorMessage={isPasswordInvalid && invalidPasswordMessage()}
-                            value={passwordValue}
-                            onValueChange={setPasswordValue}
-                            color={passwordValue ? isPasswordInvalid ? "danger" : "success" : "default"}
-                            isRequired
-                            endContent={
-                                <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                                    {
-                                        isPasswordVisible ? (
-                                            <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                        ) : (
-                                            <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                        )
+                    <Spacer y={12} />
+                    <Formik
+                        validationSchema={schema}
+                        initialValues={initialFormData}
+                        onSubmit={(formData, { setSubmitting, resetForm }) => {
+                            setTimeout(() => {
+                                dispatch(loginUser(formData));
+                                setSubmitting(false);
+                                resetForm();
+                            }, 1000);
+                        }}
+                    >
+                        {({ handleBlur, handleSubmit, handleChange, touched, errors, isValid, isSubmitting, dirty }) => (
+                            <Form onSubmit={handleSubmit}>
+                                <Field
+                                    as={Input}
+                                    type="email"
+                                    label="Email"
+                                    name="email"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    isInvalid={touched.email && errors.email}
+                                    isValid={touched.email && !errors.email}
+                                    variant="flat"
+                                    labelPlacement="outside"
+                                    description="We'll never share your email with anyone else."
+                                    className="max-w-md"
+                                    size="lg"
+                                    errorMessage={touched.email && errors.email}
+                                    color={touched.email ? errors.email ? "danger" : "success" : "default"}
+                                    isRequired
+                                />
+                                <Spacer y={3} />
+                                <Field
+                                    as={Input}
+                                    type={isPasswordVisible ? "text" : "password"}
+                                    label="Password"
+                                    name="password"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    isInvalid={touched.password && errors.password}
+                                    isValid={touched.password && !errors.password}
+                                    variant="flat"
+                                    labelPlacement="outside"
+                                    description="We'll never share your password with anyone else."
+                                    className="max-w-md"
+                                    size="lg"
+                                    errorMessage={touched.password && errors.password}
+                                    color={touched.password ? errors.password ? "danger" : "success" : "default"}
+                                    isRequired
+                                    endContent={
+                                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                                            {
+                                                isPasswordVisible ? (
+                                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                                ) : (
+                                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                                )
+                                            }
+                                        </button>
                                     }
-                                </button>
-                            }
-                        />
-                        <Spacer y={10} />
-                        <Button
-                            className="w-[28rem] text-lg bg-default-900 text-white"
-                            size="lg"
-                            variant="flat"
-                            onClick={handleLoginSubmit}
-                            // isLoading
-                            isDisabled={
-                                emailValue.length === 0 ||
-                                passwordValue.length === 0 ||
-                                isEmailInvalid ||
-                                isPasswordInvalid
-                            }
-                        >
-                            Login
-                        </Button>
-                    </div>
+                                />
+                                <Spacer y={10} />
+                                <Button
+                                    type="submit"
+                                    className="w-[28rem] text-lg bg-default-900 text-white"
+                                    size="lg"
+                                    variant="flat"
+                                    isLoading={isSubmitting}
+                                    isDisabled={!dirty || !isValid || isSubmitting}
+                                >
+                                    Login
+                                </Button>
+                            </Form>
+                        )}
+                    </Formik>
                     <Spacer y={3}/>
                     <div>
                         Don&apos;t have an account?&nbsp;
