@@ -10,7 +10,7 @@ import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
 import { LOGIN_USER_IMAGE } from "constants/images";
 import React from "react";
-import { loginUser } from "redux/auth_service/loginSlice";
+import { loginUser } from "redux/AuthService/loginSlice";
 
 function LoginScreen() {
     const dispatch = useReduxDispatch();

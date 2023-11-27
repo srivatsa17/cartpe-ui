@@ -2,7 +2,7 @@ import { LoginState } from "utils/types";
 import { USER_LOGIN_DETAILS } from "constants/localStorage";
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
-import loginSlice from "./auth_service/loginSlice";
+import loginSlice from "./AuthService/loginSlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 
