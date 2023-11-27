@@ -38,5 +38,10 @@
         "eqeqeq": ["error", "always"],
         "no-cond-assign": ["error", "always"],
         "camelcase": "error"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
