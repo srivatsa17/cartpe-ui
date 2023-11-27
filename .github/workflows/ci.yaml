@@ -6,13 +6,8 @@ on:
     push:
         branches:
         - master
-    pull_request:
-        branches:
-        - master
-        types: [closed]
 jobs:
     Install-dependencies:
-        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -30,7 +25,6 @@ jobs:
             run: npm ci
 
     Deploy-Production:
-        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         needs: Install-dependencies
         steps:
