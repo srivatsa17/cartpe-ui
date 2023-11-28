@@ -8,15 +8,14 @@ import ProtectedUserRoute from "routings/ProtectedUserRoute";
 import React from "react";
 
 export default function App() {
-
     return (
         <Router>
             <Routes>
                 <Route element={<AnonymousUserRoute />}>
-                    <Route path={LOGIN_USER_SCREEN} element={<LoginScreen />}/>
+                    <Route path={LOGIN_USER_SCREEN} element={<LoginScreen />} />
                 </Route>
-                <Route element={<ProtectedUserRoute />} >
-                    <Route path={HOME_SCREEN} element={<HomeScreen />}/>
+                <Route element={<ProtectedUserRoute />}>
+                    <Route path={HOME_SCREEN} element={<HomeScreen />} />
                 </Route>
             </Routes>
         </Router>

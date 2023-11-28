@@ -14,17 +14,13 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "react",
-        "@stylistic/js"
-    ],
+    "plugins": ["@typescript-eslint", "react", "@stylistic/js"],
     "rules": {
         "no-console": "warn",
         "no-unused-vars": "warn",
         "no-duplicate-imports": "error",
         "@stylistic/js/arrow-spacing": "error",
-        "@stylistic/js/indent": ["error", 4], 
+        "@stylistic/js/indent": ["error", 4],
         "comma-dangle": ["error", "never"],
         "@stylistic/js/comma-spacing": ["error", { "before": false, "after": true }],
         "@stylistic/js/eol-last": ["error", "always"],

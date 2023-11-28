@@ -8,16 +8,15 @@ import { getItemFromStorage } from "utils/localStorage";
 function ProtectedUserRoute() {
     const token = getItemFromStorage(USER_LOGIN_DETAILS);
 
-    return (
-        token ?
-            <>
-                <main className="py-3">
-                    <Outlet />
-                </main>
-                <hr />
-            </>
-            :
-            <Navigate to={LOGIN_USER_SCREEN} replace={true} />
+    return token ? (
+        <>
+            <main className="py-3">
+                <Outlet />
+            </main>
+            <hr />
+        </>
+    ) : (
+        <Navigate to={LOGIN_USER_SCREEN} replace={true} />
     );
 }
 

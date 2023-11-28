@@ -2,7 +2,7 @@ import secureLocalStorage from "react-secure-storage";
 
 export const getItemFromStorage = (storageItemKey: string) => {
     const storageItemDetails = secureLocalStorage.getItem(storageItemKey);
-    if(storageItemDetails && typeof(storageItemDetails) === "string") {
+    if (storageItemDetails && typeof storageItemDetails === "string") {
         return JSON.parse(storageItemDetails);
     }
     return null;
@@ -33,7 +33,7 @@ export const updateItemInStorage = (
 
 export const removeItemFromStorage = (storageItemKey: string) => {
     const storageItem = getItemFromStorage(storageItemKey);
-    if(storageItem) {
+    if (storageItem) {
         secureLocalStorage.removeItem(storageItemKey);
     }
 };

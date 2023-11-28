@@ -1,0 +1,7 @@
+.github
+.vercel
+.vscode
+dist
+node_modules
+coverage
+build

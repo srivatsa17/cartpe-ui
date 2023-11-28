@@ -8,13 +8,12 @@ import { getItemFromStorage } from "utils/localStorage";
 function AnonymousUserRoute() {
     const token = getItemFromStorage(USER_LOGIN_DETAILS);
 
-    return (
-        token ?
-            <Navigate to={HOME_SCREEN} replace={true} />
-            :
-            <main className="py-3">
-                <Outlet />
-            </main>
+    return token ? (
+        <Navigate to={HOME_SCREEN} replace={true} />
+    ) : (
+        <main className="py-3">
+            <Outlet />
+        </main>
     );
 }
 
