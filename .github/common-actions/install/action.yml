@@ -1,6 +1,5 @@
 name: Install
 description: "Sets up Node.js and runs install"
-
 runs:
     using: composite
     steps:
