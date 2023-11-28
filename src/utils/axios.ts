@@ -7,7 +7,7 @@ import { LOGIN_USER_SCREEN } from "constants/routes";
 export const publicAxiosInstance = axios.create({
     baseURL: "http://localhost:8000/api/v1/",
     headers: {
-        "Content-Type":"application/json"
+        "Content-Type": "application/json"
     }
 });
 
@@ -54,17 +54,18 @@ function createAxiosResponseInterceptor() {
                 })
                 .then((response: AxiosResponse) => {
                     const tokenData = {
-                        "access_token": response.data.access
+                        accessToken: response.data.access
                     };
 
                     const updateRegisterData = { ...tokenData };
-                    const updateLoginData = { ...tokenData, "isLoggedIn": true };
+                    const updateLoginData = { ...tokenData, isLoggedIn: true };
 
                     updateItemInStorage(USER_LOGIN_DETAILS, updateLoginData);
                     updateItemInStorage(USER_REGISTER_DETAILS, updateRegisterData);
                     if (error.response && error.response.config && error.response.config.headers) {
                         // Check if the headers object exists in the response.config
-                        error.response.config.headers["Authorization"] = "Bearer " + response.data.access;
+                        error.response.config.headers["Authorization"] =
+                            "Bearer " + response.data.access;
 
                         // Retry the initial call, but with the updated token in the headers.
                         // Resolves the promise if successful

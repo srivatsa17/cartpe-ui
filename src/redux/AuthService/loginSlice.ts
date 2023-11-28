@@ -25,7 +25,7 @@ export const loginUser = (loginData: object) => async (dispatch: Dispatch) => {
             refreshToken: data.tokens.refresh
         };
         saveItemInStorage(USER_LOGIN_DETAILS, userLoginDetails);
-    } catch(error) {
+    } catch (error) {
         const err = error as ErrorResponse;
         dispatch(loginUserFailed(throwAuthenticationErrorResponse(err)));
     }

@@ -7,7 +7,7 @@ import loginSlice from "./AuthService/loginSlice";
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 
 const persistedState: {
-    userLoginDetails?: LoginState
+    userLoginDetails?: LoginState;
 } = {
     userLoginDetails: {
         isLoggedIn: userLoginDetailsFromStorage.isLoggedIn || false,
@@ -26,8 +26,8 @@ const store = configureStore({
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type ReduxDispatch = typeof store.dispatch
+export type ReduxDispatch = typeof store.dispatch;
 
 export default store;

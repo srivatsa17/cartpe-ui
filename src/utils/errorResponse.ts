@@ -1,11 +1,11 @@
 import { ErrorResponse } from "./types";
 
 export const throwAuthenticationErrorResponse = (error: ErrorResponse) => {
-    if(error.response === null || error.response === undefined) {
+    if (error.response === null || error.response === undefined) {
         return "Oops! Something went wrong!";
     }
 
-    if(!error.response.data?.detail) {
+    if (!error.response.data?.detail) {
         return "Response from server got corrupted.";
     }
 
@@ -13,11 +13,11 @@ export const throwAuthenticationErrorResponse = (error: ErrorResponse) => {
 };
 
 export const throwErrorResponse = (error: ErrorResponse) => {
-    if(error.response === null || error.response === undefined) {
+    if (error.response === null || error.response === undefined) {
         return "Oops! Something went wrong!";
     }
 
-    if(!error.response.data?.message) {
+    if (!error.response.data?.message) {
         return "Response from server got corrupted.";
     }
 
