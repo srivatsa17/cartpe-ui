@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 
+import Footer from "components/Footer/Footer";
 import { LOGIN_USER_SCREEN } from "constants/routes";
 import NavBar from "components/NavBar/NavBar";
 import React from "react";
@@ -15,6 +16,8 @@ function ProtectedUserRoute() {
             <main>
                 <Outlet />
             </main>
+            <hr />
+            <Footer />
         </>
     ) : (
         <Navigate to={LOGIN_USER_SCREEN} replace={true} />
