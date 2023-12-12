@@ -10,3 +10,7 @@ export const PRODUCT_SEARCH_SCREEN = "/:slug";
 export const CART_SCREEN = "/cart";
 export const CHECKOUT_SCREEN = "/checkout";
 export const WISHLIST_SCREEN = "/wishlist";
+export const ORDER_SCREEN = "/orders";
+export const CONTACT_US_SCREEN = "/contact-us";
+export const SAVED_ADDRESSES_SCREEN = "/saved-addresses";
+export const EDIT_PROFILE_SCREEN = "/edit-profile";

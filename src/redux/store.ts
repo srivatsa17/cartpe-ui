@@ -3,6 +3,7 @@ import { USER_LOGIN_DETAILS } from "constants/localStorage";
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
+import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 
@@ -20,7 +21,8 @@ const persistedState: {
 const store = configureStore({
     // Automatically calls `combineReducers`
     reducer: {
-        userLoginDetails: loginSlice
+        userLoginDetails: loginSlice,
+        searchedCategories: searchedCategorySlice
     },
     preloadedState: persistedState
 });
