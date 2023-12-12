@@ -97,6 +97,7 @@ function LoginScreen() {
                                     description="We'll never share your email with anyone else."
                                     className="max-w-md"
                                     size="lg"
+                                    autoComplete="off"
                                     errorMessage={touched.email && errors.email}
                                     color={
                                         touched.email
@@ -122,6 +123,7 @@ function LoginScreen() {
                                     description="We'll never share your password with anyone else."
                                     className="max-w-md"
                                     size="lg"
+                                    autoComplete="off"
                                     errorMessage={touched.password && errors.password}
                                     color={
                                         touched.password
