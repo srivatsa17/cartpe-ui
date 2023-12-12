@@ -1,6 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 
+import Footer from "components/Footer/Footer";
 import { LOGIN_USER_SCREEN } from "constants/routes";
+import NavBar from "components/NavBar/NavBar";
 import React from "react";
 import { USER_LOGIN_DETAILS } from "constants/localStorage";
 import { getItemFromStorage } from "utils/localStorage";
@@ -10,10 +12,12 @@ function ProtectedUserRoute() {
 
     return token ? (
         <>
-            <main className="py-3">
+            <NavBar />
+            <main>
                 <Outlet />
             </main>
             <hr />
+            <Footer />
         </>
     ) : (
         <Navigate to={LOGIN_USER_SCREEN} replace={true} />

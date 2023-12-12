@@ -1,3 +1,4 @@
+import defaultTheme from "tailwindcss/defaultTheme";
 import { nextui } from "@nextui-org/react";
 
 module.exports = {
@@ -7,7 +8,10 @@ module.exports = {
         "./public/index.html"
     ],
     theme: {
-        extend: {}
+        screens: {
+            xs: { max: "639px" },
+            ...defaultTheme.screens
+        }
     },
     darkMode: "class",
     plugins: [nextui()]

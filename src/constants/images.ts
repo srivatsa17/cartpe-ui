@@ -5,6 +5,8 @@ const MISCELLANEOUS_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Miscell
 // CartPe folder images
 export const CARTPE_ICON = CARTPE_FOLDER + "cartpe-icon.png";
 export const CARTPE_LOGO = CARTPE_FOLDER + "cartpe-logo.png";
+export const CARTPE_LOGO_BLACK =
+    CARTPE_FOLDER + "cartpe-high-resolution-logo-black-transparent.svg";
 
 // Authentication folder images
 export const LOGIN_USER_IMAGE = AUTH_FOLDER + "login.png";
