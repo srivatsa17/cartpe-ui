@@ -6,6 +6,7 @@ import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "consta
 import { Link, useNavigate } from "react-router-dom";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
+import { CloseFilledIcon } from "icons/CloseFilledIcon";
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
 import { LOGIN_USER_IMAGE } from "constants/images";
@@ -108,6 +109,7 @@ function LoginScreen() {
                                                 : "success"
                                             : "default"
                                     }
+                                    isClearable
                                     isRequired
                                 />
                                 <Spacer y={3} />
@@ -135,18 +137,22 @@ function LoginScreen() {
                                             : "default"
                                     }
                                     isRequired
+                                    isClearable
                                     endContent={
-                                        <button
-                                            className="focus:outline-none"
-                                            type="button"
-                                            onClick={toggleVisibility}
-                                        >
-                                            {isPasswordVisible ? (
-                                                <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                            ) : (
-                                                <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                            )}
-                                        </button>
+                                        <div className="flex">
+                                            <CloseFilledIcon className="m-2" />
+                                            <button
+                                                className="focus:outline-none"
+                                                type="button"
+                                                onClick={toggleVisibility}
+                                            >
+                                                {isPasswordVisible ? (
+                                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                                ) : (
+                                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                                )}
+                                            </button>
+                                        </div>
                                     }
                                 />
                                 <Spacer y={10} />
