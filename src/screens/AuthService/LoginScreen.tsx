@@ -150,7 +150,8 @@ function LoginScreen() {
                                 <Spacer y={10} />
                                 <Button
                                     type="submit"
-                                    className="w-[28rem] text-lg bg-default-900 text-white"
+                                    className="max-w-md text-lg bg-default-900 text-white"
+                                    fullWidth
                                     size="lg"
                                     variant="flat"
                                     isLoading={isSubmitting}
