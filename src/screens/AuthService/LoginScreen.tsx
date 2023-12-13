@@ -6,6 +6,7 @@ import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "consta
 import { Link, useNavigate } from "react-router-dom";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
+import { CloseFilledIcon } from "icons/CloseFilledIcon";
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
 import { LOGIN_USER_IMAGE } from "constants/images";
@@ -36,6 +37,7 @@ function LoginScreen() {
             .string()
             .email("Please enter a valid email.")
             .trim()
+            .max(255, "Email is too long.")
             .required("Email is required."),
         password: yup
             .string()
@@ -43,6 +45,7 @@ function LoginScreen() {
             .min(8, "Password should be at least 8 characters long.")
             .matches(/[a-zA-Z]/i, "Password should contain alphabets.")
             .matches(/\d/, "Password should contain digits.")
+            .max(255, "Password is too long.")
             .required("Password is required.")
     });
 
@@ -97,6 +100,7 @@ function LoginScreen() {
                                     description="We'll never share your email with anyone else."
                                     className="max-w-md"
                                     size="lg"
+                                    autoComplete="off"
                                     errorMessage={touched.email && errors.email}
                                     color={
                                         touched.email
@@ -105,6 +109,7 @@ function LoginScreen() {
                                                 : "success"
                                             : "default"
                                     }
+                                    isClearable
                                     isRequired
                                 />
                                 <Spacer y={3} />
@@ -122,6 +127,7 @@ function LoginScreen() {
                                     description="We'll never share your password with anyone else."
                                     className="max-w-md"
                                     size="lg"
+                                    autoComplete="off"
                                     errorMessage={touched.password && errors.password}
                                     color={
                                         touched.password
@@ -131,24 +137,29 @@ function LoginScreen() {
                                             : "default"
                                     }
                                     isRequired
+                                    isClearable
                                     endContent={
-                                        <button
-                                            className="focus:outline-none"
-                                            type="button"
-                                            onClick={toggleVisibility}
-                                        >
-                                            {isPasswordVisible ? (
-                                                <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                            ) : (
-                                                <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                            )}
-                                        </button>
+                                        <div className="flex">
+                                            <CloseFilledIcon className="m-2" />
+                                            <button
+                                                className="focus:outline-none"
+                                                type="button"
+                                                onClick={toggleVisibility}
+                                            >
+                                                {isPasswordVisible ? (
+                                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                                ) : (
+                                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                                )}
+                                            </button>
+                                        </div>
                                     }
                                 />
                                 <Spacer y={10} />
                                 <Button
                                     type="submit"
-                                    className="w-[28rem] text-lg bg-default-900 text-white"
+                                    className="max-w-md text-lg bg-default-900 text-white"
+                                    fullWidth
                                     size="lg"
                                     variant="flat"
                                     isLoading={isSubmitting}
