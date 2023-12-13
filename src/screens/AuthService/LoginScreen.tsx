@@ -36,6 +36,7 @@ function LoginScreen() {
             .string()
             .email("Please enter a valid email.")
             .trim()
+            .max(255, "Email is too long.")
             .required("Email is required."),
         password: yup
             .string()
@@ -43,6 +44,7 @@ function LoginScreen() {
             .min(8, "Password should be at least 8 characters long.")
             .matches(/[a-zA-Z]/i, "Password should contain alphabets.")
             .matches(/\d/, "Password should contain digits.")
+            .max(255, "Password is too long.")
             .required("Password is required.")
     });
 
