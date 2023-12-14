@@ -3,7 +3,7 @@ export type RegisterState = {
     isRegistered: boolean;
     isVerified: boolean;
     error: string | null | unknown;
-}
+};
 
 export type LoginState = {
     isLoading: boolean;

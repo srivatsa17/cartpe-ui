@@ -7,9 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CloseFilledIcon } from "icons/CloseFilledIcon";
+import EmailIcon from "icons/EmailIcon";
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
 import { LOGIN_USER_IMAGE } from "constants/images";
+import LockIcon from "icons/LockIcon";
 import React from "react";
 import { loginUser } from "redux/AuthService/loginSlice";
 
@@ -97,7 +99,6 @@ function LoginScreen() {
                                     isValid={touched.email && !errors.email}
                                     variant="flat"
                                     labelPlacement="outside"
-                                    description="We'll never share your email with anyone else."
                                     className="max-w-md"
                                     size="lg"
                                     autoComplete="off"
@@ -109,10 +110,12 @@ function LoginScreen() {
                                                 : "success"
                                             : "default"
                                     }
+                                    startContent={<EmailIcon height={24} width={24} size={24} />}
                                     isClearable
+                                    isReadOnly={isSubmitting}
                                     isRequired
                                 />
-                                <Spacer y={3} />
+                                <Spacer y={8} />
                                 <Field
                                     as={Input}
                                     type={isPasswordVisible ? "text" : "password"}
@@ -124,7 +127,6 @@ function LoginScreen() {
                                     isValid={touched.password && !errors.password}
                                     variant="flat"
                                     labelPlacement="outside"
-                                    description="We'll never share your password with anyone else."
                                     className="max-w-md"
                                     size="lg"
                                     autoComplete="off"
@@ -137,7 +139,9 @@ function LoginScreen() {
                                             : "default"
                                     }
                                     isRequired
+                                    isReadOnly={isSubmitting}
                                     isClearable
+                                    startContent={<LockIcon height={24} width={24} size={24} />}
                                     endContent={
                                         <div className="flex">
                                             <CloseFilledIcon className="m-2" />
