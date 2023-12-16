@@ -14,8 +14,38 @@ const initialState: RegisterState = {
     error: null
 };
 
-export const registerUser = (registerData: object) => async (dispatch: Dispatch) => {
+type registerForm = {
+    fullName: string;
+    email: string;
+    password: string;
+};
+
+const splitFullName = (fullName: string) => {
+    const pattern: RegExp = /^([A-Za-z]+)\s+([A-Za-z\s]+?) *$/;
+    const match = pattern.exec(fullName);
+    if (match) {
+        return {
+            firstName: match[1],
+            lastName: match[2]
+        };
+    }
+    return {
+        firstName: "",
+        lastName: ""
+    };
+};
+
+export const registerUser = (registerForm: registerForm) => async (dispatch: Dispatch) => {
     try {
+        const { firstName, lastName } = splitFullName(registerForm.fullName);
+        const registerData = {
+            email: registerForm.email,
+            password: registerForm.password,
+            // eslint-disable-next-line camelcase
+            first_name: firstName,
+            // eslint-disable-next-line camelcase
+            last_name: lastName
+        };
         dispatch(registerUserRequest());
         const { data } = await publicAxiosInstance.post(REGISTER_URI, registerData);
         dispatch(registerUserSuccess());
@@ -50,9 +80,6 @@ const registerSlice = createSlice({
     }
 });
 
-export const {
-    registerUserRequest,
-    registerUserSuccess,
-    registerUserFailed
-} = registerSlice.actions;
+export const { registerUserRequest, registerUserSuccess, registerUserFailed } =
+    registerSlice.actions;
 export default registerSlice.reducer;

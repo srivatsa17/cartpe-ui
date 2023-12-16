@@ -20,12 +20,14 @@ const persistedState: {
         error: null
     },
     userRegisterDetails: {
-        isRegistered:   userLoginDetailsFromStorage.isLoggedIn ||
-                        userRegisterDetailsFromStorage.isRegistered ||
-                        false,
-        isVerified: userLoginDetailsFromStorage.isLoggedIn ||
-                    userRegisterDetailsFromStorage.isVerified ||
-                    false,
+        isRegistered:
+            userLoginDetailsFromStorage.isLoggedIn ||
+            userRegisterDetailsFromStorage.isRegistered ||
+            false,
+        isVerified:
+            userLoginDetailsFromStorage.isLoggedIn ||
+            userRegisterDetailsFromStorage.isVerified ||
+            false,
         isLoading: false,
         error: null
     }
