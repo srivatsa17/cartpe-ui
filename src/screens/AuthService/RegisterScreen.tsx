@@ -2,39 +2,41 @@ import * as yup from "yup";
 
 import { Button, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
-import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
-import { Link, useNavigate } from "react-router-dom";
-import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CloseFilledIcon } from "icons/CloseFilledIcon";
 import EmailIcon from "icons/EmailIcon";
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
-import { LOGIN_USER_IMAGE } from "constants/images";
+import { LOGIN_USER_SCREEN } from "constants/routes";
+import { Link } from "react-router-dom";
 import LockIcon from "icons/LockIcon";
+import { REGISTER_USER_IMAGE } from "constants/images";
 import React from "react";
-import { loginUser } from "redux/AuthService/loginSlice";
+import UserIcon from "icons/UserIcon";
+import { registerUser } from "redux/AuthService/registerSlice";
+import { useReduxDispatch } from "hooks/redux";
 
-function LoginScreen() {
+function RegisterScreen() {
     const dispatch = useReduxDispatch();
-    const navigate = useNavigate();
-    const { isLoggedIn } = useReduxSelector((state) => state.userLoginDetails);
+    // const navigate = useNavigate();
+    // const { isRegistered, isVerified, isLoading, error } = useReduxSelector((state) => state.userRegisterDetails);
 
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
     const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
 
-    React.useEffect(() => {
-        if (isLoggedIn === true) {
-            navigate(HOME_SCREEN);
-        }
-    }, [isLoggedIn, navigate, dispatch]);
-
     const initialFormData = {
+        fullName: "",
         email: "",
         password: ""
     };
 
     const schema = yup.object().shape({
+        fullName: yup
+            .string()
+            .trim()
+            .max(255, "Name is too long.")
+            .matches(/^([a-zA-Z]+)\s+([a-zA-Z\s]+?)\s*$/, "Enter first name and last name.")
+            .required("First and Last Name is required."),
         email: yup
             .string()
             .email("Please enter a valid email.")
@@ -43,7 +45,6 @@ function LoginScreen() {
             .required("Email is required."),
         password: yup
             .string()
-            .trim()
             .min(8, "Password should be at least 8 characters long.")
             .matches(/[a-zA-Z]/i, "Password should contain alphabets.")
             .matches(/\d/, "Password should contain digits.")
@@ -56,14 +57,14 @@ function LoginScreen() {
             <div className="flex flex-wrap items-center justify-center">
                 <div className="xs:w-2/3 sm:w-2/3 md:w-2/3 lg:w-1/2 xl:w-1/2">
                     <Image
-                        src={LOGIN_USER_IMAGE}
-                        alt="login-image"
+                        src={REGISTER_USER_IMAGE}
+                        alt="register-image"
                         className="w-full h-auto pointer-events-none"
                     />
                 </div>
                 <div className="xs:w-2/3 sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/2 my-7">
                     <div className="text-5xl text-center lg:text-left xl:text-left antialiased">
-                        Login to <span className="font-medium italic text-blue-700">CartPe</span>!
+                        Register with <span className="font-medium italic text-blue-700">CartPe</span>!
                     </div>
                     <Spacer y={12} />
                     <Formik
@@ -71,7 +72,7 @@ function LoginScreen() {
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
                             setTimeout(() => {
-                                dispatch(loginUser(formData));
+                                dispatch(registerUser(formData));
                                 setSubmitting(false);
                                 resetForm();
                             }, 1000);
@@ -88,6 +89,34 @@ function LoginScreen() {
                             dirty
                         }) => (
                             <Form onSubmit={handleSubmit}>
+                                <Field
+                                    as={Input}
+                                    type="text"
+                                    label="First & Last Name"
+                                    name="fullName"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    isInvalid={touched.fullName && errors.fullName}
+                                    isValid={touched.fullName && !errors.fullName}
+                                    variant="flat"
+                                    labelPlacement="outside"
+                                    className="max-w-md"
+                                    size="lg"
+                                    autoComplete="off"
+                                    errorMessage={touched.fullName && errors.fullName}
+                                    color={
+                                        touched.fullName
+                                            ? errors.fullName
+                                                ? "danger"
+                                                : "success"
+                                            : "default"
+                                    }
+                                    startContent={<UserIcon height={24} width={24} size={24} />}
+                                    isClearable
+                                    isReadOnly={isSubmitting}
+                                    isRequired
+                                />
+                                <Spacer y={3} />
                                 <Field
                                     as={Input}
                                     type="email"
@@ -115,7 +144,7 @@ function LoginScreen() {
                                     isReadOnly={isSubmitting}
                                     isRequired
                                 />
-                                <Spacer y={8} />
+                                <Spacer y={3} />
                                 <Field
                                     as={Input}
                                     type={isPasswordVisible ? "text" : "password"}
@@ -169,23 +198,16 @@ function LoginScreen() {
                                     isLoading={isSubmitting}
                                     isDisabled={!dirty || !isValid || isSubmitting}
                                 >
-                                    Login
+                                    Register
                                 </Button>
                             </Form>
                         )}
                     </Formik>
                     <Spacer y={3} />
                     <div>
-                        Don&apos;t have an account?&nbsp;
-                        <Link to={REGISTER_USER_SCREEN} className="text-blue-700 font-semibold">
-                            Register
-                        </Link>
-                    </div>
-                    <Spacer y={2} />
-                    <div>
-                        Forgot Password?&nbsp;
-                        <Link to={RESET_PASSWORD_SCREEN} className="text-blue-700 font-semibold">
-                            Reset
+                        Already have an account?&nbsp;
+                        <Link to={LOGIN_USER_SCREEN} className="text-blue-700 font-semibold">
+                            Login
                         </Link>
                     </div>
                 </div>
@@ -194,4 +216,4 @@ function LoginScreen() {
     );
 }
 
-export default LoginScreen;
+export default RegisterScreen;
