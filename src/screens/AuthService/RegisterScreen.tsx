@@ -64,7 +64,7 @@ function RegisterScreen() {
                 </div>
                 <div className="xs:w-2/3 sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/2 my-7">
                     <div className="text-5xl text-center lg:text-left xl:text-left antialiased">
-                        Register with <span className="font-medium">CartPe</span>!
+                        Register with <span className="font-medium italic text-blue-700">CartPe</span>!
                     </div>
                     <Spacer y={12} />
                     <Formik
