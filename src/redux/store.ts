@@ -15,6 +15,9 @@ const persistedState: {
     userRegisterDetails?: RegisterState;
 } = {
     userLoginDetails: {
+        email: userLoginDetailsFromStorage.email || null,
+        firstName: userLoginDetailsFromStorage.firstName || null,
+        lastName: userLoginDetailsFromStorage.lastName || null,
         isLoggedIn: userLoginDetailsFromStorage.isLoggedIn || false,
         isLoading: false,
         error: null

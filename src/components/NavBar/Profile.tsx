@@ -24,7 +24,7 @@ function Profile() {
     const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const loginDetails = useReduxSelector((state) => state.userLoginDetails);
-    const { isLoggedIn } = loginDetails;
+    const { isLoggedIn, email, firstName, lastName } = loginDetails;
 
     const handleUserLogout = () => {
         dispatch(logoutUser());
@@ -45,15 +45,15 @@ function Profile() {
                     showFallback
                     className="transition-transform"
                     color="danger"
-                    name="John Doe"
+                    name={firstName + " " + lastName}
                     size="sm"
                 />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem isReadOnly showDivider>
                     <User
-                        name="John Doe"
-                        description="johndoe@email.com"
+                        name={firstName + " " + lastName}
+                        description={email}
                         classNames={{
                             name: "text-default-600",
                             description: "text-default-500"

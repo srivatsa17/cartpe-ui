@@ -76,10 +76,34 @@ const registerSlice = createSlice({
         registerUserFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        verifyUserRequest: (state) => {
+            state.isLoading = true;
+        },
+        verifyUserSuccess: (state) => {
+            state.isLoading = false;
+            state.isRegistered = true;
+            state.isVerified = true;
+        },
+        verifyUserFailed: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        registerUserReset: (state) => {
+            state.isLoading = false;
+            state.isRegistered = false;
+            state.isVerified = false;
         }
     }
 });
 
-export const { registerUserRequest, registerUserSuccess, registerUserFailed } =
-    registerSlice.actions;
+export const {
+    registerUserRequest,
+    registerUserSuccess,
+    registerUserFailed,
+    verifyUserRequest,
+    verifyUserSuccess,
+    verifyUserFailed,
+    registerUserReset
+} = registerSlice.actions;
 export default registerSlice.reducer;

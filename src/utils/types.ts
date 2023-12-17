@@ -6,6 +6,9 @@ export type RegisterState = {
 };
 
 export type LoginState = {
+    email?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
     isLoading: boolean;
     isLoggedIn: boolean;
     error: string | null | unknown;
