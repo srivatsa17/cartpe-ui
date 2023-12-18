@@ -1,10 +1,10 @@
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ErrorResponse, RegisterState } from "utils/types";
+import { REGISTER_URI, VERIFY_EMAIL } from "constants/api";
+import { saveItemInStorage, updateItemInStorage } from "utils/localStorage";
 
-import { REGISTER_URI } from "constants/api";
 import { USER_REGISTER_DETAILS } from "constants/localStorage";
 import { publicAxiosInstance } from "utils/axios";
-import { saveItemInStorage } from "utils/localStorage";
 import { throwAuthenticationErrorResponse } from "utils/errorResponse";
 
 const initialState: RegisterState = {
@@ -58,6 +58,22 @@ export const registerUser = (registerForm: registerForm) => async (dispatch: Dis
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(registerUserFailed(throwAuthenticationErrorResponse(err)));
+    }
+};
+
+export const verifyUserEmail = (id: string, token: string) => async (dispatch: Dispatch) => {
+    try {
+        dispatch(verifyUserRequest());
+        const verifyUserEmailData = { uidb64: id, token: token };
+        await publicAxiosInstance.patch(VERIFY_EMAIL, verifyUserEmailData);
+        dispatch(verifyUserSuccess());
+        const updateData = {
+            isUserVerified: true
+        };
+        updateItemInStorage(USER_REGISTER_DETAILS, updateData);
+    } catch (error) {
+        const err = error as ErrorResponse;
+        dispatch(verifyUserFailed(throwAuthenticationErrorResponse(err)));
     }
 };
 
