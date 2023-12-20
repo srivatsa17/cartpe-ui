@@ -26,14 +26,15 @@ export type CategorySearchState = {
 };
 
 export type Product = {
-    name?: string;
-    brand?: string;
-    slug?: string;
+    name: string;
+    brand: string;
+    category: string;
+    slug: string;
     description?: string;
     rating?: number;
     reviewCount?: number;
-    price?: number;
-    selling_price?: number;
+    price: number;
+    selling_price: number;
     discounted_price?: number;
     discount?: number;
 };
