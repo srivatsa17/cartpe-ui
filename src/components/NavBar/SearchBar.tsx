@@ -124,7 +124,7 @@ function SearchBar() {
                     value={category.name}
                     className="capitalize"
                     as={Link}
-                    href={`/${category.slug}?rawQuery=${category.name}`}
+                    href={`categories/${category.slug}?rawQuery=${category.name}`}
                 >
                     {category.name}
                 </AutocompleteItem>
