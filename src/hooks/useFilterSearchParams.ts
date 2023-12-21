@@ -7,7 +7,11 @@ export function useFilterSearchParams() {
     const filteredCategories = queryParams.get("categories")?.split(",") ?? [];
     const filteredBrands = queryParams.get("brands")?.split(",") ?? [];
     const filteredDiscount = queryParams.get("discount") ?? null;
-    const filteredMaxPrice = queryParams.get("maxPrice") ?? null;
+    let filteredPriceRange = queryParams.get("priceRange") ?? null;
+    if (filteredPriceRange) {
+        filteredPriceRange = JSON.parse(filteredPriceRange);
+    }
+
     const sortBy = queryParams.get("sort") ?? null;
 
     return {
@@ -15,7 +19,7 @@ export function useFilterSearchParams() {
         filteredCategories,
         filteredBrands,
         filteredDiscount,
-        filteredMaxPrice,
+        filteredPriceRange,
         sortBy
     };
 }

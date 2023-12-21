@@ -16,8 +16,8 @@ function getUniqueBrands(products: Product[]) {
     const brands: string[] = [];
 
     products.forEach((product) => {
-        if (!brands.includes(product.category)) {
-            brands.push(product.category);
+        if (!brands.includes(product.brand)) {
+            brands.push(product.brand);
         }
     });
 
@@ -25,10 +25,10 @@ function getUniqueBrands(products: Product[]) {
 }
 
 function getDiscountRanges() {
-    return Array.from({ length: 9 }, (_, index) => (index + 1) * 10);
+    return Array.from({ length: 10 }, (_, index) => index * 10).map(String);
 }
 
-function getMinAndMaxPrice(products: Product[]) {
+function getPriceRange(products: Product[]) {
     let maxPrice = products[0]?.selling_price;
     let minPrice = products[0]?.selling_price;
 
@@ -42,6 +42,10 @@ function getMinAndMaxPrice(products: Product[]) {
         }
     }
 
+    // Round Up To Nearest Multiple of 100
+    minPrice = Math.floor(minPrice / 100) * 100;
+    maxPrice = Math.ceil(maxPrice / 100) * 100;
+
     return { maxPrice, minPrice };
 }
 
@@ -49,12 +53,12 @@ export function getUniqueFilterValues(products: Product[]) {
     const uniqueCategories = getUniqueCategories(products);
     const uniqueBrands = getUniqueBrands(products);
     const discountRanges = getDiscountRanges();
-    const minAndMaxPrices = getMinAndMaxPrice(products);
+    const priceRange = getPriceRange(products);
 
     return {
         uniqueCategories,
         uniqueBrands,
         discountRanges,
-        minAndMaxPrices
+        priceRange
     };
 }
