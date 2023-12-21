@@ -15,8 +15,16 @@ function ProductSearchScreen() {
     const productList = useReduxSelector((state) => state.productList);
     const { products } = productList;
 
-    const { uniqueCategories } = getUniqueFilterValues(products ?? []);
-    const { searchedCategory, filteredCategories } = useFilterSearchParams();
+    const { uniqueCategories, uniqueBrands, discountRanges, priceRange } = getUniqueFilterValues(
+        products ?? []
+    );
+    const {
+        searchedCategory,
+        filteredCategories,
+        filteredBrands,
+        filteredDiscount,
+        filteredPriceRange
+    } = useFilterSearchParams();
 
     React.useEffect(() => {
         dispatch(getProducts(searchedCategory));
@@ -26,7 +34,32 @@ function ProductSearchScreen() {
         return filteredCategories.length > 0 ? filteredCategories.includes(product.category) : true;
     };
 
-    const filteredAndSortedProducts = products?.filter(handleFilterCategories);
+    const handleFilterBrands = (product: Product) => {
+        return filteredBrands.length > 0 ? filteredBrands.includes(product.brand) : true;
+    };
+
+    const handleFilterDiscount = (product: Product) => {
+        if (product.discount !== undefined && typeof product.discount === "number") {
+            return filteredDiscount ? product.discount >= +filteredDiscount : true;
+        }
+        return false;
+    };
+
+    const handleFilterPriceRanges = (product: Product) => {
+        if (product.selling_price !== undefined && typeof product.selling_price === "number") {
+            return filteredPriceRange
+                ? product.selling_price >= +filteredPriceRange[0] &&
+                      product.selling_price <= +filteredPriceRange[1]
+                : true;
+        }
+        return false;
+    };
+
+    const filteredAndSortedProducts = products
+        ?.filter(handleFilterCategories)
+        .filter(handleFilterBrands)
+        .filter(handleFilterDiscount)
+        .filter(handleFilterPriceRanges);
 
     return (
         <div className="container mx-auto px-6 py-7">
@@ -48,18 +81,22 @@ function ProductSearchScreen() {
             </div>
             <Spacer y={4} />
             <Divider />
-            <div className="flex flex-row xs:flex-col">
-                <div className="sm:basis-2/5 md:basis-2/5 lg:basis-1/4 py-5">
+            <div className="flex flex-wrap">
+                <div className="sm:w-2/5 md:w-2/5 lg:w-1/4 py-5">
                     <Filters
                         uniqueCategories={uniqueCategories}
-                        // uniqueBrands={uniqueBrands}
-                        // discountRanges={discountRanges}
-                        // minAndMaxPrices={minAndMaxPrices}
+                        uniqueBrands={uniqueBrands}
+                        discountRanges={discountRanges}
+                        priceRange={priceRange}
                     />
                 </div>
-                <div className="py-5 sm:basis-3/5 md:basis-3/5 lg:basis-3/4 grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                <div className="py-5 sm:w-3/5 md:w-3/5 lg:w-3/4 grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7">
                     {filteredAndSortedProducts?.map((product, index) => {
-                        return <ProductCard key={index} product={product} />;
+                        return (
+                            <div key={index} className="grow">
+                                <ProductCard product={product} />
+                            </div>
+                        );
                     })}
                 </div>
             </div>
