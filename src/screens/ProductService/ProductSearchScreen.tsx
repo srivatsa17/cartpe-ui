@@ -1,6 +1,7 @@
-import { Chip, Divider, Spacer } from "@nextui-org/react";
+import { Divider, Spacer } from "@nextui-org/react";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
+import FilterAppliedChips from "components/ProductSearchScreen/Filters/FilterAppliedChips";
 import Filters from "components/ProductSearchScreen/Filters/Filters";
 import { Product } from "utils/types";
 import ProductCard from "components/ProductSearchScreen/ProductCard";
@@ -96,11 +97,7 @@ function ProductSearchScreen() {
                 <div className="sm:col-span-2 col-span-1">
                     <div className="uppercase font-semibold text-lg">Filters</div>
                     <Spacer y={2} />
-                    <Chip className="my-2 mr-2">Hello</Chip>
-                    <Chip className="my-2 mr-2">Hello</Chip>
-                    <Chip className="my-2 mr-2">Hello</Chip>
-                    <Chip className="my-2 mr-2">Hello</Chip>
-                    <Chip className="my-2 mr-2">Hello</Chip>
+                    <FilterAppliedChips />
                 </div>
                 <div className="xs:col-span-2 justify-self-end">
                     <SortBy />
