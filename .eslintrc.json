@@ -20,7 +20,7 @@
         "no-unused-vars": "warn",
         "no-duplicate-imports": "error",
         "@stylistic/js/arrow-spacing": "error",
-        "@stylistic/js/indent": ["error", 4],
+        "@stylistic/js/indent": ["error", 4, { "SwitchCase": 1 }],
         "comma-dangle": ["error", "never"],
         "@stylistic/js/comma-spacing": ["error", { "before": false, "after": true }],
         "@stylistic/js/eol-last": ["error", "always"],

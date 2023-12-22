@@ -8,6 +8,7 @@ import React from "react";
 import SortBy from "components/ProductSearchScreen/SortBy";
 import { getProducts } from "redux/ProductService/productsSlice";
 import { getUniqueFilterValues } from "utils/getUniqueFilterValues";
+import { parseISO } from "date-fns";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 
 function ProductSearchScreen() {
@@ -23,7 +24,8 @@ function ProductSearchScreen() {
         filteredCategories,
         filteredBrands,
         filteredDiscount,
-        filteredPriceRange
+        filteredPriceRange,
+        sortBy
     } = useFilterSearchParams();
 
     React.useEffect(() => {
@@ -55,11 +57,36 @@ function ProductSearchScreen() {
         return false;
     };
 
+    const getLocalDateString = (dateTimeISO: string) => {
+        // Convert 2023-05-15T19:34:16.420932+05:30 -> 15/5/2023 -> [15, 5, 2023] -> [2023, 5, 15] -> 2023515
+        return parseISO(dateTimeISO).toLocaleDateString().split("/").reverse().join("");
+    };
+
+    const handleSort = (a: Product, b: Product) => {
+        switch (sortBy) {
+            // Add cases for customer-rating, popularity
+            case "whats-new":
+                if (getLocalDateString(b.created_at) > getLocalDateString(a.created_at)) return 1;
+                else if (getLocalDateString(b.created_at) < getLocalDateString(a.created_at))
+                    return -1;
+                else return 0;
+            case "better-discount":
+                return b.discount - a.discount;
+            case "price-high-to-low":
+                return b.selling_price - a.selling_price;
+            case "price-low-to-high":
+                return a.selling_price - b.selling_price;
+            default:
+                return a.name.localeCompare(b.name);
+        }
+    };
+
     const filteredAndSortedProducts = products
         ?.filter(handleFilterCategories)
         .filter(handleFilterBrands)
         .filter(handleFilterDiscount)
-        .filter(handleFilterPriceRanges);
+        .filter(handleFilterPriceRanges)
+        .sort(handleSort);
 
     return (
         <div className="container mx-auto px-6 py-7">

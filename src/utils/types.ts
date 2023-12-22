@@ -36,7 +36,8 @@ export type Product = {
     price: number;
     selling_price: number;
     discounted_price?: number;
-    discount?: number;
+    discount: number;
+    created_at: string;
 };
 
 export type ProductListState = {

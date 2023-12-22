@@ -12,7 +12,7 @@ export function useFilterSearchParams() {
         filteredPriceRange = JSON.parse(filteredPriceRange);
     }
 
-    const sortBy = queryParams.get("sort") ?? null;
+    const sortBy = queryParams.get("sortBy") ?? null;
 
     return {
         searchedCategory,
