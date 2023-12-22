@@ -8,6 +8,14 @@ interface FilterPrice {
 
 function FilterPrice({ priceRange }: FilterPrice) {
     const [queryParams, setQueryParams] = useSearchParams();
+    const filteredPriceRangeString = queryParams.get("priceRange");
+    let filteredPriceRange: number | number[];
+
+    if (filteredPriceRangeString) {
+        filteredPriceRange = JSON.parse(filteredPriceRangeString);
+    } else {
+        filteredPriceRange = [priceRange.minPrice, priceRange.maxPrice];
+    }
 
     const handleSlider = (priceRange: number | number[]) => {
         const priceRangeString = Array.isArray(priceRange)
@@ -23,7 +31,7 @@ function FilterPrice({ priceRange }: FilterPrice) {
             step={100}
             maxValue={priceRange.maxPrice}
             minValue={0}
-            defaultValue={[priceRange.minPrice, priceRange.maxPrice]}
+            defaultValue={filteredPriceRange}
             onChangeEnd={handleSlider}
             showTooltip={true}
             showOutline={true}
@@ -35,7 +43,7 @@ function FilterPrice({ priceRange }: FilterPrice) {
                 maximumFractionDigits: 2
             }}
             classNames={{
-                base: "w-11/12",
+                base: "w-11/12 xs:w-full",
                 filler: "bg-gradient-to-r from-primary-500 to-secondary-400",
                 labelWrapper: "mb-2",
                 label: "uppercase font-semibold text-purple-800 text-medium",

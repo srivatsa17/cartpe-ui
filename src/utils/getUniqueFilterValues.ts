@@ -25,7 +25,9 @@ function getUniqueBrands(products: Product[]) {
 }
 
 function getDiscountRanges() {
-    return Array.from({ length: 10 }, (_, index) => index * 10).map(String);
+    return Array.from({ length: 5 }, (_, index) => (index + 1) * 10)
+        .reverse()
+        .map(String);
 }
 
 function getPriceRange(products: Product[]) {

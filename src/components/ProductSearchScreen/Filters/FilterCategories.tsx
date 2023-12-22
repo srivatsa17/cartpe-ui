@@ -1,6 +1,7 @@
-import { Checkbox, CheckboxGroup, Divider } from "@nextui-org/react";
+import { Button, Checkbox, CheckboxGroup } from "@nextui-org/react";
 
 import React from "react";
+import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 import { useSearchParams } from "react-router-dom";
 
 interface FilterCategories {
@@ -9,10 +10,8 @@ interface FilterCategories {
 
 function FilterCategories({ uniqueCategories }: FilterCategories) {
     const [queryParams, setQueryParams] = useSearchParams();
-    const filteredCategories = queryParams.get("categories")?.split(",");
-    const [categorySelected, setCategorySelected] = React.useState<string[]>(
-        filteredCategories ?? []
-    );
+    const { filteredCategories } = useFilterSearchParams();
+    const [categorySelected, setCategorySelected] = React.useState<string[]>(filteredCategories);
 
     const handleCategoryChange = (selectedCategories: string[]) => {
         setCategorySelected(selectedCategories);
@@ -24,15 +23,33 @@ function FilterCategories({ uniqueCategories }: FilterCategories) {
         setQueryParams(queryParams);
     };
 
+    const handleClearCategoryFilter = () => {
+        setCategorySelected([]);
+        queryParams.delete("categories");
+        setQueryParams(queryParams);
+    };
+
     return (
         <div>
             <CheckboxGroup
-                label="Categories"
+                label={
+                    <div className="flex justify-between w-11/12">
+                        <div className="uppercase font-semibold text-purple-800">Categories</div>
+                        {filteredCategories.length > 0 && (
+                            <Button
+                                size="sm"
+                                className="w-2/5"
+                                variant="ghost"
+                                color="danger"
+                                onClick={handleClearCategoryFilter}
+                            >
+                                Clear Filter
+                            </Button>
+                        )}
+                    </div>
+                }
                 value={categorySelected}
                 onValueChange={handleCategoryChange}
-                classNames={{
-                    label: "uppercase font-semibold text-purple-800"
-                }}
             >
                 {uniqueCategories.map((category: string) => {
                     return (
@@ -44,7 +61,6 @@ function FilterCategories({ uniqueCategories }: FilterCategories) {
                     );
                 })}
             </CheckboxGroup>
-            <Divider className="my-3 w-11/12 xs:w-full" />
         </div>
     );
 }

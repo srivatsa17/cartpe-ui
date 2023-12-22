@@ -82,7 +82,7 @@ function ProductSearchScreen() {
             <Spacer y={4} />
             <Divider />
             <div className="flex flex-wrap">
-                <div className="sm:w-2/5 md:w-2/5 lg:w-1/4 py-5">
+                <div className="xs:w-full sm:w-2/5 md:w-2/5 lg:w-1/4 py-5">
                     <Filters
                         uniqueCategories={uniqueCategories}
                         uniqueBrands={uniqueBrands}
@@ -90,10 +90,10 @@ function ProductSearchScreen() {
                         priceRange={priceRange}
                     />
                 </div>
-                <div className="py-5 sm:w-3/5 md:w-3/5 lg:w-3/4 grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7">
+                <div className="py-5 xs:w-full sm:w-3/5 md:w-3/5 lg:w-3/4 grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7">
                     {filteredAndSortedProducts?.map((product, index) => {
                         return (
-                            <div key={index} className="grow">
+                            <div key={index}>
                                 <ProductCard product={product} />
                             </div>
                         );

@@ -1,6 +1,7 @@
-import { Checkbox, CheckboxGroup, Divider } from "@nextui-org/react";
+import { Button, Checkbox, CheckboxGroup } from "@nextui-org/react";
 
 import React from "react";
+import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 import { useSearchParams } from "react-router-dom";
 
 interface FilterBrands {
@@ -9,8 +10,8 @@ interface FilterBrands {
 
 function FilterBrands({ uniqueBrands }: FilterBrands) {
     const [queryParams, setQueryParams] = useSearchParams();
-    const filteredBrands = queryParams.get("brands")?.split(",");
-    const [brandsSelected, setBrandsSelected] = React.useState<string[]>(filteredBrands ?? []);
+    const { filteredBrands } = useFilterSearchParams();
+    const [brandsSelected, setBrandsSelected] = React.useState<string[]>(filteredBrands);
 
     const handleBrandsChange = (selectedBrands: string[]) => {
         setBrandsSelected(selectedBrands);
@@ -22,15 +23,33 @@ function FilterBrands({ uniqueBrands }: FilterBrands) {
         setQueryParams(queryParams);
     };
 
+    const handleClearBrandsFilter = () => {
+        setBrandsSelected([]);
+        queryParams.delete("brands");
+        setQueryParams(queryParams);
+    };
+
     return (
         <div>
             <CheckboxGroup
-                label="brands"
+                label={
+                    <div className="flex justify-between w-11/12">
+                        <div className="uppercase font-semibold text-purple-800">Brands</div>
+                        {filteredBrands.length > 0 && (
+                            <Button
+                                size="sm"
+                                className="w-2/5"
+                                variant="ghost"
+                                color="danger"
+                                onClick={handleClearBrandsFilter}
+                            >
+                                Clear Filter
+                            </Button>
+                        )}
+                    </div>
+                }
                 value={brandsSelected}
                 onValueChange={handleBrandsChange}
-                classNames={{
-                    label: "uppercase font-semibold text-purple-800"
-                }}
             >
                 {uniqueBrands.map((brand: string) => {
                     return (
@@ -42,7 +61,6 @@ function FilterBrands({ uniqueBrands }: FilterBrands) {
                     );
                 })}
             </CheckboxGroup>
-            <Divider className="my-3 w-11/12 xs:w-full" />
         </div>
     );
 }

@@ -1,6 +1,7 @@
-import { Divider, Radio, RadioGroup } from "@nextui-org/react";
+import { Button, Radio, RadioGroup } from "@nextui-org/react";
 
 import React from "react";
+import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 import { useSearchParams } from "react-router-dom";
 
 interface FilterDiscounts {
@@ -9,8 +10,8 @@ interface FilterDiscounts {
 
 function FilterDiscounts({ discountRanges }: FilterDiscounts) {
     const [queryParams, setQueryParams] = useSearchParams();
-    const filteredDiscount = queryParams.get("discount");
-    const [discountSelected, setDiscountSelected] = React.useState<string>(filteredDiscount ?? "0");
+    const { filteredDiscount } = useFilterSearchParams();
+    const [discountSelected, setDiscountSelected] = React.useState<string>(filteredDiscount);
 
     const handleCategoryChange = (selectedDiscount: string) => {
         setDiscountSelected(selectedDiscount);
@@ -22,15 +23,35 @@ function FilterDiscounts({ discountRanges }: FilterDiscounts) {
         setQueryParams(queryParams);
     };
 
+    const handleClearDiscountFilter = () => {
+        setDiscountSelected("0");
+        queryParams.delete("discount");
+        setQueryParams(queryParams);
+    };
+
     return (
         <div>
             <RadioGroup
-                label="Discount Range"
+                label={
+                    <div className="flex justify-between w-11/12">
+                        <div className="uppercase font-semibold text-purple-800">
+                            Discount Range
+                        </div>
+                        {filteredDiscount !== "0" && (
+                            <Button
+                                size="sm"
+                                className="w-2/5"
+                                variant="ghost"
+                                color="danger"
+                                onClick={handleClearDiscountFilter}
+                            >
+                                Clear Filter
+                            </Button>
+                        )}
+                    </div>
+                }
                 value={discountSelected}
                 onValueChange={handleCategoryChange}
-                classNames={{
-                    label: "uppercase font-semibold text-purple-800"
-                }}
             >
                 {discountRanges.map((discount: string) => {
                     return (
@@ -42,7 +63,6 @@ function FilterDiscounts({ discountRanges }: FilterDiscounts) {
                     );
                 })}
             </RadioGroup>
-            <Divider className="my-3 w-11/12 xs:w-full" />
         </div>
     );
 }

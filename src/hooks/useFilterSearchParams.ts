@@ -6,7 +6,7 @@ export function useFilterSearchParams() {
     const searchedCategory = queryParams.get("rawQuery") ?? "";
     const filteredCategories = queryParams.get("categories")?.split(",") ?? [];
     const filteredBrands = queryParams.get("brands")?.split(",") ?? [];
-    const filteredDiscount = queryParams.get("discount") ?? null;
+    const filteredDiscount = queryParams.get("discount") ?? "0";
     let filteredPriceRange = queryParams.get("priceRange") ?? null;
     if (filteredPriceRange) {
         filteredPriceRange = JSON.parse(filteredPriceRange);
