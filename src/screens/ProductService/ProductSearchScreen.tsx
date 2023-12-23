@@ -1,4 +1,5 @@
-import { Divider, Spacer } from "@nextui-org/react";
+import { BreadcrumbItem, Breadcrumbs, Divider, Spacer } from "@nextui-org/react";
+import { CATEGORY_SCREEN, HOME_SCREEN } from "constants/routes";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import FilterAppliedChips from "components/ProductSearchScreen/Filters/FilterAppliedChips";
@@ -91,12 +92,20 @@ function ProductSearchScreen() {
 
     return (
         <div className="container mx-auto px-6 py-7">
-            <div className="capitalize font-semibold text-lg">Cameras - 2 items</div>
-            <Spacer y={5} />
+            <Breadcrumbs className="mb-3" size="lg">
+                <BreadcrumbItem href={HOME_SCREEN}>Home</BreadcrumbItem>
+                <BreadcrumbItem href={CATEGORY_SCREEN}>Categories</BreadcrumbItem>
+                <BreadcrumbItem isCurrent isLast>
+                    {searchedCategory}
+                </BreadcrumbItem>
+            </Breadcrumbs>
+            <div className="capitalize font-semibold text-lg">
+                {searchedCategory} - {filteredAndSortedProducts.length} items
+            </div>
+            <Spacer y={3} />
             <div className="grid grid-cols-3">
                 <div className="sm:col-span-2 col-span-1">
                     <div className="uppercase font-semibold text-lg">Filters</div>
-                    <Spacer y={2} />
                     <FilterAppliedChips />
                 </div>
                 <div className="xs:col-span-2 justify-self-end">

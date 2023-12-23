@@ -31,8 +31,8 @@ function getDiscountRanges() {
 }
 
 function getPriceRange(products: Product[]) {
-    let maxPrice = products[0]?.selling_price;
-    let minPrice = products[0]?.selling_price;
+    let minPrice = products[0]?.selling_price ?? 0;
+    let maxPrice = products[0]?.selling_price ?? 1000;
 
     for (let i = 0; i < products.length; i++) {
         const price = products[i].selling_price;
@@ -48,7 +48,7 @@ function getPriceRange(products: Product[]) {
     minPrice = Math.floor(minPrice / 100) * 100;
     maxPrice = Math.ceil(maxPrice / 100) * 100;
 
-    return { maxPrice, minPrice };
+    return { minPrice, maxPrice };
 }
 
 export function getUniqueFilterValues(products: Product[]) {

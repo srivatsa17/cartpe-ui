@@ -1,5 +1,6 @@
+import { Slider, SliderValue } from "@nextui-org/react";
+
 import React from "react";
-import { Slider } from "@nextui-org/react";
 import { useSearchParams } from "react-router-dom";
 
 interface FilterPrice {
@@ -9,7 +10,7 @@ interface FilterPrice {
 function FilterPrice({ priceRange }: FilterPrice) {
     const [queryParams, setQueryParams] = useSearchParams();
     const filteredPriceRangeString = queryParams.get("priceRange");
-    let filteredPriceRange: number | number[];
+    let filteredPriceRange: SliderValue;
 
     if (filteredPriceRangeString) {
         filteredPriceRange = JSON.parse(filteredPriceRangeString);
@@ -17,7 +18,7 @@ function FilterPrice({ priceRange }: FilterPrice) {
         filteredPriceRange = [priceRange.minPrice, priceRange.maxPrice];
     }
 
-    const handleSlider = (priceRange: number | number[]) => {
+    const handleSlider = (priceRange: SliderValue) => {
         const priceRangeString = Array.isArray(priceRange)
             ? JSON.stringify(priceRange)
             : String(priceRange);
