@@ -106,12 +106,12 @@ function ProductSearchScreen() {
             <div className="grid grid-cols-3">
                 <div className="sm:col-span-2 col-span-1">
                     <div className="uppercase font-semibold text-lg">Filters</div>
-                    <FilterAppliedChips />
                 </div>
                 <div className="xs:col-span-2 justify-self-end">
                     <SortBy />
                 </div>
             </div>
+            <FilterAppliedChips />
             <Spacer y={4} />
             <Divider />
             <div className="flex flex-wrap">

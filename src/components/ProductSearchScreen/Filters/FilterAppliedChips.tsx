@@ -17,7 +17,7 @@ function FilterAppliedChips() {
     }
 
     return (
-        <React.Fragment>
+        <div className="w-full xs:grid grid-flow-row grid-cols-2 overflow-auto my-3">
             {filtersApplied.map((filter, index) => {
                 return (
                     <Chip key={index} className="my-2 mr-2" color="secondary">
@@ -25,7 +25,7 @@ function FilterAppliedChips() {
                     </Chip>
                 );
             })}
-        </React.Fragment>
+        </div>
     );
 }
 
