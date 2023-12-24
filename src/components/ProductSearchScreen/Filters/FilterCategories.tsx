@@ -1,5 +1,6 @@
 import { Button, Checkbox, CheckboxGroup } from "@nextui-org/react";
 
+import { CATEGORY_QUERY_PARAM_KEY } from "constants/queryParam";
 import React from "react";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 import { useSearchParams } from "react-router-dom";
@@ -16,16 +17,16 @@ function FilterCategories({ uniqueCategories }: FilterCategories) {
     const handleCategoryChange = (selectedCategories: string[]) => {
         setCategorySelected(selectedCategories);
         if (selectedCategories.length) {
-            queryParams.set("categories", selectedCategories.join(","));
+            queryParams.set(CATEGORY_QUERY_PARAM_KEY, selectedCategories.join(","));
         } else {
-            queryParams.delete("categories");
+            queryParams.delete(CATEGORY_QUERY_PARAM_KEY);
         }
         setQueryParams(queryParams);
     };
 
     const handleClearCategoryFilter = () => {
         setCategorySelected([]);
-        queryParams.delete("categories");
+        queryParams.delete(CATEGORY_QUERY_PARAM_KEY);
         setQueryParams(queryParams);
     };
 

@@ -1,5 +1,6 @@
 import { Button, Checkbox, CheckboxGroup } from "@nextui-org/react";
 
+import { BRAND_QUERY_PARAM_KEY } from "constants/queryParam";
 import React from "react";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 import { useSearchParams } from "react-router-dom";
@@ -16,16 +17,16 @@ function FilterBrands({ uniqueBrands }: FilterBrands) {
     const handleBrandsChange = (selectedBrands: string[]) => {
         setBrandsSelected(selectedBrands);
         if (selectedBrands.length) {
-            queryParams.set("brands", selectedBrands.join(","));
+            queryParams.set(BRAND_QUERY_PARAM_KEY, selectedBrands.join(","));
         } else {
-            queryParams.delete("brands");
+            queryParams.delete(BRAND_QUERY_PARAM_KEY);
         }
         setQueryParams(queryParams);
     };
 
     const handleClearBrandsFilter = () => {
         setBrandsSelected([]);
-        queryParams.delete("brands");
+        queryParams.delete(BRAND_QUERY_PARAM_KEY);
         setQueryParams(queryParams);
     };
 

@@ -1,5 +1,6 @@
 import { Button, Radio, RadioGroup } from "@nextui-org/react";
 
+import { DISCOUNT_QUERY_PARAM_KEY } from "constants/queryParam";
 import React from "react";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 import { useSearchParams } from "react-router-dom";
@@ -16,16 +17,16 @@ function FilterDiscounts({ discountRanges }: FilterDiscounts) {
     const handleCategoryChange = (selectedDiscount: string) => {
         setDiscountSelected(selectedDiscount);
         if (selectedDiscount) {
-            queryParams.set("discount", selectedDiscount);
+            queryParams.set(DISCOUNT_QUERY_PARAM_KEY, selectedDiscount);
         } else {
-            queryParams.delete("discount");
+            queryParams.delete(DISCOUNT_QUERY_PARAM_KEY);
         }
         setQueryParams(queryParams);
     };
 
     const handleClearDiscountFilter = () => {
         setDiscountSelected("0");
-        queryParams.delete("discount");
+        queryParams.delete(DISCOUNT_QUERY_PARAM_KEY);
         setQueryParams(queryParams);
     };
 

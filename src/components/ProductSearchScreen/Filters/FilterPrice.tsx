@@ -1,5 +1,6 @@
 import { Slider, SliderValue } from "@nextui-org/react";
 
+import { PRICE_QUERY_PARAM_KEY } from "constants/queryParam";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -9,7 +10,7 @@ interface FilterPrice {
 
 function FilterPrice({ priceRange }: FilterPrice) {
     const [queryParams, setQueryParams] = useSearchParams();
-    const filteredPriceRangeString = queryParams.get("priceRange");
+    const filteredPriceRangeString = queryParams.get(PRICE_QUERY_PARAM_KEY);
     let filteredPriceRange: SliderValue;
 
     if (filteredPriceRangeString) {
@@ -22,7 +23,7 @@ function FilterPrice({ priceRange }: FilterPrice) {
         const priceRangeString = Array.isArray(priceRange)
             ? JSON.stringify(priceRange)
             : String(priceRange);
-        queryParams.set("priceRange", priceRangeString);
+        queryParams.set(PRICE_QUERY_PARAM_KEY, priceRangeString);
         setQueryParams(queryParams);
     };
 
