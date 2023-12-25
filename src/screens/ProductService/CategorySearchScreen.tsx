@@ -2,18 +2,18 @@ import { BreadcrumbItem, Breadcrumbs, Divider, Spacer } from "@nextui-org/react"
 import { CATEGORY_SCREEN, HOME_SCREEN } from "constants/routes";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
-import FilterAppliedChips from "components/ProductSearchScreen/Filters/FilterAppliedChips";
-import Filters from "components/ProductSearchScreen/Filters/Filters";
+import FilterAppliedChips from "components/CategorySearchScreen/Filters/FilterAppliedChips";
+import Filters from "components/CategorySearchScreen/Filters/Filters";
 import { Product } from "utils/types";
-import ProductCard from "components/ProductSearchScreen/ProductCard";
+import ProductCard from "components/CategorySearchScreen/ProductCard";
 import React from "react";
-import SortBy from "components/ProductSearchScreen/SortBy";
+import SortBy from "components/CategorySearchScreen/SortBy";
 import { getProducts } from "redux/ProductService/productsSlice";
 import { getUniqueFilterValues } from "utils/getUniqueFilterValues";
 import { parseISO } from "date-fns";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 
-function ProductSearchScreen() {
+function CategorySearchScreen() {
     const dispatch = useReduxDispatch();
     const productList = useReduxSelector((state) => state.productList);
     const { products } = productList;
@@ -137,4 +137,4 @@ function ProductSearchScreen() {
     );
 }
 
-export default ProductSearchScreen;
+export default CategorySearchScreen;

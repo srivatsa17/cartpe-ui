@@ -1,16 +1,16 @@
 import {
+    CATEGORY_SEARCH_SCREEN,
     HOME_SCREEN,
     LOGIN_USER_SCREEN,
-    PRODUCT_SEARCH_SCREEN,
     REGISTER_USER_SCREEN,
     VERIFY_USER_EMAIL_SCREEN
 } from "constants/routes";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import AnonymousUserRoute from "routings/AnonymousUserRoute";
+import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/AuthService/LoginScreen";
-import ProductSearchScreen from "screens/ProductService/ProductSearchScreen";
 import ProtectedUserRoute from "routings/ProtectedUserRoute";
 import React from "react";
 import RegisterScreen from "screens/AuthService/RegisterScreen";
@@ -27,7 +27,7 @@ export default function App() {
                 </Route>
                 <Route element={<ProtectedUserRoute />}>
                     <Route path={HOME_SCREEN} element={<HomeScreen />} />
-                    <Route path={PRODUCT_SEARCH_SCREEN} element={<ProductSearchScreen />} />
+                    <Route path={CATEGORY_SEARCH_SCREEN} element={<CategorySearchScreen />} />
                 </Route>
             </Routes>
         </Router>
