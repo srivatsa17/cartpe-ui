@@ -25,6 +25,28 @@ export type CategorySearchState = {
     error: string | null | unknown;
 };
 
+export type Product = {
+    name: string;
+    brand: string;
+    category: string;
+    slug: string;
+    description?: string;
+    rating?: number;
+    reviewCount?: number;
+    price: number;
+    selling_price: number;
+    discounted_price?: number;
+    discount: number;
+    created_at: string;
+};
+
+export type ProductListState = {
+    isLoading?: boolean;
+    products: Array<Product> | [];
+    searchedCategory: string;
+    error?: string | null | unknown;
+};
+
 export interface ErrorResponse {
     response?: {
         data?: {

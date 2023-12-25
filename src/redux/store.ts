@@ -1,19 +1,28 @@
-import { LoginState, RegisterState } from "utils/types";
-import { USER_LOGIN_DETAILS, USER_REGISTER_DETAILS } from "constants/localStorage";
+import { LoginState, ProductListState, RegisterState } from "utils/types";
+import { PRODUCT_LIST, USER_LOGIN_DETAILS, USER_REGISTER_DETAILS } from "constants/localStorage";
 
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
+import productsSlice from "./ProductService/productsSlice";
 import registerSlice from "./AuthService/registerSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 const userRegisterDetailsFromStorage = getItemFromStorage(USER_REGISTER_DETAILS) ?? {};
+const productListFromStorage = getItemFromStorage(PRODUCT_LIST) ?? {};
 
 const persistedState: {
     userLoginDetails?: LoginState;
     userRegisterDetails?: RegisterState;
+    productList?: ProductListState;
 } = {
+    productList: {
+        products: productListFromStorage.products ?? [],
+        searchedCategory: productListFromStorage.searchedCategory ?? "",
+        isLoading: false,
+        error: null
+    },
     userLoginDetails: {
         email: userLoginDetailsFromStorage.email || null,
         firstName: userLoginDetailsFromStorage.firstName || null,
@@ -42,6 +51,7 @@ const store = configureStore({
     reducer: {
         userRegisterDetails: registerSlice,
         userLoginDetails: loginSlice,
+        productList: productsSlice,
         searchedCategories: searchedCategorySlice
     },
     preloadedState: persistedState

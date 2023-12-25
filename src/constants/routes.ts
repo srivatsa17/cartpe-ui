@@ -5,8 +5,9 @@ export const RESET_PASSWORD_SCREEN = "/user/reset-password";
 export const RESET_PASSWORD_CONFIRM_SCREEN = "/user/reset-password-confirm/:id/:token";
 
 export const HOME_SCREEN = "/";
+export const CATEGORY_SCREEN = "/categories";
 export const PRODUCT_SCREEN = "/products/:slug/:id/buy";
-export const PRODUCT_SEARCH_SCREEN = "/:slug";
+export const CATEGORY_SEARCH_SCREEN = "/categories/:slug";
 export const CART_SCREEN = "/cart";
 export const CHECKOUT_SCREEN = "/checkout";
 export const WISHLIST_SCREEN = "/wishlist";
