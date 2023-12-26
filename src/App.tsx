@@ -2,6 +2,7 @@ import {
     CATEGORY_SEARCH_SCREEN,
     HOME_SCREEN,
     LOGIN_USER_SCREEN,
+    PRODUCT_SCREEN,
     REGISTER_USER_SCREEN,
     VERIFY_USER_EMAIL_SCREEN
 } from "constants/routes";
@@ -11,6 +12,7 @@ import AnonymousUserRoute from "routings/AnonymousUserRoute";
 import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/AuthService/LoginScreen";
+import ProductScreen from "screens/ProductService/ProductScreen";
 import ProtectedUserRoute from "routings/ProtectedUserRoute";
 import React from "react";
 import RegisterScreen from "screens/AuthService/RegisterScreen";
@@ -28,6 +30,7 @@ export default function App() {
                 <Route element={<ProtectedUserRoute />}>
                     <Route path={HOME_SCREEN} element={<HomeScreen />} />
                     <Route path={CATEGORY_SEARCH_SCREEN} element={<CategorySearchScreen />} />
+                    <Route path={PRODUCT_SCREEN} element={<ProductScreen />} />
                 </Route>
             </Routes>
         </Router>

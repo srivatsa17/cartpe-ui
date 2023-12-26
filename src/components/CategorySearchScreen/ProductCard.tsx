@@ -40,7 +40,7 @@ function ProductCard({ product }: ProductCardProps) {
                     showAnchorIcon
                     isBlock
                     color="secondary"
-                    href="https://github.com/nextui-org/nextui"
+                    href={`/products/${product.slug}/${product.id}/buy`}
                 >
                     View the product
                 </Link>
