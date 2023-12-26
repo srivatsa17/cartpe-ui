@@ -4,6 +4,7 @@ import { PRODUCT_LIST, USER_LOGIN_DETAILS, USER_REGISTER_DETAILS } from "constan
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
+import productByIdSlice from "./ProductService/productByIdSlice";
 import productsSlice from "./ProductService/productsSlice";
 import registerSlice from "./AuthService/registerSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
@@ -52,6 +53,7 @@ const store = configureStore({
         userRegisterDetails: registerSlice,
         userLoginDetails: loginSlice,
         productList: productsSlice,
+        productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice
     },
     preloadedState: persistedState
