@@ -62,7 +62,7 @@ function CategoryMegaMenu() {
                                                     classNames={{
                                                         base: "text-center"
                                                     }}
-                                                    href={`product/${child.slug}`}
+                                                    href={`/categories/${child.slug}`}
                                                 >
                                                     {child.label}
                                                 </DropdownItem>

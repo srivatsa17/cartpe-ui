@@ -4,8 +4,10 @@ import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import FilterAppliedChips from "components/CategorySearchScreen/Filters/FilterAppliedChips";
 import Filters from "components/CategorySearchScreen/Filters/Filters";
+import FiltersSkeleton from "components/CategorySearchScreen/Filters/FiltersSkeleton";
 import { Product } from "utils/types";
 import ProductCard from "components/CategorySearchScreen/ProductCard";
+import ProductCardSkeleton from "components/CategorySearchScreen/ProductCardSkeleton";
 import React from "react";
 import SortBy from "components/CategorySearchScreen/SortBy";
 import { getProducts } from "redux/ProductService/productsSlice";
@@ -16,7 +18,7 @@ import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 function CategorySearchScreen() {
     const dispatch = useReduxDispatch();
     const productList = useReduxSelector((state) => state.productList);
-    const { products } = productList;
+    const { products, isLoading } = productList;
 
     const { uniqueCategories, uniqueBrands, discountRanges, priceRange } = getUniqueFilterValues(
         products ?? []
@@ -116,21 +118,33 @@ function CategorySearchScreen() {
             <Divider />
             <div className="flex flex-wrap">
                 <div className="xs:w-full sm:w-2/5 md:w-2/5 lg:w-1/4 py-5">
-                    <Filters
-                        uniqueCategories={uniqueCategories}
-                        uniqueBrands={uniqueBrands}
-                        discountRanges={discountRanges}
-                        priceRange={priceRange}
-                    />
+                    {isLoading ? (
+                        <FiltersSkeleton />
+                    ) : (
+                        <Filters
+                            uniqueCategories={uniqueCategories}
+                            uniqueBrands={uniqueBrands}
+                            discountRanges={discountRanges}
+                            priceRange={priceRange}
+                        />
+                    )}
                 </div>
                 <div className="py-5 xs:w-full sm:w-3/5 md:w-3/5 lg:w-3/4 grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7">
-                    {filteredAndSortedProducts?.map((product, index) => {
-                        return (
+                    {isLoading ? (
+                        Array.from({ length: 6 }).map((_, index) => (
                             <div key={index}>
-                                <ProductCard product={product} />
+                                <ProductCardSkeleton />
                             </div>
-                        );
-                    })}
+                        ))
+                    ) : (
+                        filteredAndSortedProducts?.map((product, index) => {
+                            return (
+                                <div key={index}>
+                                    <ProductCard product={product} />
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </div>
