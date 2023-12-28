@@ -3,6 +3,7 @@ import { CATEGORY_SCREEN, HOME_SCREEN } from "constants/routes";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import ProductDetails from "components/ProductScreen/ProductDetails";
+import ProductImages from "components/ProductScreen/ProductImages";
 import React from "react";
 import { getProductDetails } from "redux/ProductService/productByIdSlice";
 import { useParams } from "react-router-dom";
@@ -36,7 +37,9 @@ function ProductScreen() {
                 </BreadcrumbItem>
             </Breadcrumbs>
             <div className="grid md:grid-cols-2 py-3">
-                <div>Hello</div>
+                <div>
+                    <ProductImages product={product} />
+                </div>
                 <div>
                     <ProductDetails product={product} />
                 </div>
