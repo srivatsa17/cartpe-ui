@@ -11,7 +11,9 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
-    const featuredImage = product.product_images.find((productImage) => productImage.is_featured === true);
+    const featuredImage = product.product_images.find(
+        (productImage) => productImage.is_featured === true
+    );
 
     return (
         <Card isPressable>

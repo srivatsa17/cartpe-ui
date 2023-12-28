@@ -29,7 +29,7 @@ export type ProductImages = {
     id: bigint;
     image: string;
     is_featured: boolean;
-}
+};
 
 export type Product = {
     id: bigint;
