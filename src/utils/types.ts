@@ -25,6 +25,12 @@ export type CategorySearchState = {
     error: string | null | unknown;
 };
 
+export type ProductImages = {
+    id: bigint;
+    image: string;
+    is_featured: boolean;
+}
+
 export type Product = {
     id: bigint;
     name: string;
@@ -40,6 +46,7 @@ export type Product = {
     selling_price: number;
     discounted_price?: number;
     discount: number;
+    product_images: Array<ProductImages>;
     created_at: string;
 };
 

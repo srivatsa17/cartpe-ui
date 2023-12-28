@@ -1,6 +1,6 @@
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
 
-import { LOGIN_USER_IMAGE } from "constants/images";
+import { PLACEHOLDER_IMAGE } from "constants/images";
 import { Product } from "utils/types";
 import Rating from "./Rating";
 import React from "react";
@@ -11,6 +11,8 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
+    const featuredImage = product.product_images.find((productImage) => productImage.is_featured === true);
+
     return (
         <Card isPressable>
             <CardHeader className="py-3 px-4 flex-col items-start">
@@ -18,7 +20,11 @@ function ProductCard({ product }: ProductCardProps) {
                 <div className="text-slate-900 line-clamp-1 font-medium">{product.name}</div>
             </CardHeader>
             <CardBody className="py-3 px-4 flex-col">
-                <Image src={LOGIN_USER_IMAGE} />
+                <Image
+                    src={featuredImage?.image || PLACEHOLDER_IMAGE}
+                    alt="product-image"
+                    isBlurred
+                />
                 <div className="line-clamp-2 text-default-500">{product.description}</div>
                 <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
                 <div className="flex">
