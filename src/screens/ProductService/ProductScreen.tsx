@@ -3,6 +3,7 @@ import { CATEGORY_SCREEN, HOME_SCREEN } from "constants/routes";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import ProductDetails from "components/ProductScreen/ProductDetails";
+import ProductDetailsSkeleton from "components/ProductScreen/ProductDetailsSkeleton";
 import ProductImages from "components/ProductScreen/ProductImages";
 import React from "react";
 import { getProductDetails } from "redux/ProductService/productByIdSlice";
@@ -16,7 +17,7 @@ function ProductScreen() {
     const typeCastedId = BigInt(id);
     const dispatch = useReduxDispatch();
     const productDetails = useReduxSelector((state) => state.productDetails);
-    const { product } = productDetails;
+    const { product, isLoading } = productDetails;
 
     React.useEffect(() => {
         dispatch(getProductDetails(typeCastedId));
@@ -38,10 +39,10 @@ function ProductScreen() {
             </Breadcrumbs>
             <div className="grid md:grid-cols-2 py-3">
                 <div>
-                    <ProductImages product={product} />
+                    <ProductImages product={product} isLoading={isLoading} />
                 </div>
                 <div>
-                    <ProductDetails product={product} />
+                    {isLoading ? <ProductDetailsSkeleton /> : <ProductDetails product={product} />}
                 </div>
             </div>
         </div>
