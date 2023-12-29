@@ -15,6 +15,16 @@ import { getUniqueFilterValues } from "utils/getUniqueFilterValues";
 import { parseISO } from "date-fns";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 
+const ProductCardSkeletonList = () => {
+    const skeletonList = Array.from({ length: 6 }).map((_, index) => (
+        <div key={index}>
+            <ProductCardSkeleton />
+        </div>
+    ));
+
+    return <React.Fragment>{skeletonList}</React.Fragment>;
+};
+
 function CategorySearchScreen() {
     const dispatch = useReduxDispatch();
     const productList = useReduxSelector((state) => state.productList);
@@ -131,11 +141,7 @@ function CategorySearchScreen() {
                 </div>
                 <div className="py-5 xs:w-full sm:w-3/5 md:w-3/5 lg:w-3/4 grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7">
                     {isLoading ? (
-                        Array.from({ length: 6 }).map((_, index) => (
-                            <div key={index}>
-                                <ProductCardSkeleton />
-                            </div>
-                        ))
+                        <ProductCardSkeletonList />
                     ) : (
                         filteredAndSortedProducts?.map((product, index) => {
                             return (
