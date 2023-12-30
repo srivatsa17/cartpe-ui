@@ -1,6 +1,7 @@
 import { LoginState, ProductListState, RegisterState } from "utils/types";
 import { PRODUCT_LIST, USER_LOGIN_DETAILS, USER_REGISTER_DETAILS } from "constants/localStorage";
 
+import cartSlice from "./CartService/cartSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
@@ -54,7 +55,8 @@ const store = configureStore({
         userLoginDetails: loginSlice,
         productList: productsSlice,
         productDetails: productByIdSlice,
-        searchedCategories: searchedCategorySlice
+        searchedCategories: searchedCategorySlice,
+        cart: cartSlice
     },
     preloadedState: persistedState
 });
