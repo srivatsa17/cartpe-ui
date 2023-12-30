@@ -1,4 +1,5 @@
 import {
+    CART_SCREEN,
     CATEGORY_SEARCH_SCREEN,
     HOME_SCREEN,
     LOGIN_USER_SCREEN,
@@ -9,6 +10,7 @@ import {
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import AnonymousUserRoute from "routings/AnonymousUserRoute";
+import CartScreen from "screens/CartService/CartScreen";
 import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/AuthService/LoginScreen";
@@ -31,6 +33,7 @@ export default function App() {
                     <Route path={HOME_SCREEN} element={<HomeScreen />} />
                     <Route path={CATEGORY_SEARCH_SCREEN} element={<CategorySearchScreen />} />
                     <Route path={PRODUCT_SCREEN} element={<ProductScreen />} />
+                    <Route path={CART_SCREEN} element={<CartScreen />} />
                 </Route>
             </Routes>
         </Router>
