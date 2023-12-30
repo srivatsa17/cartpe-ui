@@ -8,6 +8,7 @@ import { useReduxSelector } from "hooks/redux";
 function CartSubTotal() {
     const cart = useReduxSelector((state) => state.cart);
     const { cartItems } = cart;
+    const totalCartItemsQuantity = cartItems.length;
     const totalMRP = cartItems
         .reduce(
             (sum: number, cartItem: Cart) => sum + cartItem.quantity * cartItem.product.price,
@@ -31,8 +32,10 @@ function CartSubTotal() {
     const isCartEmpty = cartItems.length === 0;
 
     return (
-        <div className="pr-8">
-            <div className="uppercase font-semibold text-2xl">Subtotal</div>
+        <div>
+            <div className="uppercase font-semibold text-2xl">
+                Subtotal ({totalCartItemsQuantity} items)
+            </div>
             <Spacer y={4} />
             <Divider className="my-3" />
             <div className="text-lg">

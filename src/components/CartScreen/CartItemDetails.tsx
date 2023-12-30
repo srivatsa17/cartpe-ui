@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
-import { Field, Formik } from "formik";
 import {
+    Button,
     Image,
     Input,
     Table,
@@ -12,6 +12,7 @@ import {
     TableRow,
     Tooltip
 } from "@nextui-org/react";
+import { Field, Formik } from "formik";
 
 import { Cart } from "utils/types";
 import { MinusCircleIcon } from "icons/MinusCircleIcon";
@@ -21,7 +22,7 @@ import { RupeeIcon } from "icons/RupeeIcon";
 import { TrashIcon } from "icons/TrashIcon";
 import { useReduxSelector } from "hooks/redux";
 
-export default function CartItemDetails() {
+function CartItemDetails() {
     const { cartItems } = useReduxSelector((state) => state.cart);
 
     const columns = [
@@ -126,8 +127,11 @@ export default function CartItemDetails() {
                                     errorMessage={errors.quantity}
                                     color={errors.quantity ? "danger" : "default"}
                                     startContent={
-                                        <button
+                                        <Button
+                                            isIconOnly
+                                            isDisabled={values.quantity <= 1}
                                             type="submit"
+                                            className="bg-foreground/0"
                                             onClick={() =>
                                                 handleSubtractQuantity(
                                                     values.quantity,
@@ -135,29 +139,25 @@ export default function CartItemDetails() {
                                                 )
                                             }
                                         >
-                                            <MinusCircleIcon
-                                                height={22}
-                                                width={22}
-                                            />
-                                        </button>
+                                            <MinusCircleIcon height={22} width={22} />
+                                        </Button>
                                     }
                                     endContent={
-                                        <button
+                                        <Button
+                                            isIconOnly
+                                            isDisabled={values.quantity >= 10}
                                             type="submit"
+                                            className="bg-foreground/0"
                                             onClick={() =>
                                                 handleAddQuantity(values.quantity, setFieldValue)
                                             }
                                         >
-                                            <PlusCircleIcon
-                                                width={22}
-                                                height={22}
-                                                className="cursor-pointer"
-                                            />
-                                        </button>
+                                            <PlusCircleIcon width={22} height={22} />
+                                        </Button>
                                     }
                                     classNames={{
                                         input: "text-center",
-                                        base: "w-[120px]"
+                                        base: "w-[150px]"
                                     }}
                                 />
                             )}
@@ -191,3 +191,5 @@ export default function CartItemDetails() {
         </Table>
     );
 }
+
+export default CartItemDetails;
