@@ -18,9 +18,13 @@ import { HeartIcon } from "icons/HeartIcon";
 import Profile from "./Profile";
 import React from "react";
 import SearchBar from "./SearchBar";
+import { useReduxSelector } from "hooks/redux";
 
 function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const cart = useReduxSelector((state) => state.cart);
+    const { cartItems } = cart;
+    const totalCartItemsQuantity = cartItems.length;
 
     return (
         <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
@@ -57,14 +61,28 @@ function NavBar() {
                         color="foreground"
                         className="ml-2"
                     >
-                        <HeartIcon size={25} width={0} height={0} />
+                        <Badge
+                            color="danger"
+                            content={0}
+                            size="sm"
+                            variant="shadow"
+                            showOutline={false}
+                        >
+                            <HeartIcon size={26} width={26} height={26} />
+                        </Badge>
                     </Link>
                 </Tooltip>
 
                 <Tooltip content="Cart" color="foreground">
                     <Link href={CART_SCREEN} underline="none" color="foreground">
-                        <Badge color="danger" content={0} isInvisible={false} shape="circle">
-                            <CartIcon size={25} width={25} height={25} />
+                        <Badge
+                            color="danger"
+                            content={totalCartItemsQuantity <= 99 ? totalCartItemsQuantity : "99+"}
+                            size="sm"
+                            variant="shadow"
+                            showOutline={false}
+                        >
+                            <CartIcon size={26} width={26} height={26} />
                         </Badge>
                     </Link>
                 </Tooltip>

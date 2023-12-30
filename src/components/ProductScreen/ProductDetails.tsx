@@ -83,7 +83,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
                                 className="mx-3 my-1"
                             />
                         </div>
-                        <div className="">
+                        <div>
                             <div className="flex py-1">
                                 <TruckFastIcon width={24} height={24} size={24} className="mr-3" />
                                 Get it by {getDeliveryDate()}
