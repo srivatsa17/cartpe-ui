@@ -1,5 +1,10 @@
-import { LoginState, ProductListState, RegisterState } from "utils/types";
-import { PRODUCT_LIST, USER_LOGIN_DETAILS, USER_REGISTER_DETAILS } from "constants/localStorage";
+import {
+    CART_ITEMS,
+    PRODUCT_LIST,
+    USER_LOGIN_DETAILS,
+    USER_REGISTER_DETAILS
+} from "constants/localStorage";
+import { CartState, LoginState, ProductListState, RegisterState } from "utils/types";
 
 import cartSlice from "./CartService/cartSlice";
 import { configureStore } from "@reduxjs/toolkit";
@@ -13,11 +18,13 @@ import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 const userRegisterDetailsFromStorage = getItemFromStorage(USER_REGISTER_DETAILS) ?? {};
 const productListFromStorage = getItemFromStorage(PRODUCT_LIST) ?? {};
+const cartItemsFromStorage = getItemFromStorage(CART_ITEMS) ?? [];
 
 const persistedState: {
-    userLoginDetails?: LoginState;
-    userRegisterDetails?: RegisterState;
-    productList?: ProductListState;
+    userLoginDetails: LoginState;
+    userRegisterDetails: RegisterState;
+    productList: ProductListState;
+    cart: CartState;
 } = {
     productList: {
         products: productListFromStorage.products ?? [],
@@ -43,6 +50,11 @@ const persistedState: {
             userRegisterDetailsFromStorage.isVerified ||
             false,
         isLoading: false,
+        error: null
+    },
+    cart: {
+        isLoading: false,
+        cartItems: cartItemsFromStorage,
         error: null
     }
 };
