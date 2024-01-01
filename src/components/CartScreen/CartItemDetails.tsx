@@ -13,6 +13,8 @@ import {
     Tooltip
 } from "@nextui-org/react";
 import { Field, Formik } from "formik";
+import { removeCartItem, updateCartItem } from "redux/CartService/cartSlice";
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { Cart } from "utils/types";
 import { MinusCircleIcon } from "icons/MinusCircleIcon";
@@ -20,10 +22,11 @@ import { PlusCircleIcon } from "icons/PlusCircleIcon";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import { TrashIcon } from "icons/TrashIcon";
-import { useReduxSelector } from "hooks/redux";
+import { debounce } from "lodash";
 
 function CartItemDetails() {
-    const { cartItems } = useReduxSelector((state) => state.cart);
+    const dispatch = useReduxDispatch();
+    const { cartItems, isLoading } = useReduxSelector((state) => state.cart);
 
     const columns = [
         { key: "name", label: "Name" },
@@ -40,10 +43,35 @@ function CartItemDetails() {
             .required("Quantity required.")
     });
 
+    const checkIntRegex = /^(?:[1-9]|10)$/;
+
+    // Send update API request after 500ms of user typing.
+    const debouncedSendRequest = React.useMemo(() => {
+        const sendRequest = (cartItem: Cart, quantity: string) => {
+            if (quantity.match(checkIntRegex)) {
+                // Quantity might of type string. Typecase it to a number during API call.
+                dispatch(updateCartItem(cartItem.product.id, Number(quantity)));
+            }
+        };
+
+        return debounce(sendRequest, 500);
+    }, []);
+
+    const handleQuantityInputChange = (
+        quantity: string,
+        // eslint-disable-next-line no-unused-vars
+        setFieldValue: (field: string, value: string, shouldValidate?: boolean | undefined) => void,
+        cartItem: Cart
+    ) => {
+        setFieldValue("quantity", quantity);
+        debouncedSendRequest(cartItem, quantity);
+    };
+
     const handleSubtractQuantity = (
         quantity: number,
         // eslint-disable-next-line no-unused-vars
-        setFieldValue: (field: string, value: number, shouldValidate?: boolean | undefined) => void
+        setFieldValue: (field: string, value: number, shouldValidate?: boolean | undefined) => void,
+        cartItem: Cart
     ) => {
         // Input stores quantity as a string. So convert it to a number and then set the value
         // to avoid string concatenation.
@@ -51,12 +79,14 @@ function CartItemDetails() {
             quantity = Number(quantity);
         }
         setFieldValue("quantity", quantity - 1, true);
+        dispatch(updateCartItem(cartItem.product.id, quantity - 1));
     };
 
     const handleAddQuantity = (
         quantity: number,
         // eslint-disable-next-line no-unused-vars
-        setFieldValue: (field: string, value: number, shouldValidate?: boolean | undefined) => void
+        setFieldValue: (field: string, value: number, shouldValidate?: boolean | undefined) => void,
+        cartItem: Cart
     ) => {
         // Input stores quantity as a string. So convert it to a number and then set the value
         // to avoid string concatenation.
@@ -64,6 +94,11 @@ function CartItemDetails() {
             quantity = Number(quantity);
         }
         setFieldValue("quantity", quantity + 1, true);
+        dispatch(updateCartItem(cartItem.product.id, quantity + 1));
+    };
+
+    const handleRemoveCartItem = (cartItem: Cart) => {
+        dispatch(removeCartItem(cartItem.product.id));
     };
 
     const renderCell = React.useCallback((cartItem: Cart, columnKey: React.Key) => {
@@ -105,7 +140,7 @@ function CartItemDetails() {
                     <div className="flex">
                         <Formik
                             validationSchema={schema}
-                            initialValues={{ quantity: 1 }}
+                            initialValues={{ quantity: cartItem.quantity || 1 }}
                             onSubmit={(formData, { setSubmitting }) => {
                                 setSubmitting(false);
                             }}
@@ -117,10 +152,16 @@ function CartItemDetails() {
                                     name="quantity"
                                     onBlur={handleBlur}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                        setFieldValue("quantity", e.target.value)
+                                        handleQuantityInputChange(
+                                            e.target.value,
+                                            setFieldValue,
+                                            cartItem
+                                        )
                                     }
                                     isInvalid={errors.quantity}
                                     isValid={!errors.quantity}
+                                    isReadOnly={isLoading}
+                                    isDisabled={isLoading}
                                     variant="bordered"
                                     size="sm"
                                     autoComplete="off"
@@ -129,13 +170,14 @@ function CartItemDetails() {
                                     startContent={
                                         <Button
                                             isIconOnly
-                                            isDisabled={values.quantity <= 1}
+                                            isDisabled={isLoading || values.quantity <= 1}
                                             type="submit"
                                             className="bg-foreground/0"
                                             onClick={() =>
                                                 handleSubtractQuantity(
                                                     values.quantity,
-                                                    setFieldValue
+                                                    setFieldValue,
+                                                    cartItem
                                                 )
                                             }
                                         >
@@ -145,11 +187,15 @@ function CartItemDetails() {
                                     endContent={
                                         <Button
                                             isIconOnly
-                                            isDisabled={values.quantity >= 10}
+                                            isDisabled={isLoading || values.quantity >= 10}
                                             type="submit"
                                             className="bg-foreground/0"
                                             onClick={() =>
-                                                handleAddQuantity(values.quantity, setFieldValue)
+                                                handleAddQuantity(
+                                                    values.quantity,
+                                                    setFieldValue,
+                                                    cartItem
+                                                )
                                             }
                                         >
                                             <PlusCircleIcon width={22} height={22} />
@@ -163,7 +209,10 @@ function CartItemDetails() {
                             )}
                         </Formik>
                         <Tooltip color="foreground" content="Remove Cart Item">
-                            <span className="text-lg text-danger cursor-pointer active:opacity-50 self-center pl-5">
+                            <span
+                                className="text-lg text-danger cursor-pointer active:opacity-50 self-center pl-5"
+                                onClick={() => handleRemoveCartItem(cartItem)}
+                            >
                                 <TrashIcon height={20} width={20} />
                             </span>
                         </Tooltip>

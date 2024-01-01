@@ -1,14 +1,20 @@
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
+
 import { Button } from "@nextui-org/react";
 import React from "react";
 import { TrashIcon } from "icons/TrashIcon";
-import { useReduxSelector } from "hooks/redux";
+import { emptyCart } from "redux/CartService/cartSlice";
 
 function CartQuantityDetails() {
-    // const dispatch = useReduxDispatch();
+    const dispatch = useReduxDispatch();
     const cart = useReduxSelector((state) => state.cart);
     const { cartItems } = cart;
     const totalCartItemsQuantity = cartItems.length;
     const isCartEmpty = totalCartItemsQuantity === 0;
+
+    const handleEmptyCart = () => {
+        dispatch(emptyCart());
+    };
 
     return (
         <div className="py-6 flex justify-between">
@@ -21,6 +27,7 @@ function CartQuantityDetails() {
                     variant="ghost"
                     color="danger"
                     endContent={<TrashIcon width={22} height={20} />}
+                    onClick={handleEmptyCart}
                 >
                     Empty cart
                 </Button>
