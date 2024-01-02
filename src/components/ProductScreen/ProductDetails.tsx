@@ -8,6 +8,8 @@ import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import { TruckFastIcon } from "icons/TruckFastIcon";
 import { TruckIcon } from "icons/TruckIcon";
+import { addCartItem } from "redux/CartService/cartSlice";
+import { useReduxDispatch } from "hooks/redux";
 
 interface ProductDetailsProps {
     product: Partial<Product>;
@@ -25,6 +27,14 @@ function getDeliveryDate() {
 }
 
 function ProductDetails({ product }: ProductDetailsProps) {
+    const dispatch = useReduxDispatch();
+
+    const addToCartHandler = () => {
+        // Handle already exists condition as well with alert message.
+        const productWithStrictType = product as Product;
+        dispatch(addCartItem(productWithStrictType, 1));
+    };
+
     return (
         <div>
             <div className="text-4xl">{product.brand}</div>
@@ -60,7 +70,14 @@ function ProductDetails({ product }: ProductDetailsProps) {
             </div>
             <Divider />
             <div className="py-5 flex">
-                <Button fullWidth size="lg" className="capitalize" variant="ghost" color="warning">
+                <Button
+                    fullWidth
+                    size="lg"
+                    className="capitalize"
+                    variant="ghost"
+                    color="warning"
+                    onClick={addToCartHandler}
+                >
                     Add to cart
                 </Button>
                 <Spacer x={7} />
@@ -83,7 +100,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
                                 className="mx-3 my-1"
                             />
                         </div>
-                        <div className="">
+                        <div>
                             <div className="flex py-1">
                                 <TruckFastIcon width={24} height={24} size={24} className="mr-3" />
                                 Get it by {getDeliveryDate()}

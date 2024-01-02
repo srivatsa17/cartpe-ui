@@ -44,7 +44,7 @@ export type Product = {
     stock_count: number;
     price: number;
     selling_price: number;
-    discounted_price?: number;
+    discounted_price: number;
     discount: number;
     product_images: Array<ProductImages>;
     created_at: string;
@@ -61,6 +61,17 @@ export type ProductDetailsState = {
     isLoading?: boolean;
     product: Partial<Product>;
     error?: string | null | unknown;
+};
+
+export type Cart = {
+    product: Product;
+    quantity: number;
+};
+
+export type CartState = {
+    isLoading: boolean;
+    cartItems: Array<Cart>;
+    error: string | null;
 };
 
 export interface ErrorResponse {
