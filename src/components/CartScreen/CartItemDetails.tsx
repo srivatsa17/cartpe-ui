@@ -4,6 +4,7 @@ import {
     Button,
     Image,
     Input,
+    Link,
     Table,
     TableBody,
     TableCell,
@@ -116,10 +117,16 @@ function CartItemDetails() {
                             height={60}
                             className="self-center"
                         />
-                        <div className="md:pl-2 pt-1 text-base">
-                            <div className="uppercase font-semibold">{cartItem.product.brand}</div>
-                            <div className="text-default-500">{cartItem.product.name}</div>
-                        </div>
+                        <Link
+                            href={`/products/${cartItem.product.slug}/${cartItem.product.id}/buy`}
+                            isExternal
+                            color="foreground"
+                        >
+                            <div className="md:pl-2 pt-1 text-base">
+                                <div className="uppercase font-semibold">{cartItem.product.brand}</div>
+                                <div className="text-default-500">{cartItem.product.name}</div>
+                            </div>
+                        </Link>
                     </div>
                 );
             case "price":
