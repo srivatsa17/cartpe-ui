@@ -26,40 +26,44 @@ export const getCartItems = () => async (dispatch: Dispatch, getState: () => Roo
     }
 };
 
+/* eslint-disable @stylistic/js/indent */
 export const addCartItem =
     (product: Product, quantity: number = 1) =>
-        async (dispatch: Dispatch, getState: () => RootState) => {
-            const cartData = { product: product, quantity: quantity };
+    async (dispatch: Dispatch, getState: () => RootState) => {
+        const cartData = { product: product, quantity: quantity };
 
-            try {
-                dispatch(addCartItemRequest());
-                await axiosInstance.post(CART_URI, cartData);
-                dispatch(addCartItemSuccess(cartData));
-                saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
-            } catch (error) {
-                const err = error as ErrorResponse;
-                dispatch(addCartItemFailed(throwErrorResponse(err)));
-            }
-        };
+        try {
+            dispatch(addCartItemRequest());
+            await axiosInstance.post(CART_URI, cartData);
+            dispatch(addCartItemSuccess(cartData));
+            saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
+        } catch (error) {
+            const err = error as ErrorResponse;
+            dispatch(addCartItemFailed(throwErrorResponse(err)));
+        }
+    };
+/* eslint-enable @stylistic/js/indent */
 
+/* eslint-disable @stylistic/js/indent */
 export const updateCartItem =
     (productId: bigint, quantity: number) =>
-        async (dispatch: Dispatch, getState: () => RootState) => {
-            const updateCartQuantityData = { quantity: quantity };
+    async (dispatch: Dispatch, getState: () => RootState) => {
+        const updateCartQuantityData = { quantity: quantity };
 
-            try {
-                dispatch(updateCartItemRequest());
-                const { data } = await axiosInstance.patch(
-                    CART_BY_ID_URI(productId),
-                    updateCartQuantityData
-                );
-                dispatch(updateCartItemSuccess(data));
-                saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
-            } catch (error) {
-                const err = error as ErrorResponse;
-                dispatch(updateCartItemFailed(throwErrorResponse(err)));
-            }
-        };
+        try {
+            dispatch(updateCartItemRequest());
+            const { data } = await axiosInstance.patch(
+                CART_BY_ID_URI(productId),
+                updateCartQuantityData
+            );
+            dispatch(updateCartItemSuccess(data));
+            saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
+        } catch (error) {
+            const err = error as ErrorResponse;
+            dispatch(updateCartItemFailed(throwErrorResponse(err)));
+        }
+    };
+/* eslint-enable @stylistic/js/indent */
 
 export const removeCartItem =
     (productId: bigint) => async (dispatch: Dispatch, getState: () => RootState) => {
