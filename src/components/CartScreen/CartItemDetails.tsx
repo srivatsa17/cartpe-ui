@@ -49,6 +49,7 @@ function CartItemDetails() {
     // Send update API request after 500ms of user typing.
     const debouncedSendRequest = React.useMemo(() => {
         const sendRequest = (cartItem: Cart, quantity: string) => {
+            // Send API call only if the input is a number from 1-10.
             if (quantity.match(checkIntRegex)) {
                 // Quantity might of type string. Typecase it to a number during API call.
                 dispatch(updateCartItem(cartItem.product.id, Number(quantity)));
@@ -123,7 +124,9 @@ function CartItemDetails() {
                             color="foreground"
                         >
                             <div className="md:pl-2 pt-1 text-base">
-                                <div className="uppercase font-semibold">{cartItem.product.brand}</div>
+                                <div className="uppercase font-semibold">
+                                    {cartItem.product.brand}
+                                </div>
                                 <div className="text-default-500">{cartItem.product.name}</div>
                             </div>
                         </Link>
