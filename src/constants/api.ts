@@ -8,3 +8,7 @@ export const CART_URI = "cart/";
 export const CART_BY_ID_URI = (productId: bigint) => {
     return `cart/${productId}`;
 };
+export const SHIPPING_ADDRESS_URI = "shipping/user-address";
+export const SHIPPING_ADDRESS_BY_ID_URI = (userAddressId: bigint) => {
+    return `shipping/user-address/${userAddressId}`;
+};
