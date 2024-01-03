@@ -5,7 +5,13 @@ import {
     USER_LOGIN_DETAILS,
     USER_REGISTER_DETAILS
 } from "constants/localStorage";
-import { CartState, LoginState, ProductListState, RegisterState, ShippingAddressState } from "utils/types";
+import {
+    CartState,
+    LoginState,
+    ProductListState,
+    RegisterState,
+    ShippingAddressState
+} from "utils/types";
 
 import cartSlice from "./CartService/cartSlice";
 import { configureStore } from "@reduxjs/toolkit";

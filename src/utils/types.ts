@@ -74,13 +74,6 @@ export type CartState = {
     error: string | null;
 };
 
-export type Country = {
-    id: bigint;
-    name: string;
-    created_at: string;
-    updated_at: string;
-};
-
 export type Address = {
     id: bigint;
     line1: string;
@@ -90,7 +83,7 @@ export type Address = {
     pin_code: number;
     created_at: string;
     updated_at: string;
-    country: Country;
+    country: string;
 };
 
 export type ShippingAddress = {
