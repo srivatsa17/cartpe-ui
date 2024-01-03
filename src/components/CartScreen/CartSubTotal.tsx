@@ -1,6 +1,8 @@
 import { Button, Divider, Spacer } from "@nextui-org/react";
 
+import { CHECKOUT_SCREEN } from "constants/routes";
 import { Cart } from "utils/types";
+import { Link } from "react-router-dom";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import { useReduxSelector } from "hooks/redux";
@@ -68,15 +70,17 @@ function CartSubTotal() {
                 <Divider className="my-3" />
             </div>
 
-            <Button
-                fullWidth
-                className="my-2"
-                color="warning"
-                variant="flat"
-                isDisabled={isCartEmpty}
-            >
-                Proceed to Checkout
-            </Button>
+            <Link to={CHECKOUT_SCREEN}>
+                <Button
+                    fullWidth
+                    className="my-2"
+                    color="warning"
+                    variant="flat"
+                    isDisabled={isCartEmpty}
+                >
+                    Proceed to Checkout
+                </Button>
+            </Link>
         </div>
     );
 }
