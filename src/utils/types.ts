@@ -74,6 +74,43 @@ export type CartState = {
     error: string | null;
 };
 
+export type Country = {
+    id: bigint;
+    name: string;
+    created_at: string;
+    updated_at: string;
+};
+
+export type Address = {
+    id: bigint;
+    line1: string;
+    line2: string;
+    city: string;
+    state: string;
+    pin_code: number;
+    created_at: string;
+    updated_at: string;
+    country: Country;
+};
+
+export type ShippingAddress = {
+    id: bigint;
+    name: string;
+    alternate_phone: string;
+    type: "Home" | "Work" | "Other";
+    is_default: boolean;
+    created_at: string;
+    updated_at: string;
+    address: Address;
+    user: string;
+};
+
+export type ShippingAddressState = {
+    isLoading: boolean;
+    addressList: Array<ShippingAddress>;
+    error: string | null | unknown;
+};
+
 export interface ErrorResponse {
     response?: {
         data?: {
