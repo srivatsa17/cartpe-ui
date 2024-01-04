@@ -66,6 +66,20 @@ export const editShippingAddress =
         }
     };
 
+export const removeShippingAddress =
+    (shippingAddressId: bigint) => async (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch(removeShippingAddressRequest());
+            await axiosInstance.delete(SHIPPING_ADDRESS_BY_ID_URI(shippingAddressId));
+            await getShippingAddressList()(dispatch, getState);
+            dispatch(removeShippingAddressSuccess());
+            saveItemInStorage(ADDRESS_LIST, getState().address.addressList);
+        } catch (error) {
+            const err = error as ErrorResponse;
+            dispatch(removeShippingAddressFailed(throwErrorResponse(err)));
+        }
+    };
+
 const shippingAddressSlice = createSlice({
     name: "shippingAddress",
     initialState: initialState,
@@ -100,6 +114,16 @@ const shippingAddressSlice = createSlice({
         editShippingAddressFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        removeShippingAddressRequest: (state) => {
+            state.isLoading = true;
+        },
+        removeShippingAddressSuccess: (state) => {
+            state.isLoading = false;
+        },
+        removeShippingAddressFailed: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 });
@@ -113,6 +137,9 @@ export const {
     addShippingAddressFailed,
     editShippingAddressRequest,
     editShippingAddressSuccess,
-    editShippingAddressFailed
+    editShippingAddressFailed,
+    removeShippingAddressRequest,
+    removeShippingAddressSuccess,
+    removeShippingAddressFailed
 } = shippingAddressSlice.actions;
 export default shippingAddressSlice.reducer;
