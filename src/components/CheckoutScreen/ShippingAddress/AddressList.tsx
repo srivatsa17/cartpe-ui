@@ -1,9 +1,38 @@
-import { Chip, Divider, Radio, RadioGroup, Spacer } from "@nextui-org/react";
+import { Button, Chip, Divider, Radio, RadioGroup, Spacer, Tooltip } from "@nextui-org/react";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
+import EditAddress from "./EditAddress";
 import React from "react";
 import { ShippingAddress } from "utils/types";
+import { TrashIcon } from "icons/TrashIcon";
 import { getShippingAddressList } from "redux/OrderService/shippingAddressSlice";
+
+interface ShippingAddressDescriptionProps {
+    shippingAddress: ShippingAddress;
+}
+
+export const ShippingAddressDescription = ({
+    shippingAddress
+}: ShippingAddressDescriptionProps) => {
+    return (
+        <React.Fragment>
+            <div>
+                {shippingAddress.address.line1}, {shippingAddress.address.line2},{" "}
+                {shippingAddress.address.city}, {shippingAddress.address.state},{" "}
+                {shippingAddress.address.country} - {shippingAddress.address.pin_code}
+            </div>
+            <div className="pt-2">Phone Number - {shippingAddress.alternate_phone}</div>
+            <div className="pt-2 flex gap-2">
+                <EditAddress shippingAddress={shippingAddress} />
+                <Tooltip color="danger" content="Delete address">
+                    <Button isIconOnly className="bg-foreground/0 text-rose-600" variant="solid">
+                        <TrashIcon height={22} width={22} />
+                    </Button>
+                </Tooltip>
+            </div>
+        </React.Fragment>
+    );
+};
 
 function AddressList() {
     const dispatch = useReduxDispatch();
@@ -26,19 +55,7 @@ function AddressList() {
                                 description: "pl-2 pt-2 pb-2 text-black text-medium"
                             }}
                             description={
-                                <div>
-                                    <div>
-                                        {shippingAddress.address.line1},{" "}
-                                        {shippingAddress.address.line2},{" "}
-                                        {shippingAddress.address.city},{" "}
-                                        {shippingAddress.address.state},{" "}
-                                        {shippingAddress.address.country} -{" "}
-                                        {shippingAddress.address.pin_code}
-                                    </div>
-                                    <div className="pt-2">
-                                        Phone Number - {shippingAddress.alternate_phone}
-                                    </div>
-                                </div>
+                                <ShippingAddressDescription shippingAddress={shippingAddress} />
                             }
                         >
                             <div className="flex">
