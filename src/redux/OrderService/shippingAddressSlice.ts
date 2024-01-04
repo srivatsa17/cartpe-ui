@@ -5,10 +5,10 @@ import {
     ShippingAddressFormData,
     ShippingAddressState
 } from "utils/types";
+import { SHIPPING_ADDRESS_BY_ID_URI, SHIPPING_ADDRESS_URI } from "constants/api";
 
 import { ADDRESS_LIST } from "constants/localStorage";
 import { RootState } from "redux/store";
-import { SHIPPING_ADDRESS_URI } from "constants/api";
 import { axiosInstance } from "utils/axios";
 import { saveItemInStorage } from "utils/localStorage";
 import { throwErrorResponse } from "utils/errorResponse";
@@ -49,6 +49,23 @@ export const addShippingAddress =
     };
 /* eslint-enable @stylistic/js/indent */
 
+export const editShippingAddress =
+    (shippingAddress: ShippingAddress) => async (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch(editShippingAddressRequest());
+            await axiosInstance.put(
+                SHIPPING_ADDRESS_BY_ID_URI(shippingAddress.id),
+                shippingAddress
+            );
+            await getShippingAddressList()(dispatch, getState);
+            dispatch(editShippingAddressSuccess());
+            saveItemInStorage(ADDRESS_LIST, getState().address.addressList);
+        } catch (error) {
+            const err = error as ErrorResponse;
+            dispatch(editShippingAddressFailed(throwErrorResponse(err)));
+        }
+    };
+
 const shippingAddressSlice = createSlice({
     name: "shippingAddress",
     initialState: initialState,
@@ -73,6 +90,16 @@ const shippingAddressSlice = createSlice({
         addShippingAddressFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        editShippingAddressRequest: (state) => {
+            state.isLoading = true;
+        },
+        editShippingAddressSuccess: (state) => {
+            state.isLoading = false;
+        },
+        editShippingAddressFailed: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 });
@@ -83,6 +110,9 @@ export const {
     getShippingAddressListFailed,
     addShippingAddressRequest,
     addShippingAddressSuccess,
-    addShippingAddressFailed
+    addShippingAddressFailed,
+    editShippingAddressRequest,
+    editShippingAddressSuccess,
+    editShippingAddressFailed
 } = shippingAddressSlice.actions;
 export default shippingAddressSlice.reducer;
