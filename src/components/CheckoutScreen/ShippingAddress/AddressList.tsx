@@ -49,7 +49,7 @@ function AddressList() {
                                 </Chip>
                             </div>
                         </Radio>
-                        <Divider className="my-2"/>
+                        <Divider className="my-2" />
                     </div>
                 );
             })}
