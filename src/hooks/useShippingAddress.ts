@@ -1,5 +1,6 @@
 import * as yup from "yup";
 
+import { ShippingAddressType } from "utils/types";
 import { getIndianStates } from "utils/getIndianStates";
 
 export function useShippingAddress() {
@@ -9,7 +10,7 @@ export function useShippingAddress() {
         name: "",
         // eslint-disable-next-line camelcase
         alternate_phone: "",
-        type: "Home",
+        type: addressTypeOptions[0] as ShippingAddressType,
         // eslint-disable-next-line camelcase
         is_default: false,
         address: {

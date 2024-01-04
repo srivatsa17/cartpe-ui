@@ -1,5 +1,10 @@
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ErrorResponse, ShippingAddress, ShippingAddressState } from "utils/types";
+import {
+    ErrorResponse,
+    ShippingAddress,
+    ShippingAddressFormData,
+    ShippingAddressState
+} from "utils/types";
 
 import { ADDRESS_LIST } from "constants/localStorage";
 import { RootState } from "redux/store";
@@ -27,6 +32,23 @@ export const getShippingAddressList =
         }
     };
 
+/* eslint-disable @stylistic/js/indent */
+export const addShippingAddress =
+    (shippingAddress: ShippingAddressFormData) =>
+    async (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch(addShippingAddressRequest());
+            await axiosInstance.post(SHIPPING_ADDRESS_URI, shippingAddress);
+            await getShippingAddressList()(dispatch, getState);
+            dispatch(addShippingAddressSuccess());
+            saveItemInStorage(ADDRESS_LIST, getState().address.addressList);
+        } catch (error) {
+            const err = error as ErrorResponse;
+            dispatch(addShippingAddressFailed(throwErrorResponse(err)));
+        }
+    };
+/* eslint-enable @stylistic/js/indent */
+
 const shippingAddressSlice = createSlice({
     name: "shippingAddress",
     initialState: initialState,
@@ -41,6 +63,16 @@ const shippingAddressSlice = createSlice({
         getShippingAddressListFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        addShippingAddressRequest: (state) => {
+            state.isLoading = true;
+        },
+        addShippingAddressSuccess: (state) => {
+            state.isLoading = false;
+        },
+        addShippingAddressFailed: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 });
@@ -48,6 +80,9 @@ const shippingAddressSlice = createSlice({
 export const {
     getShippingAddressListRequest,
     getShippingAddressListSuccess,
-    getShippingAddressListFailed
+    getShippingAddressListFailed,
+    addShippingAddressRequest,
+    addShippingAddressSuccess,
+    addShippingAddressFailed
 } = shippingAddressSlice.actions;
 export default shippingAddressSlice.reducer;

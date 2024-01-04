@@ -18,9 +18,12 @@ import {
 import { Field, Form, Formik, getIn } from "formik";
 
 import React from "react";
+import { addShippingAddress } from "redux/OrderService/shippingAddressSlice";
+import { useReduxDispatch } from "hooks/redux";
 import { useShippingAddress } from "hooks/useShippingAddress";
 
 function AddNewAddress() {
+    const dispatch = useReduxDispatch();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const {
@@ -51,7 +54,7 @@ function AddNewAddress() {
                             initialValues={initialAddNewAddressFormData}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
                                 setTimeout(() => {
-                                    // handleAddNewShippingAddress(formData)
+                                    dispatch(addShippingAddress(formData));
                                     setSubmitting(false);
                                     resetForm();
                                     onClose();
