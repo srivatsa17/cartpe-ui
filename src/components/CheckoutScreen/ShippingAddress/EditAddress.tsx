@@ -61,7 +61,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                     dispatch(editShippingAddress(formData));
                                     setSubmitting(false);
                                     onClose();
-                                }, 500);
+                                }, 750);
                             }}
                         >
                             {({

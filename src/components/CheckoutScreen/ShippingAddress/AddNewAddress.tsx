@@ -58,7 +58,7 @@ function AddNewAddress() {
                                     setSubmitting(false);
                                     resetForm();
                                     onClose();
-                                }, 500);
+                                }, 750);
                             }}
                         >
                             {({
