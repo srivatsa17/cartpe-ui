@@ -1,10 +1,10 @@
-import { Button, Chip, Divider, Radio, RadioGroup, Spacer, Tooltip } from "@nextui-org/react";
+import { Chip, Divider, Radio, RadioGroup, Spacer } from "@nextui-org/react";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import EditAddress from "./EditAddress";
 import React from "react";
+import RemoveAddress from "./RemoveAddress";
 import { ShippingAddress } from "utils/types";
-import { TrashIcon } from "icons/TrashIcon";
 import { getShippingAddressList } from "redux/OrderService/shippingAddressSlice";
 
 interface ShippingAddressDescriptionProps {
@@ -24,11 +24,7 @@ export const ShippingAddressDescription = ({
             <div className="pt-2">Phone Number - {shippingAddress.alternate_phone}</div>
             <div className="pt-2 flex gap-2">
                 <EditAddress shippingAddress={shippingAddress} />
-                <Tooltip color="danger" content="Delete address">
-                    <Button isIconOnly className="bg-foreground/0 text-rose-600" variant="solid">
-                        <TrashIcon height={22} width={22} />
-                    </Button>
-                </Tooltip>
+                <RemoveAddress shippingAddressId={shippingAddress.id} />
             </div>
         </React.Fragment>
     );
