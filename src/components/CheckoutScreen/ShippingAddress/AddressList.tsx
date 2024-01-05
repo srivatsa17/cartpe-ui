@@ -34,6 +34,12 @@ export const ShippingAddressDescription = ({
     );
 };
 
+const getDefaultAddress = (addressList: Array<ShippingAddress>) => {
+    const isDefaultAddressFound = addressList.find((address) => address.is_default);
+    const defaultAddress = isDefaultAddressFound || (addressList.length > 0 ? addressList[0] : "");
+    return defaultAddress;
+};
+
 function AddressList() {
     const dispatch = useReduxDispatch();
     const { addressList } = useReduxSelector((state) => state.address);
@@ -42,10 +48,8 @@ function AddressList() {
         dispatch(getShippingAddressList());
     }, [dispatch]);
 
-    const defaultAddress = addressList.find((address) => address.is_default === true);
-    const [selectedAddress, setSelectedAddress] = React.useState(
-        defaultAddress ? defaultAddress.name : ""
-    );
+    const defaultAddress = getDefaultAddress(addressList);
+    const [selectedAddress, setSelectedAddress] = React.useState(defaultAddress ? defaultAddress.name : "");
 
     return (
         <RadioGroup value={selectedAddress} onValueChange={setSelectedAddress}>
