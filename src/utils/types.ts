@@ -9,6 +9,8 @@ export type NestedOmit<T, K extends PropertyKey> = {
     : never;
 
 /* Error Response Types */
+export type Error = string | null;
+
 export interface ErrorResponse {
     response?: {
         data?: {
@@ -23,7 +25,7 @@ export type RegisterState = {
     isLoading: boolean;
     isRegistered: boolean;
     isVerified: boolean;
-    error: string | null | unknown;
+    error: Error;
 };
 
 export type LoginState = {
@@ -32,7 +34,7 @@ export type LoginState = {
     lastName?: string | null;
     isLoading: boolean;
     isLoggedIn: boolean;
-    error: string | null | unknown;
+    error: Error;
 };
 
 /* Product Service Types */
@@ -44,7 +46,7 @@ export type Category = {
 export type CategorySearchState = {
     isLoading: boolean;
     categories: Array<Category> | [];
-    error: string | null | unknown;
+    error: Error;
 };
 
 export type ProductImages = {
@@ -76,13 +78,13 @@ export type ProductListState = {
     isLoading?: boolean;
     products: Array<Product> | [];
     searchedCategory: string;
-    error?: string | null | unknown;
+    error?: Error;
 };
 
 export type ProductDetailsState = {
     isLoading?: boolean;
     product: Partial<Product>;
-    error?: string | null | unknown;
+    error?: Error;
 };
 
 /* Cart Service Types */
@@ -127,7 +129,7 @@ export type ShippingAddress = {
 export type ShippingAddressState = {
     isLoading: boolean;
     addressList: Array<ShippingAddress>;
-    error: string | null | unknown;
+    error: Error;
 };
 
 export type ShippingAddressFormData = NestedOmit<

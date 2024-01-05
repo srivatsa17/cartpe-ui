@@ -37,7 +37,7 @@ export const ShippingAddressDescription = ({
 const getDefaultAddress = (addressList: Array<ShippingAddress>) => {
     const isDefaultAddressFound = addressList.find((address) => address.is_default);
     const defaultAddress = isDefaultAddressFound || (addressList.length > 0 ? addressList[0] : "");
-    return defaultAddress;
+    return defaultAddress ? defaultAddress.name : "";
 };
 
 function AddressList() {
@@ -49,10 +49,20 @@ function AddressList() {
     }, [dispatch]);
 
     const defaultAddress = getDefaultAddress(addressList);
-    const [selectedAddress, setSelectedAddress] = React.useState(defaultAddress ? defaultAddress.name : "");
+    const [selectedAddress, setSelectedAddress] = React.useState(defaultAddress);
+
+    // On POST/DELETE operations, selectedAddress still holds the previous state value.
+    // To resolve this issue, we trigger useEffect to set the latest value of defaultAddress as the selectedAddress.
+    React.useEffect(() => {
+        setSelectedAddress(defaultAddress);
+    }, [defaultAddress]);
+
+    const handleSelectedAddressChange = (newSelectedAddress: string) => {
+        setSelectedAddress(newSelectedAddress);
+    };
 
     return (
-        <RadioGroup value={selectedAddress} onValueChange={setSelectedAddress}>
+        <RadioGroup value={selectedAddress} onValueChange={handleSelectedAddressChange}>
             {addressList.length ? (
                 addressList.map((shippingAddress: ShippingAddress) => {
                     return (
