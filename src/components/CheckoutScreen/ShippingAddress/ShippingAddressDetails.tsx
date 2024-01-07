@@ -82,7 +82,7 @@ function ShippingAddressDetails({ setSelectedKeys }: ShippingAddressDetailsProps
     return (
         <div className="p-2">
             <RadioGroup value={selectedAddress} onValueChange={handleSelectedAddressChange}>
-                {!isAddressListEmpty ? (
+                {isAddressListEmpty ? (
                     <div className="pb-2">
                         Looks like there is no shipping address added yet. Please go ahead and add
                         one!
