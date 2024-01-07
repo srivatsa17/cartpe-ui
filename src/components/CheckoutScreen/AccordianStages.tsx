@@ -4,7 +4,7 @@ import { CartIcon } from "icons/CartIcon";
 import CartItemDetails from "components/CartScreen/CartItemDetails";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
-import ShippingAddressDetails from "./ShippingAddress/ShippingAddress";
+import ShippingAddressDetails from "./ShippingAddress/ShippingAddressDetails";
 import { TruckFastIcon } from "icons/TruckFastIcon";
 
 export interface IHash {
@@ -31,7 +31,7 @@ function AccordianStages() {
                 title="Shipping Address"
                 subtitle="Select a delivery address."
             >
-                <ShippingAddressDetails />
+                <ShippingAddressDetails setSelectedKeys={setSelectedKeys} />
             </AccordionItem>
             <AccordionItem
                 key={accordianStageKeys["ORDER_SUMMARY"]}

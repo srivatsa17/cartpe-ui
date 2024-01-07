@@ -142,3 +142,9 @@ export type ShippingAddressFormData = NestedOmit<
     | "address.created_at"
     | "address.updated_at"
 >;
+
+export type CheckoutStepsState = {
+    isLoading: boolean;
+    shippingAddressId: bigint | null;
+    error: Error;
+};
