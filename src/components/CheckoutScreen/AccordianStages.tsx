@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem, Selection } from "@nextui-org/react";
 
 import { CartIcon } from "icons/CartIcon";
 import CartItemDetails from "components/CartScreen/CartItemDetails";
@@ -18,8 +18,12 @@ export const accordianStageKeys: IHash = {
 };
 
 function AccordianStages() {
+    const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
+        new Set([accordianStageKeys["SHIPPING_ADDRESS"]])
+    );
+
     return (
-        <Accordion variant="shadow" defaultExpandedKeys={[accordianStageKeys["SHIPPING_ADDRESS"]]}>
+        <Accordion variant="shadow" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
             <AccordionItem
                 key={accordianStageKeys["SHIPPING_ADDRESS"]}
                 aria-label="Shipping Address"
@@ -35,7 +39,6 @@ function AccordianStages() {
                 startContent={<CartIcon height={30} width={30} size={30} />}
                 title="Order Summary"
                 subtitle="Review the order items."
-                // isDisabled
             >
                 <div className="p-2">
                     <CartItemDetails />
@@ -47,7 +50,6 @@ function AccordianStages() {
                 startContent={<RupeeIcon height={30} width={30} size={30} />}
                 title="Payment Options"
                 subtitle="Choose a payment method."
-                // isDisabled
             >
                 h
             </AccordionItem>
