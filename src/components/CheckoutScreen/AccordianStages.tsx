@@ -1,7 +1,7 @@
 import { Accordion, AccordionItem, Selection } from "@nextui-org/react";
 
 import { CartIcon } from "icons/CartIcon";
-import CartItemDetails from "components/CartScreen/CartItemDetails";
+import OrderItemDetails from "./OrderItems/OrderItemDetails";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import ShippingAddressDetails from "./ShippingAddress/ShippingAddressDetails";
@@ -40,9 +40,7 @@ function AccordianStages() {
                 title="Order Summary"
                 subtitle="Review the order items."
             >
-                <div className="p-2">
-                    <CartItemDetails />
-                </div>
+                <OrderItemDetails setSelectedKeys={setSelectedKeys} />
             </AccordionItem>
             <AccordionItem
                 key={accordianStageKeys["PAYMENT_OPTIONS"]}

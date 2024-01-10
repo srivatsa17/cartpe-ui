@@ -1,37 +1,17 @@
 import { Button, Divider, Spacer } from "@nextui-org/react";
 
 import { CHECKOUT_SCREEN } from "constants/routes";
-import { Cart } from "utils/types";
 import { Link } from "react-router-dom";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
+import { getCartPriceDetails } from "utils/getCartPriceDetails";
 import { useReduxSelector } from "hooks/redux";
 
 function CartSubTotal() {
     const cart = useReduxSelector((state) => state.cart);
     const { cartItems } = cart;
     const totalCartItemsQuantity = cartItems.length;
-    const totalMRP = cartItems
-        .reduce(
-            (sum: number, cartItem: Cart) => sum + cartItem.quantity * cartItem.product.price,
-            0
-        )
-        .toFixed(2);
-    const totalDiscountPrice = cartItems
-        .reduce(
-            (sum: number, cartItem: Cart) =>
-                sum + cartItem.quantity * cartItem.product.discounted_price,
-            0
-        )
-        .toFixed(2);
-    const totalSellingPrice = cartItems
-        .reduce(
-            (sum: number, cartItem: Cart) =>
-                sum + cartItem.quantity * cartItem.product.selling_price,
-            0
-        )
-        .toFixed(2);
-    const isCartEmpty = cartItems.length === 0;
+    const { totalMRP, totalDiscountPrice, totalSellingPrice } = getCartPriceDetails(cartItems);
 
     return (
         <div>
@@ -76,7 +56,7 @@ function CartSubTotal() {
                     className="my-2"
                     color="warning"
                     variant="flat"
-                    isDisabled={isCartEmpty}
+                    isDisabled={totalCartItemsQuantity === 0}
                 >
                     Proceed to Checkout
                 </Button>

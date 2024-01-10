@@ -143,8 +143,18 @@ export type ShippingAddressFormData = NestedOmit<
     | "address.updated_at"
 >;
 
+export type OrderDetails = {
+    orderItems: Array<Cart>;
+    amount: number;
+};
+
 export type CheckoutStepsState = {
     isLoading: boolean;
     shippingAddressId: bigint | null;
+    orderItems: Array<{
+        product: bigint;
+        quantity: number;
+    }>;
+    amount: number;
     error: Error;
 };
