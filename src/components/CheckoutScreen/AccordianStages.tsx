@@ -2,6 +2,7 @@ import { Accordion, AccordionItem, Selection } from "@nextui-org/react";
 
 import { CartIcon } from "icons/CartIcon";
 import OrderItemDetails from "./OrderItems/OrderItemDetails";
+import PaymentOptions from "./PaymentOptions/PaymentOptions";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import ShippingAddressDetails from "./ShippingAddress/ShippingAddressDetails";
@@ -47,9 +48,9 @@ function AccordianStages() {
                 aria-label="Payment Options"
                 startContent={<RupeeIcon height={30} width={30} size={30} />}
                 title="Payment Options"
-                subtitle="Choose a payment method."
+                subtitle="Pay and complete the order."
             >
-                h
+                <PaymentOptions />
             </AccordionItem>
         </Accordion>
     );
