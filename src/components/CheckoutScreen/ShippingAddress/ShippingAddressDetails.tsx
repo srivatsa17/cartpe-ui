@@ -6,12 +6,15 @@ import EditAddress from "./EditAddress";
 import React from "react";
 import RemoveAddress from "./RemoveAddress";
 import { ShippingAddress } from "utils/types";
-import { accordianStageKeys } from "../AccordianStages";
+import { accordianStageKeys } from "utils/getAddressDetails";
 import { addSelectedShippingAddress } from "redux/OrderService/checkoutStepsSlice";
 import { getShippingAddressList } from "redux/OrderService/shippingAddressSlice";
 
 interface ShippingAddressDetailsProps {
-    setSelectedKeys: React.Dispatch<React.SetStateAction<Selection>>;
+    setSelectedAccordionKeys: React.Dispatch<React.SetStateAction<Selection>>;
+    selectedAddress: string;
+    setSelectedAddress: React.Dispatch<React.SetStateAction<string>>;
+    defaultAddress: string;
 }
 
 interface ShippingAddressDescriptionProps {
@@ -41,14 +44,12 @@ export const ShippingAddressDescription = ({
     );
 };
 
-const getDefaultAddress = (addressList: Array<ShippingAddress>) => {
-    const isDefaultAddressFound = addressList.find((address) => address.is_default);
-    const defaultAddress =
-        isDefaultAddressFound || (addressList.length > 0 ? addressList[0] : null);
-    return defaultAddress ? JSON.stringify(defaultAddress) : JSON.stringify("");
-};
-
-function ShippingAddressDetails({ setSelectedKeys }: ShippingAddressDetailsProps) {
+function ShippingAddressDetails({
+    setSelectedAccordionKeys,
+    selectedAddress,
+    setSelectedAddress,
+    defaultAddress
+}: ShippingAddressDetailsProps) {
     const dispatch = useReduxDispatch();
     const { addressList, isLoading } = useReduxSelector((state) => state.address);
     const isAddressListEmpty = addressList.length === 0;
@@ -56,9 +57,6 @@ function ShippingAddressDetails({ setSelectedKeys }: ShippingAddressDetailsProps
     React.useEffect(() => {
         dispatch(getShippingAddressList());
     }, [dispatch]);
-
-    const defaultAddress = getDefaultAddress(addressList);
-    const [selectedAddress, setSelectedAddress] = React.useState(defaultAddress);
 
     // On POST/DELETE operations, selectedAddress still holds the previous state value.
     // To resolve this issue, we trigger useEffect to set the latest value of defaultAddress as the selectedAddress.
@@ -75,7 +73,7 @@ function ShippingAddressDetails({ setSelectedKeys }: ShippingAddressDetailsProps
         if (parseSelectedAddress) {
             dispatch(addSelectedShippingAddress(parseSelectedAddress.id));
             // Open the Order Summary Accordion Item.
-            setSelectedKeys(new Set([accordianStageKeys["ORDER_SUMMARY"]]));
+            setSelectedAccordionKeys(new Set([accordianStageKeys.ORDER_SUMMARY]));
         }
     };
 

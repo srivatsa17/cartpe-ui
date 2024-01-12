@@ -3,23 +3,23 @@ import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import CartItemDetails from "components/CartScreen/CartItemDetails";
 import React from "react";
-import { accordianStageKeys } from "../AccordianStages";
+import { accordianStageKeys } from "utils/getAddressDetails";
 import { addOrderItems } from "redux/OrderService/checkoutStepsSlice";
 import { getCartPriceDetails } from "utils/getCartPriceDetails";
 
 interface OrderItemDetailsProps {
-    setSelectedKeys: React.Dispatch<React.SetStateAction<Selection>>;
+    setSelectedAccordionKeys: React.Dispatch<React.SetStateAction<Selection>>;
 }
 
-function OrderItemDetails({ setSelectedKeys }: OrderItemDetailsProps) {
+function OrderItemDetails({ setSelectedAccordionKeys }: OrderItemDetailsProps) {
     const dispatch = useReduxDispatch();
     const { cartItems } = useReduxSelector((state) => state.cart);
-    const { totalAmount } = getCartPriceDetails(cartItems);
+    const { totalAmount } = getCartPriceDetails();
     const isCartEmpty = cartItems.length === 0;
 
     const handleAddOrderItems = () => {
         dispatch(addOrderItems(cartItems, totalAmount));
-        setSelectedKeys(new Set([accordianStageKeys["PAYMENT_OPTIONS"]]));
+        setSelectedAccordionKeys(new Set([accordianStageKeys.PAYMENT_OPTIONS]));
     };
 
     return (
