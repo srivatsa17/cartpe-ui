@@ -7,44 +7,54 @@ import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import ShippingAddressDetails from "./ShippingAddress/ShippingAddressDetails";
 import { TruckFastIcon } from "icons/TruckFastIcon";
+import { accordianStageKeys } from "utils/getAddressDetails";
 
-export interface IHash {
-    [details: string]: string;
+interface AccordianStagesProps {
+    selectedAccordionKeys: Selection;
+    setSelectedAccordionKeys: React.Dispatch<React.SetStateAction<Selection>>;
+    selectedAddress: string;
+    setSelectedAddress: React.Dispatch<React.SetStateAction<string>>;
+    defaultAddress: string;
 }
 
-export const accordianStageKeys: IHash = {
-    SHIPPING_ADDRESS: "1",
-    ORDER_SUMMARY: "2",
-    PAYMENT_OPTIONS: "3"
-};
-
-function AccordianStages() {
-    const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
-        new Set([accordianStageKeys["SHIPPING_ADDRESS"]])
-    );
-
+function AccordianStages({
+    selectedAccordionKeys,
+    setSelectedAccordionKeys,
+    selectedAddress,
+    setSelectedAddress,
+    defaultAddress
+}: AccordianStagesProps) {
     return (
-        <Accordion variant="shadow" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
+        <Accordion
+            variant="shadow"
+            selectedKeys={selectedAccordionKeys}
+            onSelectionChange={setSelectedAccordionKeys}
+        >
             <AccordionItem
-                key={accordianStageKeys["SHIPPING_ADDRESS"]}
+                key={accordianStageKeys.SHIPPING_ADDRESS}
                 aria-label="Shipping Address"
                 startContent={<TruckFastIcon height={30} width={30} size={30} strokeWidth={2} />}
                 title="Shipping Address"
                 subtitle="Select a delivery address."
             >
-                <ShippingAddressDetails setSelectedKeys={setSelectedKeys} />
+                <ShippingAddressDetails
+                    setSelectedAccordionKeys={setSelectedAccordionKeys}
+                    selectedAddress={selectedAddress}
+                    setSelectedAddress={setSelectedAddress}
+                    defaultAddress={defaultAddress}
+                />
             </AccordionItem>
             <AccordionItem
-                key={accordianStageKeys["ORDER_SUMMARY"]}
+                key={accordianStageKeys.ORDER_SUMMARY}
                 aria-label="Order Summary"
                 startContent={<CartIcon height={30} width={30} size={30} />}
                 title="Order Summary"
                 subtitle="Review the order items."
             >
-                <OrderItemDetails setSelectedKeys={setSelectedKeys} />
+                <OrderItemDetails setSelectedAccordionKeys={setSelectedAccordionKeys} />
             </AccordionItem>
             <AccordionItem
-                key={accordianStageKeys["PAYMENT_OPTIONS"]}
+                key={accordianStageKeys.PAYMENT_OPTIONS}
                 aria-label="Payment Options"
                 startContent={<RupeeIcon height={30} width={30} size={30} />}
                 title="Payment Options"
