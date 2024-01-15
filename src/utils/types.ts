@@ -158,3 +158,90 @@ export type CheckoutStepsState = {
     amount: number;
     error: Error;
 };
+
+/* Razorpay Types */
+export interface RazorpayInstance {
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
+    on(event: string, callback: (args: any) => void): void;
+    open(): void;
+}
+
+export interface RazorpaySuccessHandlerArgs {
+    razorpay_order_id: string;
+    razorpay_payment_id: string;
+    razorpay_signature: string;
+}
+
+export interface RazorPayFailureHandlerArgs {
+    error?: {
+        code?: string;
+        description?: string;
+        source?: string;
+        step?: string;
+        reason?: string;
+        metadata?: {
+            order_id?: string;
+            payment_id?: string;
+        };
+    };
+}
+
+export interface RazorpayOptions {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description?: string;
+    image?: string;
+    order_id: string;
+    // eslint-disable-next-line no-unused-vars
+    handler?: (args: RazorpaySuccessHandlerArgs) => void;
+    prefill?: {
+        name?: string;
+        email?: string;
+        contact?: string;
+        method?: "card" | "netbanking" | "wallet" | "emi" | "upi";
+    };
+    notes?: object;
+    theme?: {
+        hide_topbar?: boolean;
+        color?: string;
+        backdrop_color?: string;
+    };
+    modal?: {
+        backdropclose?: boolean;
+        escape?: boolean;
+        handleback?: boolean;
+        confirm_close?: boolean;
+        ondismiss?: () => void;
+        animation?: boolean;
+    };
+    subscription_id?: string;
+    subscription_card_change?: boolean;
+    recurring?: boolean;
+    callback_url?: string;
+    redirect?: boolean;
+    customer_id?: string;
+    timeout?: number;
+    remember_customer?: boolean;
+    readonly?: {
+        contact?: boolean;
+        email?: boolean;
+        name?: boolean;
+    };
+    hidden?: {
+        contact?: boolean;
+        email?: boolean;
+    };
+    send_sms_hash?: boolean;
+    allow_rotation?: boolean;
+    retry?: {
+        enabled?: boolean;
+        max_count?: boolean;
+    };
+    config?: {
+        display: {
+            language: "en";
+        };
+    };
+}
