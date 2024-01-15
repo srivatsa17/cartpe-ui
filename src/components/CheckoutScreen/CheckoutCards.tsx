@@ -28,7 +28,7 @@ function CheckoutCards({
         } else if (selectedAccordionKeys.has(accordianStageKeys.ORDER_SUMMARY)) {
             cardToRender = <OrderCard setSelectedAccordionKeys={setSelectedAccordionKeys} />;
         } else if (selectedAccordionKeys.has(accordianStageKeys.PAYMENT_OPTIONS)) {
-            cardToRender = <PaymentCard />;
+            cardToRender = <PaymentCard setSelectedAccordionKeys={setSelectedAccordionKeys} />;
         } else {
             cardToRender = <React.Fragment></React.Fragment>;
         }

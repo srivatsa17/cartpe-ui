@@ -60,7 +60,7 @@ function AccordianStages({
                 title="Payment Options"
                 subtitle="Pay and complete the order."
             >
-                <PaymentOptions />
+                <PaymentOptions setSelectedAccordionKeys={setSelectedAccordionKeys} />
             </AccordionItem>
         </Accordion>
     );
