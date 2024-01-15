@@ -4,6 +4,7 @@ import { accordianStageKeys, getDefaultAddress } from "utils/getAddressDetails";
 
 import AccordianStages from "components/CheckoutScreen/AccordianStages";
 import CheckoutCards from "components/CheckoutScreen/CheckoutCards";
+import { PaymentMethods } from "utils/types";
 import ProgressStepper from "components/CheckoutScreen/ProgressStepper";
 import React from "react";
 import { useReduxSelector } from "hooks/redux";
@@ -17,6 +18,8 @@ function CheckoutScreen() {
     const [selectedAccordionKeys, setSelectedAccordionKeys] = React.useState<Selection>(
         new Set([accordianStageKeys.SHIPPING_ADDRESS])
     );
+
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState<PaymentMethods>("UPI");
 
     return (
         <div className="container mx-auto px-6 py-7">
@@ -38,6 +41,8 @@ function CheckoutScreen() {
                         selectedAddress={selectedAddress}
                         setSelectedAddress={setSelectedAddress}
                         defaultAddress={defaultAddress}
+                        selectedPaymentMethod={selectedPaymentMethod}
+                        setSelectedPaymentMethod={setSelectedPaymentMethod}
                     />
                 </div>
                 <div className="my-7 xl:my-0 xl:pl-5">
@@ -45,6 +50,7 @@ function CheckoutScreen() {
                         selectedAccordionKeys={selectedAccordionKeys}
                         setSelectedAccordionKeys={setSelectedAccordionKeys}
                         selectedAddress={selectedAddress}
+                        selectedPaymentMethod={selectedPaymentMethod}
                     />
                 </div>
             </div>

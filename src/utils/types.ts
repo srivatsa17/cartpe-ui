@@ -159,6 +159,8 @@ export type CheckoutStepsState = {
     error: Error;
 };
 
+export type PaymentMethods = "UPI" | "Cash On Delivery";
+
 /* Razorpay Types */
 export interface RazorpayInstance {
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any

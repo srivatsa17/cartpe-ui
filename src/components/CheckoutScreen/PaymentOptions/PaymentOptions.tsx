@@ -1,20 +1,37 @@
-import { Radio, RadioGroup } from "@nextui-org/react";
+import { Button, Divider, Radio, RadioGroup, Selection, Spacer } from "@nextui-org/react";
 
+import DisplayRazorPayCard from "../RazorPay/RazorPayCard";
+import { PaymentMethods } from "utils/types";
 import React from "react";
+import { paymentOptions } from "utils/getPaymentOptions";
+import { useReduxSelector } from "hooks/redux";
 
-function PaymentOptions() {
-    const paymentOptions = [
-        { key: "upi", label: "UPI", description: "Pay using UPI, QR, Cards and more." },
-        { key: "cod", label: "Cash on Delivery", description: "Pay on the day of delivery." }
-    ];
+interface PaymentOptionsProps {
+    setSelectedAccordionKeys: React.Dispatch<React.SetStateAction<Selection>>;
+    selectedPaymentMethod: PaymentMethods;
+    setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<PaymentMethods>>;
+}
 
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState("UPI");
+function PaymentOptions({
+    setSelectedAccordionKeys,
+    selectedPaymentMethod,
+    setSelectedPaymentMethod
+}: PaymentOptionsProps) {
+    const [isPlaceOrderButtonClicked, setIsPlaceOrderButtonClicked] = React.useState(false);
+    const { shippingAddressId, orderItems, amount } = useReduxSelector(
+        (state) => state.checkoutDetails
+    );
+
+    const handlePayment = () => {
+        setIsPlaceOrderButtonClicked(true);
+        setSelectedAccordionKeys(new Set([]));
+    };
 
     return (
         <div className="p-2">
             <RadioGroup
                 value={selectedPaymentMethod}
-                onValueChange={setSelectedPaymentMethod}
+                onValueChange={(value: string) => setSelectedPaymentMethod(value as PaymentMethods)}
                 color="secondary"
                 label="Choose a payment method."
             >
@@ -33,6 +50,20 @@ function PaymentOptions() {
                     );
                 })}
             </RadioGroup>
+            <Spacer y={2} />
+            <Divider />
+            <Spacer y={5} />
+            <Button
+                variant="ghost"
+                color="success"
+                onClick={handlePayment}
+                isDisabled={shippingAddressId === null || orderItems.length === 0 || amount === 0}
+            >
+                Pay Now
+            </Button>
+            {isPlaceOrderButtonClicked && selectedPaymentMethod === "UPI" && (
+                <DisplayRazorPayCard />
+            )}
         </div>
     );
 }

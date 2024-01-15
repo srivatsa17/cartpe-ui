@@ -2,6 +2,7 @@ import { Accordion, AccordionItem, Selection } from "@nextui-org/react";
 
 import { CartIcon } from "icons/CartIcon";
 import OrderItemDetails from "./OrderItems/OrderItemDetails";
+import { PaymentMethods } from "utils/types";
 import PaymentOptions from "./PaymentOptions/PaymentOptions";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
@@ -15,6 +16,8 @@ interface AccordianStagesProps {
     selectedAddress: string;
     setSelectedAddress: React.Dispatch<React.SetStateAction<string>>;
     defaultAddress: string;
+    selectedPaymentMethod: PaymentMethods;
+    setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<PaymentMethods>>;
 }
 
 function AccordianStages({
@@ -22,7 +25,9 @@ function AccordianStages({
     setSelectedAccordionKeys,
     selectedAddress,
     setSelectedAddress,
-    defaultAddress
+    defaultAddress,
+    selectedPaymentMethod,
+    setSelectedPaymentMethod
 }: AccordianStagesProps) {
     return (
         <Accordion
@@ -60,7 +65,11 @@ function AccordianStages({
                 title="Payment Options"
                 subtitle="Pay and complete the order."
             >
-                <PaymentOptions setSelectedAccordionKeys={setSelectedAccordionKeys} />
+                <PaymentOptions
+                    setSelectedAccordionKeys={setSelectedAccordionKeys}
+                    selectedPaymentMethod={selectedPaymentMethod}
+                    setSelectedPaymentMethod={setSelectedPaymentMethod}
+                />
             </AccordionItem>
         </Accordion>
     );
