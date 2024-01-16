@@ -24,12 +24,16 @@ export const getCartPriceDetails = () => {
             0
         )
     );
-    const convenienceFee = 10;
+    // Set convenience fee only if cart items are present.
+    const convenienceFee = cartItems.length ? 10 : 0;
     const shippingFee = "FREE";
     const totalAmount = Math.round(totalSellingPrice + convenienceFee);
     const roundOffPrice = Math.round(totalSellingPrice) - totalSellingPrice;
-    const savingsAmount = Math.round(totalMRP - totalAmount);
-    const savingsPercent = (savingsAmount / totalMRP) * 100;
+    // Savings amount is 0 if value is -ve.
+    const savingsAmount =
+        Math.round(totalMRP - totalAmount) > 0 ? Math.round(totalMRP - totalAmount) : 0;
+    // Savings percent is set to 0 incase MRP is 0 to avoid Divide by zero which gives Infinity here.
+    const savingsPercent = totalMRP === 0 ? 0 : (savingsAmount / totalMRP) * 100;
 
     return {
         totalMRP,

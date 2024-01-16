@@ -105,7 +105,13 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
             <Divider />
             <Spacer y={2} />
             <CardFooter>
-                <Button variant="ghost" fullWidth color="success" onClick={handleAddOrderItems}>
+                <Button
+                    variant="ghost"
+                    fullWidth
+                    color="success"
+                    onClick={handleAddOrderItems}
+                    isDisabled={totalCartItemsQuantity === 0}
+                >
                     Place order items
                 </Button>
             </CardFooter>
