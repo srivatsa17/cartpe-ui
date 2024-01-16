@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { ORDER_CONFIRMED_SCREEN, ORDER_FAILED_SCREEN } from "constants/routes";
+import { Order, PaymentMethods } from "utils/types";
 
-import { PaymentMethods } from "utils/types";
 import React from "react";
 import { createOrder } from "hooks/useCreateOrder";
 import { useNavigate } from "react-router-dom";
@@ -22,13 +22,16 @@ function PayCashOnDelivery() {
                     orderItems: orderItems,
                     amount: amount
                 };
-                const order = await createOrder(createOrderProps);
-                navigate(`${ORDER_CONFIRMED_SCREEN}?paymentMethod=COD&orderId=${order.id}`, {
-                    state: {
-                        paymentMethod: "COD",
-                        orderId: order.id
+                const order: Order = await createOrder(createOrderProps);
+                navigate(
+                    `${ORDER_CONFIRMED_SCREEN}?paymentMethod=${order.method}&orderId=${order.id}`,
+                    {
+                        state: {
+                            paymentMethod: order.method,
+                            orderId: order.id
+                        }
                     }
-                });
+                );
             } catch (error) {
                 navigate(ORDER_FAILED_SCREEN);
             }

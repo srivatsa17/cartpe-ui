@@ -160,6 +160,38 @@ export type CheckoutStepsState = {
 };
 
 export type PaymentMethods = "UPI" | "Cash On Delivery";
+export type PaymentStatus =
+    | "PENDING"
+    | "CONFIRMED"
+    | "SHIPPED"
+    | "OUT_FOR_DELIVERY"
+    | "DELIVERED"
+    | "CANCELLED"
+    | "RETURNED"
+    | "REFUNDED";
+
+export type Order = {
+    id: bigint;
+    amount: number;
+    user: string;
+    user_address: bigint;
+    is_paid: boolean;
+    status: PaymentStatus;
+    method: PaymentMethods;
+    razorpay_order_id: string | null;
+    razorpay_payment_id: string | null;
+    razorpay_signature: string | null;
+    created_at: string;
+    updated_at: string;
+    order_items: Array<{
+        id: bigint;
+        order: bigint;
+        product: bigint;
+        quantity: number;
+        created_at: string;
+        updated_at: string;
+    }>;
+};
 
 /* Razorpay Types */
 export interface RazorpayInstance {
@@ -245,5 +277,26 @@ export interface RazorpayOptions {
         display: {
             language: "en";
         };
+    };
+}
+
+export interface RazorpaySuccessResponse {
+    data: {
+        id: string;
+        entity: string;
+        amount: number;
+        amount_paid: number;
+        amount_due: number;
+        currency: "INR";
+        receipt: number;
+        offer_id: string | null;
+        status: "created" | "attempted" | "paid";
+        attempts: number;
+        notes:
+            | {
+                  [key: string]: string;
+              }
+            | [];
+        created_at: number;
     };
 }

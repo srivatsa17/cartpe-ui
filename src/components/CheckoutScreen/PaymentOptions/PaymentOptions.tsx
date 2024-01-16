@@ -1,7 +1,7 @@
 import { Button, Divider, Radio, RadioGroup, Selection, Spacer } from "@nextui-org/react";
 
-import DisplayRazorPayCard from "../RazorPay/RazorPayCard";
 import PayCashOnDelivery from "./PayCashOnDelivery";
+import PayUPI from "../RazorPay/PayUPI";
 import { PaymentMethods } from "utils/types";
 import React from "react";
 import { paymentOptions } from "utils/getPaymentOptions";
@@ -73,7 +73,7 @@ function PaymentOptions({
             </Button>
             {isPayNowClicked ? (
                 selectedPaymentMethod === "UPI" ? (
-                    <DisplayRazorPayCard />
+                    <PayUPI />
                 ) : (
                     <PayCashOnDelivery />
                 )
