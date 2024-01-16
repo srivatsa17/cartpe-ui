@@ -1,34 +1,13 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Divider,
-    Selection,
-    Spacer
-} from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Divider, Spacer } from "@nextui-org/react";
 
-import DisplayRazorPayCard from "../RazorPay/RazorPayCard";
-import { PaymentMethods } from "utils/types";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import { getCartPriceDetails } from "utils/getCartPriceDetails";
 import { useReduxSelector } from "hooks/redux";
 
-interface PaymentCardProps {
-    setSelectedAccordionKeys: React.Dispatch<React.SetStateAction<Selection>>;
-    selectedPaymentMethod: PaymentMethods;
-}
-
-function PaymentCard({ setSelectedAccordionKeys }: PaymentCardProps) {
+function PaymentCard() {
     const { cartItems } = useReduxSelector((state) => state.cart);
     const totalCartItemsQuantity = cartItems.length;
-    const [isPlaceOrderButtonClicked, setIsPlaceOrderButtonClicked] =
-        React.useState<boolean>(false);
-    const { shippingAddressId, orderItems, amount } = useReduxSelector(
-        (state) => state.checkoutDetails
-    );
 
     const {
         totalMRP,
@@ -41,11 +20,6 @@ function PaymentCard({ setSelectedAccordionKeys }: PaymentCardProps) {
         roundOffPrice,
         savingsPercent
     } = getCartPriceDetails();
-
-    const handlePayment = () => {
-        setIsPlaceOrderButtonClicked(true);
-        setSelectedAccordionKeys(new Set([]));
-    };
 
     return (
         <Card>
@@ -108,23 +82,6 @@ function PaymentCard({ setSelectedAccordionKeys }: PaymentCardProps) {
                     {savingsAmount.toFixed(2)} ({savingsPercent.toFixed(2)}%)
                 </div>
             </CardBody>
-            <Divider />
-            <Spacer y={2} />
-            <CardFooter>
-                <Button
-                    variant="ghost"
-                    fullWidth
-                    color="success"
-                    onClick={handlePayment}
-                    isDisabled={
-                        shippingAddressId === null || orderItems.length === 0 || amount === 0
-                    }
-                >
-                    Pay Now
-                </Button>
-                {isPlaceOrderButtonClicked && <DisplayRazorPayCard />}
-            </CardFooter>
-            <Spacer y={2} />
         </Card>
     );
 }

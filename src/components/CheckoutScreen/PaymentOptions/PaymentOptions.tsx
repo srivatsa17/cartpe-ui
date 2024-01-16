@@ -1,6 +1,7 @@
 import { Button, Divider, Radio, RadioGroup, Selection, Spacer } from "@nextui-org/react";
 
 import DisplayRazorPayCard from "../RazorPay/RazorPayCard";
+import PayCashOnDelivery from "./PayCashOnDelivery";
 import { PaymentMethods } from "utils/types";
 import React from "react";
 import { paymentOptions } from "utils/getPaymentOptions";
@@ -17,14 +18,21 @@ function PaymentOptions({
     selectedPaymentMethod,
     setSelectedPaymentMethod
 }: PaymentOptionsProps) {
-    const [isPlaceOrderButtonClicked, setIsPlaceOrderButtonClicked] = React.useState(false);
+    const [isPayNowButtonLoading, setIsPayNowButtonLoading] = React.useState(false);
+    const [isPayNowClicked, setIsPayNowClicked] = React.useState(false);
     const { shippingAddressId, orderItems, amount } = useReduxSelector(
         (state) => state.checkoutDetails
     );
 
     const handlePayment = () => {
-        setIsPlaceOrderButtonClicked(true);
-        setSelectedAccordionKeys(new Set([]));
+        // Create a loading effect for 1s and then set the button clicked state to true
+        // to trigger backend API call.
+        setIsPayNowButtonLoading(true);
+        setTimeout(() => {
+            setIsPayNowClicked(true);
+            setSelectedAccordionKeys(new Set([]));
+            setIsPayNowButtonLoading(false);
+        }, 1000);
     };
 
     return (
@@ -58,12 +66,18 @@ function PaymentOptions({
                 color="success"
                 onClick={handlePayment}
                 isDisabled={shippingAddressId === null || orderItems.length === 0 || amount === 0}
+                isLoading={isPayNowButtonLoading}
+                className="w-40"
             >
                 Pay Now
             </Button>
-            {isPlaceOrderButtonClicked && selectedPaymentMethod === "UPI" && (
-                <DisplayRazorPayCard />
-            )}
+            {isPayNowClicked ? (
+                selectedPaymentMethod === "UPI" ? (
+                    <DisplayRazorPayCard />
+                ) : (
+                    <PayCashOnDelivery />
+                )
+            ) : null}
         </div>
     );
 }
