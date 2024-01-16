@@ -1,13 +1,15 @@
 /* eslint-disable camelcase */
 import { ORDER_CONFIRMED_SCREEN, ORDER_FAILED_SCREEN } from "constants/routes";
 import { Order, PaymentMethods } from "utils/types";
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import React from "react";
 import { createOrder } from "hooks/useCreateOrder";
+import { emptyCart } from "redux/CartService/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { useReduxSelector } from "hooks/redux";
 
 function PayCashOnDelivery() {
+    const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const { shippingAddressId, orderItems, amount } = useReduxSelector(
         (state) => state.checkoutDetails
@@ -23,6 +25,7 @@ function PayCashOnDelivery() {
                     amount: amount
                 };
                 const order: Order = await createOrder(createOrderProps);
+                dispatch(emptyCart());
                 navigate(
                     `${ORDER_CONFIRMED_SCREEN}?paymentMethod=${order.method}&orderId=${order.id}`,
                     {

@@ -13,14 +13,16 @@ import {
     RazorpaySuccessResponse
 } from "utils/types";
 import useRazorpay, { Razorpay } from "hooks/useRazorpay";
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CARTPE_ICON_BLACK } from "constants/images";
 import { RAZORPAY_API_TEST_KEY } from "constants/razorpay";
 import { RAZORPAY_ORDER_URI } from "constants/api";
 import React from "react";
+import { ReduxDispatch } from "redux/store";
 import { axiosInstance } from "utils/axios";
 import { createOrder } from "hooks/useCreateOrder";
-import { useReduxSelector } from "hooks/redux";
+import { emptyCart } from "redux/CartService/cartSlice";
 
 interface OrderDetails {
     shippingAddressId: bigint | null;
@@ -43,6 +45,7 @@ interface RazorpayDetails {
 
 const DisplayRazorPayCheckoutForm = ({
     Razorpay,
+    dispatch,
     shippingAddressId,
     orderItems,
     amount,
@@ -50,7 +53,9 @@ const DisplayRazorPayCheckoutForm = ({
     lastName,
     email,
     navigate
-}: OrderDetails & UserDetails & RazorpayDetails & { navigate: NavigateFunction }) => {
+}: OrderDetails &
+    UserDetails &
+    RazorpayDetails & { dispatch: ReduxDispatch } & { navigate: NavigateFunction }) => {
     const razorpayOrderData = { amount: amount };
 
     // Create the Razorpay order first by passing the amount.
@@ -77,6 +82,7 @@ const DisplayRazorPayCheckoutForm = ({
                         };
                         // Create an order at the backend and navigate to order confirmed screen.
                         createOrder(createOrderProps).then((order: Order) => {
+                            dispatch(emptyCart());
                             navigate(
                                 `${ORDER_CONFIRMED_SCREEN}?paymentMethod=${order.method}&orderId=${order.id}&razorpayOrderId=${razorpayOrder.id}`,
                                 {
@@ -124,6 +130,7 @@ const DisplayRazorPayCheckoutForm = ({
 function PayUPI() {
     // Passing hooks from default component.
     const [Razorpay] = useRazorpay();
+    const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const { shippingAddressId, orderItems, amount } = useReduxSelector(
         (state) => state.checkoutDetails
@@ -132,6 +139,7 @@ function PayUPI() {
 
     const checkoutFormProps = {
         Razorpay,
+        dispatch,
         navigate,
         shippingAddressId,
         orderItems,
