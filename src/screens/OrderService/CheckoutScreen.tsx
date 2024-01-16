@@ -50,7 +50,6 @@ function CheckoutScreen() {
                         selectedAccordionKeys={selectedAccordionKeys}
                         setSelectedAccordionKeys={setSelectedAccordionKeys}
                         selectedAddress={selectedAddress}
-                        selectedPaymentMethod={selectedPaymentMethod}
                     />
                 </div>
             </div>
