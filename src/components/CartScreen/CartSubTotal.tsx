@@ -1,7 +1,6 @@
-import { Button, Divider, Spacer } from "@nextui-org/react";
+import { Button, Divider, Link, Spacer } from "@nextui-org/react";
 
 import { CHECKOUT_SCREEN } from "constants/routes";
-import { Link } from "react-router-dom";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import { getCartPriceDetails } from "utils/getCartPriceDetails";
@@ -50,14 +49,12 @@ function CartSubTotal() {
                 <Divider className="my-3" />
             </div>
 
-            <Link to={CHECKOUT_SCREEN}>
-                <Button
-                    fullWidth
-                    className="my-2"
-                    color="warning"
-                    variant="flat"
-                    isDisabled={totalCartItemsQuantity === 0}
-                >
+            <Link
+                href={CHECKOUT_SCREEN}
+                className="w-full"
+                isDisabled={totalCartItemsQuantity === 0}
+            >
+                <Button fullWidth className="my-2" variant="flat" color="primary">
                     Proceed to Checkout
                 </Button>
             </Link>
