@@ -22,6 +22,7 @@ interface OrderCardProps {
 
 function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
     const dispatch = useReduxDispatch();
+    const { shippingAddressId } = useReduxSelector((state) => state.checkoutDetails);
     const { cartItems } = useReduxSelector((state) => state.cart);
     const totalCartItemsQuantity = cartItems.length;
     const {
@@ -110,7 +111,7 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
                     fullWidth
                     color="success"
                     onClick={handleAddOrderItems}
-                    isDisabled={totalCartItemsQuantity === 0}
+                    isDisabled={totalCartItemsQuantity === 0 || shippingAddressId === null}
                 >
                     Place order items
                 </Button>

@@ -14,6 +14,7 @@ interface OrderItemDetailsProps {
 function OrderItemDetails({ setSelectedAccordionKeys }: OrderItemDetailsProps) {
     const dispatch = useReduxDispatch();
     const { cartItems } = useReduxSelector((state) => state.cart);
+    const { shippingAddressId } = useReduxSelector((state) => state.checkoutDetails);
     const { totalAmount } = getCartPriceDetails();
     const isCartEmpty = cartItems.length === 0;
 
@@ -31,7 +32,7 @@ function OrderItemDetails({ setSelectedAccordionKeys }: OrderItemDetailsProps) {
             <Button
                 color="success"
                 variant="ghost"
-                isDisabled={isCartEmpty}
+                isDisabled={isCartEmpty || shippingAddressId === null}
                 onClick={handleAddOrderItems}
             >
                 Place order items
