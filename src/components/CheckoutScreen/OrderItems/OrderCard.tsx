@@ -75,7 +75,7 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
                 <Spacer y={0.5} />
                 <div className="flex justify-between text-lg">
                     <div>Shipping Fee</div>
-                    <div className="text-green-600">{shippingFee}</div>
+                    <div className="text-green-600">{shippingFee === 0 ? "FREE" : shippingFee}</div>
                 </div>
                 <Spacer y={0.5} />
                 <div className="flex justify-between text-lg">

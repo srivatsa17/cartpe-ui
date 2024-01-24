@@ -26,7 +26,7 @@ export const getCartPriceDetails = () => {
     );
     // Set convenience fee only if cart items are present.
     const convenienceFee = cartItems.length ? 10 : 0;
-    const shippingFee = "FREE";
+    const shippingFee = 0;
     const totalAmount = Math.round(totalSellingPrice + convenienceFee);
     const roundOffPrice = Math.round(totalSellingPrice) - totalSellingPrice;
     // Savings amount is 0 if value is -ve.
