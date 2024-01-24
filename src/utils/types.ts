@@ -174,7 +174,7 @@ export type Order = {
     id: bigint;
     amount: number;
     user: string;
-    user_address: bigint;
+    user_address: ShippingAddress;
     is_paid: boolean;
     status: PaymentStatus;
     method: PaymentMethods;
@@ -191,6 +191,22 @@ export type Order = {
         created_at: string;
         updated_at: string;
     }>;
+    payment: Payment;
+};
+
+/* Payment Types */
+export type Payment = {
+    id: bigint;
+    order: bigint;
+    total_mrp: number;
+    total_discount_price: number;
+    total_selling_price: number;
+    convenience_fee: number;
+    shipping_fee: number;
+    total_amount: number;
+    round_off_price: number;
+    savings_amount: number;
+    savings_percent: number;
 };
 
 /* Razorpay Types */
