@@ -7,6 +7,7 @@ import {
 } from "constants/routes";
 import {
     Order,
+    Payment,
     PaymentMethods,
     RazorPayFailureHandlerArgs,
     RazorpaySuccessHandlerArgs,
@@ -23,6 +24,7 @@ import { ReduxDispatch } from "redux/store";
 import { axiosInstance } from "utils/axios";
 import { createOrder } from "hooks/useCreateOrder";
 import { emptyCart } from "redux/CartService/cartSlice";
+import { getCartPriceDetails } from "utils/getCartPriceDetails";
 
 interface OrderDetails {
     shippingAddressId: bigint | null;
@@ -43,6 +45,10 @@ interface RazorpayDetails {
     Razorpay: typeof Razorpay;
 }
 
+interface PaymentDetails {
+    paymentDetails: Omit<Payment, "id" | "order">;
+}
+
 const DisplayRazorPayCheckoutForm = ({
     Razorpay,
     dispatch,
@@ -52,9 +58,11 @@ const DisplayRazorPayCheckoutForm = ({
     firstName,
     lastName,
     email,
-    navigate
+    navigate,
+    paymentDetails
 }: OrderDetails &
     UserDetails &
+    PaymentDetails &
     RazorpayDetails & { dispatch: ReduxDispatch } & { navigate: NavigateFunction }) => {
     const razorpayOrderData = { amount: amount };
 
@@ -78,7 +86,8 @@ const DisplayRazorPayCheckoutForm = ({
                             razorpayOrderDetails: response,
                             shippingAddressId,
                             orderItems,
-                            amount
+                            amount,
+                            paymentDetails
                         };
                         // Create an order at the backend and navigate to order confirmed screen.
                         createOrder(createOrderProps).then((order: Order) => {
@@ -136,6 +145,19 @@ function PayUPI() {
         (state) => state.checkoutDetails
     );
     const { firstName, lastName, email } = useReduxSelector((state) => state.userLoginDetails);
+    const cartPriceDetails = getCartPriceDetails();
+
+    const paymentDetails = {
+        total_mrp: Number(cartPriceDetails.totalMRP.toFixed(2)),
+        total_discount_price: Number(cartPriceDetails.totalDiscountPrice.toFixed(2)),
+        total_selling_price: Number(cartPriceDetails.totalSellingPrice.toFixed(2)),
+        convenience_fee: cartPriceDetails.convenienceFee,
+        shipping_fee: cartPriceDetails.shippingFee,
+        total_amount: Number(cartPriceDetails.totalAmount.toFixed(2)),
+        round_off_price: Number(cartPriceDetails.roundOffPrice.toFixed(2)),
+        savings_amount: Number(cartPriceDetails.savingsAmount.toFixed(2)),
+        savings_percent: Number(cartPriceDetails.savingsPercent.toFixed(2))
+    };
 
     const checkoutFormProps = {
         Razorpay,
@@ -146,7 +168,8 @@ function PayUPI() {
         amount,
         firstName,
         lastName,
-        email
+        email,
+        paymentDetails
     };
 
     React.useEffect(() => {
