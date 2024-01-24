@@ -1,4 +1,4 @@
-import { ErrorResponse, PaymentMethods, RazorpaySuccessHandlerArgs } from "utils/types";
+import { ErrorResponse, Payment, PaymentMethods, RazorpaySuccessHandlerArgs } from "utils/types";
 
 /* eslint-disable camelcase */
 import { ORDER_API } from "constants/api";
@@ -14,6 +14,7 @@ type CreateOrderProps = {
         quantity: number;
     }>;
     amount: number;
+    paymentDetails: Omit<Payment, "id" | "order">;
 };
 
 export const createOrder = async ({
@@ -21,7 +22,8 @@ export const createOrder = async ({
     razorpayOrderDetails,
     shippingAddressId,
     orderItems,
-    amount
+    amount,
+    paymentDetails
 }: CreateOrderProps) => {
     try {
         const orderData = {
@@ -31,7 +33,8 @@ export const createOrder = async ({
             order_items: orderItems,
             razorpay_order_id: razorpayOrderDetails?.razorpay_order_id || null,
             razorpay_payment_id: razorpayOrderDetails?.razorpay_payment_id || null,
-            razorpay_signature: razorpayOrderDetails?.razorpay_signature || null
+            razorpay_signature: razorpayOrderDetails?.razorpay_signature || null,
+            payment_details: paymentDetails
         };
         const { data } = await axiosInstance.post(ORDER_API, orderData);
         return data;
