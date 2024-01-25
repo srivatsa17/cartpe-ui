@@ -3,6 +3,7 @@ import { HOME_SCREEN, ORDER_SCREEN } from "constants/routes";
 import { NOT_FOUND_404, ORDER_CONFIRMED } from "constants/images";
 import { useLocation, useSearchParams } from "react-router-dom";
 
+import Confetti from "react-confetti";
 import React from "react";
 
 function OrderConfirmedScreen() {
@@ -26,6 +27,7 @@ function OrderConfirmedScreen() {
                         <Image src={ORDER_CONFIRMED} width={500} height={500} />
                     </div>
                     <div className="self-center text-2xl xs:text-xl px-5">
+                        <Confetti numberOfPieces={400} recycle={false}/>
                         <div>
                             Yayy! Your order has been <strong>confirmed</strong>!
                             <Spacer y={0.5} />
