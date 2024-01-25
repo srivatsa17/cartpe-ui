@@ -186,7 +186,13 @@ export type Order = {
     order_items: Array<{
         id: bigint;
         order: bigint;
-        product: bigint;
+        product: {
+            id: bigint;
+            name: string;
+            description: string;
+            brand: string;
+            featured_image: string;
+        }
         quantity: number;
         created_at: string;
         updated_at: string;
