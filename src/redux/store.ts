@@ -1,12 +1,20 @@
 import {
+    ADDRESS_LIST,
     CART_ITEMS,
     PRODUCT_LIST,
     USER_LOGIN_DETAILS,
     USER_REGISTER_DETAILS
 } from "constants/localStorage";
-import { CartState, LoginState, ProductListState, RegisterState } from "utils/types";
+import {
+    CartState,
+    LoginState,
+    ProductListState,
+    RegisterState,
+    ShippingAddressState
+} from "utils/types";
 
 import cartSlice from "./CartService/cartSlice";
+import checkoutStepsSlice from "./OrderService/checkoutStepsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
@@ -14,17 +22,20 @@ import productByIdSlice from "./ProductService/productByIdSlice";
 import productsSlice from "./ProductService/productsSlice";
 import registerSlice from "./AuthService/registerSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
+import shippingAddressSlice from "./OrderService/shippingAddressSlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 const userRegisterDetailsFromStorage = getItemFromStorage(USER_REGISTER_DETAILS) ?? {};
 const productListFromStorage = getItemFromStorage(PRODUCT_LIST) ?? {};
 const cartItemsFromStorage = getItemFromStorage(CART_ITEMS) ?? [];
+const addressListFromStorage = getItemFromStorage(ADDRESS_LIST) ?? [];
 
 const persistedState: {
     userLoginDetails: LoginState;
     userRegisterDetails: RegisterState;
     productList: ProductListState;
     cart: CartState;
+    address: ShippingAddressState;
 } = {
     productList: {
         products: productListFromStorage.products ?? [],
@@ -56,6 +67,11 @@ const persistedState: {
         isLoading: false,
         cartItems: cartItemsFromStorage,
         error: null
+    },
+    address: {
+        isLoading: false,
+        addressList: addressListFromStorage,
+        error: null
     }
 };
 
@@ -68,7 +84,9 @@ const store = configureStore({
         productList: productsSlice,
         productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice,
-        cart: cartSlice
+        cart: cartSlice,
+        address: shippingAddressSlice,
+        checkoutDetails: checkoutStepsSlice
     },
     preloadedState: persistedState
 });

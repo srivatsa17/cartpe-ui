@@ -13,6 +13,7 @@ import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
 import { LOGIN_USER_IMAGE } from "constants/images";
 import LockIcon from "icons/LockIcon";
 import React from "react";
+import { getCartItems } from "redux/CartService/cartSlice";
 import { loginUser } from "redux/AuthService/loginSlice";
 
 function LoginScreen() {
@@ -26,6 +27,7 @@ function LoginScreen() {
     React.useEffect(() => {
         if (isLoggedIn === true) {
             navigate(HOME_SCREEN);
+            dispatch(getCartItems());
         }
     }, [isLoggedIn, navigate, dispatch]);
 

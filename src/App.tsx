@@ -1,8 +1,12 @@
 import {
     CART_SCREEN,
     CATEGORY_SEARCH_SCREEN,
+    CHECKOUT_SCREEN,
     HOME_SCREEN,
     LOGIN_USER_SCREEN,
+    ORDER_CONFIRMED_SCREEN,
+    ORDER_FAILED_SCREEN,
+    ORDER_PAYMENT_FAILED_SCREEN,
     PRODUCT_SCREEN,
     REGISTER_USER_SCREEN,
     VERIFY_USER_EMAIL_SCREEN
@@ -12,8 +16,12 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AnonymousUserRoute from "routings/AnonymousUserRoute";
 import CartScreen from "screens/CartService/CartScreen";
 import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
+import CheckoutScreen from "screens/OrderService/CheckoutScreen";
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/AuthService/LoginScreen";
+import OrderConfirmedScreen from "screens/OrderService/OrderConfirmedScreen";
+import OrderFailedScreen from "screens/OrderService/OrderFailedScreen";
+import OrderPaymentFailedScreen from "screens/OrderService/OrderPaymentFailedScreen";
 import ProductScreen from "screens/ProductService/ProductScreen";
 import ProtectedUserRoute from "routings/ProtectedUserRoute";
 import React from "react";
@@ -34,6 +42,13 @@ export default function App() {
                     <Route path={CATEGORY_SEARCH_SCREEN} element={<CategorySearchScreen />} />
                     <Route path={PRODUCT_SCREEN} element={<ProductScreen />} />
                     <Route path={CART_SCREEN} element={<CartScreen />} />
+                    <Route path={CHECKOUT_SCREEN} element={<CheckoutScreen />} />
+                    <Route path={ORDER_CONFIRMED_SCREEN} element={<OrderConfirmedScreen />} />
+                    <Route path={ORDER_FAILED_SCREEN} element={<OrderFailedScreen />} />
+                    <Route
+                        path={ORDER_PAYMENT_FAILED_SCREEN}
+                        element={<OrderPaymentFailedScreen />}
+                    />
                 </Route>
             </Routes>
         </Router>

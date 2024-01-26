@@ -1,35 +1,16 @@
-import { Button, Divider, Spacer } from "@nextui-org/react";
+import { Button, Divider, Link, Spacer } from "@nextui-org/react";
 
-import { Cart } from "utils/types";
+import { CHECKOUT_SCREEN } from "constants/routes";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
+import { getCartPriceDetails } from "utils/getCartPriceDetails";
 import { useReduxSelector } from "hooks/redux";
 
 function CartSubTotal() {
     const cart = useReduxSelector((state) => state.cart);
     const { cartItems } = cart;
     const totalCartItemsQuantity = cartItems.length;
-    const totalMRP = cartItems
-        .reduce(
-            (sum: number, cartItem: Cart) => sum + cartItem.quantity * cartItem.product.price,
-            0
-        )
-        .toFixed(2);
-    const totalDiscountPrice = cartItems
-        .reduce(
-            (sum: number, cartItem: Cart) =>
-                sum + cartItem.quantity * cartItem.product.discounted_price,
-            0
-        )
-        .toFixed(2);
-    const totalSellingPrice = cartItems
-        .reduce(
-            (sum: number, cartItem: Cart) =>
-                sum + cartItem.quantity * cartItem.product.selling_price,
-            0
-        )
-        .toFixed(2);
-    const isCartEmpty = cartItems.length === 0;
+    const { totalMRP, totalDiscountPrice, totalSellingPrice } = getCartPriceDetails();
 
     return (
         <div>
@@ -43,7 +24,7 @@ function CartSubTotal() {
                     <div>Price</div>
                     <div className="flex">
                         <RupeeIcon height={22} width={22} size={22} className="my-1" />
-                        {totalMRP}
+                        {totalMRP.toFixed(2)}
                     </div>
                 </div>
 
@@ -51,7 +32,7 @@ function CartSubTotal() {
                     <div>Price Discount</div>
                     <div className="flex text-green-600">
                         <RupeeIcon height={22} width={22} size={22} className="my-1" />
-                        {totalDiscountPrice}
+                        {totalDiscountPrice.toFixed(2)}
                     </div>
                 </div>
 
@@ -61,22 +42,22 @@ function CartSubTotal() {
                     <div>Total Amount</div>
                     <div className="flex">
                         <RupeeIcon height={22} width={22} size={22} className="my-1" />
-                        {totalSellingPrice}
+                        {totalSellingPrice.toFixed(2)}
                     </div>
                 </div>
 
                 <Divider className="my-3" />
             </div>
 
-            <Button
-                fullWidth
-                className="my-2"
-                color="warning"
-                variant="flat"
-                isDisabled={isCartEmpty}
+            <Link
+                href={CHECKOUT_SCREEN}
+                className="w-full"
+                isDisabled={totalCartItemsQuantity === 0}
             >
-                Proceed to Checkout
-            </Button>
+                <Button fullWidth className="my-2" variant="flat" color="primary">
+                    Proceed to Checkout
+                </Button>
+            </Link>
         </div>
     );
 }

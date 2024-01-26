@@ -12,7 +12,6 @@ import React from "react";
 import SortBy from "components/CategorySearchScreen/SortBy";
 import { getProducts } from "redux/ProductService/productsSlice";
 import { getUniqueFilterValues } from "utils/getUniqueFilterValues";
-import { parseISO } from "date-fns";
 import { useFilterSearchParams } from "hooks/useFilterSearchParams";
 
 const ProductCardSkeletonList = () => {
@@ -71,19 +70,11 @@ function CategorySearchScreen() {
         return false;
     };
 
-    const getLocalDateString = (dateTimeISO: string) => {
-        // Convert 2023-05-15T19:34:16.420932+05:30 -> 15/5/2023 -> [15, 5, 2023] -> [2023, 5, 15] -> 2023515
-        return parseISO(dateTimeISO).toLocaleDateString().split("/").reverse().join("");
-    };
-
     const handleSort = (a: Product, b: Product) => {
         switch (sortBy) {
             // Add cases for customer-rating, popularity
             case "whats-new":
-                if (getLocalDateString(b.created_at) > getLocalDateString(a.created_at)) return 1;
-                else if (getLocalDateString(b.created_at) < getLocalDateString(a.created_at))
-                    return -1;
-                else return 0;
+                return a.created_at.localeCompare(b.created_at);
             case "better-discount":
                 return b.discount - a.discount;
             case "price-high-to-low":
