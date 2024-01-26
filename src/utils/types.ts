@@ -200,6 +200,12 @@ export type Order = {
     payment: Payment;
 };
 
+export type OrderListState = {
+    isLoading: boolean;
+    orders: Array<Order> | [];
+    error: Error;
+};
+
 /* Payment Types */
 export type Payment = {
     id: bigint;

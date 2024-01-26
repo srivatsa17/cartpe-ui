@@ -18,6 +18,7 @@ import checkoutStepsSlice from "./OrderService/checkoutStepsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
+import orderListSlice from "./OrderService/orderListSlice";
 import productByIdSlice from "./ProductService/productByIdSlice";
 import productsSlice from "./ProductService/productsSlice";
 import registerSlice from "./AuthService/registerSlice";
@@ -86,7 +87,8 @@ const store = configureStore({
         searchedCategories: searchedCategorySlice,
         cart: cartSlice,
         address: shippingAddressSlice,
-        checkoutDetails: checkoutStepsSlice
+        checkoutDetails: checkoutStepsSlice,
+        orderList: orderListSlice
     },
     preloadedState: persistedState
 });
