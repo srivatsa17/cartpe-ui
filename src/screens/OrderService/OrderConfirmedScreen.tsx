@@ -27,7 +27,7 @@ function OrderConfirmedScreen() {
                         <Image src={ORDER_CONFIRMED} width={500} height={500} />
                     </div>
                     <div className="self-center text-2xl xs:text-xl px-5">
-                        <Confetti numberOfPieces={400} recycle={false}/>
+                        <Confetti numberOfPieces={400} recycle={false} />
                         <div>
                             Yayy! Your order has been <strong>confirmed</strong>!
                             <Spacer y={0.5} />

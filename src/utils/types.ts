@@ -192,7 +192,7 @@ export type Order = {
             description: string;
             brand: string;
             featured_image: string;
-        }
+        };
         quantity: number;
         created_at: string;
         updated_at: string;
