@@ -28,7 +28,9 @@ function OrderStatusTabs() {
                 selectedKey={selectedTab}
                 onSelectionChange={(value: string | number) => setSelectedTab(value)}
                 classNames={{
-                    tab: "text-lg"
+                    tabList: "gap-x-6",
+                    tab: "text-md px-0 h-12 max-w-fit",
+                    cursor: "w-full"
                 }}
             >
                 <Tab
