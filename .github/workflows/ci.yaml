@@ -12,7 +12,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout Repository
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
         -   name: Install
             uses: ./.github/common-actions/install
@@ -24,7 +24,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout Repository
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
         -   name: Install
             uses: ./.github/common-actions/install
@@ -38,7 +38,7 @@ jobs:
         needs: [eslint, prettier]
         steps:
         -   name: Checkout Repository
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
         -   name: Install Vercel CLI
             run: npm install --global vercel@latest
@@ -58,7 +58,7 @@ jobs:
         needs: [eslint, prettier]
         steps:
         -   name: Checkout Repository
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
         -   name: Install Vercel CLI
             run: npm install --global vercel@latest
