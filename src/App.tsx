@@ -5,8 +5,10 @@ import {
     HOME_SCREEN,
     LOGIN_USER_SCREEN,
     ORDER_CONFIRMED_SCREEN,
+    ORDER_DETAIL_SCREEN,
     ORDER_FAILED_SCREEN,
     ORDER_PAYMENT_FAILED_SCREEN,
+    ORDER_SCREEN,
     PRODUCT_SCREEN,
     REGISTER_USER_SCREEN,
     VERIFY_USER_EMAIL_SCREEN
@@ -20,7 +22,9 @@ import CheckoutScreen from "screens/OrderService/CheckoutScreen";
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/AuthService/LoginScreen";
 import OrderConfirmedScreen from "screens/OrderService/OrderConfirmedScreen";
+import OrderDetailScreen from "screens/OrderService/OrderDetailScreen";
 import OrderFailedScreen from "screens/OrderService/OrderFailedScreen";
+import OrderListScreen from "screens/OrderService/OrderListScreen";
 import OrderPaymentFailedScreen from "screens/OrderService/OrderPaymentFailedScreen";
 import ProductScreen from "screens/ProductService/ProductScreen";
 import ProtectedUserRoute from "routings/ProtectedUserRoute";
@@ -49,6 +53,8 @@ export default function App() {
                         path={ORDER_PAYMENT_FAILED_SCREEN}
                         element={<OrderPaymentFailedScreen />}
                     />
+                    <Route path={ORDER_SCREEN} element={<OrderListScreen />} />
+                    <Route path={ORDER_DETAIL_SCREEN} element={<OrderDetailScreen />} />
                 </Route>
             </Routes>
         </Router>

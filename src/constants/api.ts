@@ -13,4 +13,7 @@ export const SHIPPING_ADDRESS_BY_ID_URI = (userAddressId: bigint) => {
     return `shipping/user-address/${userAddressId}`;
 };
 export const RAZORPAY_ORDER_URI = "orders/razorpay";
-export const ORDER_API = "orders/";
+export const ORDER_URI = "orders/";
+export const ORDER_BY_ID_URI = (orderId: bigint) => {
+    return `orders/${orderId}`;
+};

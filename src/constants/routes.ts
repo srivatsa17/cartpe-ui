@@ -23,6 +23,7 @@ export const CART_SCREEN = "/cart";
 /* Order service routes */
 export const CHECKOUT_SCREEN = "/checkout";
 export const ORDER_SCREEN = "/orders";
+export const ORDER_DETAIL_SCREEN = "/orders/:id";
 export const ORDER_CONFIRMED_SCREEN = "/order/confirmed";
 export const ORDER_FAILED_SCREEN = "/order/failed";
 export const ORDER_PAYMENT_FAILED_SCREEN = "/order/paymentFailed";

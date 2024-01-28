@@ -1,7 +1,7 @@
 import { ErrorResponse, Payment, PaymentMethods, RazorpaySuccessHandlerArgs } from "utils/types";
 
 /* eslint-disable camelcase */
-import { ORDER_API } from "constants/api";
+import { ORDER_URI } from "constants/api";
 import { axiosInstance } from "utils/axios";
 import { throwErrorResponse } from "utils/errorResponse";
 
@@ -36,7 +36,7 @@ export const createOrder = async ({
             razorpay_signature: razorpayOrderDetails?.razorpay_signature || null,
             payment_details: paymentDetails
         };
-        const { data } = await axiosInstance.post(ORDER_API, orderData);
+        const { data } = await axiosInstance.post(ORDER_URI, orderData);
         return data;
     } catch (error) {
         const err = error as ErrorResponse;

@@ -173,6 +173,7 @@ export type PaymentStatus =
 export type Order = {
     id: bigint;
     amount: number;
+    pending_amount: number;
     user: string;
     user_address: ShippingAddress;
     is_paid: boolean;
@@ -189,6 +190,7 @@ export type Order = {
         product: {
             id: bigint;
             name: string;
+            slug: string;
             description: string;
             brand: string;
             featured_image: string;
@@ -197,7 +199,19 @@ export type Order = {
         created_at: string;
         updated_at: string;
     }>;
-    payment: Payment;
+    payment_details: Payment;
+};
+
+export type OrderListState = {
+    isLoading: boolean;
+    orders: Array<Order> | [];
+    error: Error;
+};
+
+export type OrderDetailsState = {
+    isLoading: boolean;
+    order: Order | null;
+    error: Error;
 };
 
 /* Payment Types */
