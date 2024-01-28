@@ -6,6 +6,29 @@ import React from "react";
 import { useReduxSelector } from "hooks/redux";
 import { useSearchParams } from "react-router-dom";
 
+interface TabContentProps {
+    title: string;
+    orders: Array<Order>;
+    emptyListTitle: string;
+}
+
+const TabContent = ({ orders, emptyListTitle }: TabContentProps) => (
+    <React.Fragment>
+        {orders.length ? (
+            orders.map((order) => (
+                <div key={order.id} className="grid xl:grid-cols-3">
+                    <div className="xl:col-span-2">
+                        <OrderCard order={order} />
+                        <Spacer y={7} />
+                    </div>
+                </div>
+            ))
+        ) : (
+            <div className="text-default-500">{emptyListTitle}</div>
+        )}
+    </React.Fragment>
+);
+
 function OrderStatusTabs() {
     const { orders } = useReduxSelector((state) => state.orderList);
     const [selectedTab, setSelectedTab] = React.useState<string | number>("confirmed-orders");
@@ -36,6 +59,27 @@ function OrderStatusTabs() {
     const cancelledOrders = orders.filter(handleFilterCancelledOrderStatus);
     const returnedOrders = orders.filter(handleFilterReturnedOrderStatus);
 
+    const tabData = [
+        {
+            key: "confirmed-orders",
+            title: "Orders",
+            orders: completedOrders,
+            emptyListTitle: "No orders found."
+        },
+        {
+            key: "cancelled-orders",
+            title: "Cancelled Orders",
+            orders: cancelledOrders,
+            emptyListTitle: "No cancelled orders found."
+        },
+        {
+            key: "returned-orders",
+            title: "Returned Orders",
+            orders: returnedOrders,
+            emptyListTitle: "No returned orders found."
+        }
+    ];
+
     return (
         <div>
             <Tabs
@@ -49,79 +93,21 @@ function OrderStatusTabs() {
                     cursor: "w-full"
                 }}
             >
-                <Tab
-                    key="confirmed-orders"
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span>Orders</span>
-                            <Chip
-                                size="sm"
-                                color={selectedTab === "confirmed-orders" ? "primary" : "default"}
-                            >
-                                {completedOrders.length}
-                            </Chip>
-                        </div>
-                    }
-                >
-                    {completedOrders.length ? (
-                        completedOrders.map((order) => {
-                            return (
-                                <div key={order.id} className="grid xl:grid-cols-3">
-                                    <div className="xl:col-span-2">
-                                        <OrderCard order={order} />
-                                        <Spacer y={7} />
-                                    </div>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <div>Looks like there no orders yet</div>
-                    )}
-                </Tab>
-                <Tab
-                    key="cancelled-orders"
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span>Cancelled Orders</span>
-                            <Chip
-                                size="sm"
-                                color={selectedTab === "cancelled-orders" ? "primary" : "default"}
-                            >
-                                {cancelledOrders.length}
-                            </Chip>
-                        </div>
-                    }
-                >
-                    {cancelledOrders.length ? (
-                        cancelledOrders.map((order) => {
-                            return <div key={order.id}>{order.id.toString()}</div>;
-                        })
-                    ) : (
-                        <div>No orders have been cancelled</div>
-                    )}
-                </Tab>
-                <Tab
-                    key="returned-orders"
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span>Returned Orders</span>
-                            <Chip
-                                size="sm"
-                                color={selectedTab === "returned-orders" ? "primary" : "default"}
-                            >
-                                {returnedOrders.length}
-                            </Chip>
-                        </div>
-                    }
-                >
-                    {returnedOrders.length ? (
-                        returnedOrders.map((order) => {
-                            return <div key={order.id}>{order.id.toString()}</div>;
-                        })
-                    ) : (
-                        <div>No orders have been returned</div>
-                    )}
-                </Tab>
+                {tabData.map(({ key, title, orders, emptyListTitle }) => (
+                    <Tab
+                        key={key}
+                        title={
+                            <div className="flex items-center space-x-2">
+                                <span>{title}</span>
+                                <Chip size="sm" color={selectedTab === key ? "primary" : "default"}>
+                                    {orders.length}
+                                </Chip>
+                            </div>
+                        }
+                    >
+                        <TabContent title={title} orders={orders} emptyListTitle={emptyListTitle} />
+                    </Tab>
+                ))}
             </Tabs>
         </div>
     );
