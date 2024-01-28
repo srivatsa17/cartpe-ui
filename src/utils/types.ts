@@ -199,7 +199,7 @@ export type Order = {
         created_at: string;
         updated_at: string;
     }>;
-    payment: Payment;
+    payment_details: Payment;
 };
 
 export type OrderListState = {

@@ -7,7 +7,7 @@ import React from "react";
 import { getOrderList } from "redux/OrderService/orderListSlice";
 import { useReduxDispatch } from "hooks/redux";
 
-function OrderList() {
+function OrderListScreen() {
     const dispatch = useReduxDispatch();
 
     React.useEffect(() => {
@@ -34,4 +34,4 @@ function OrderList() {
     );
 }
 
-export default OrderList;
+export default OrderListScreen;
