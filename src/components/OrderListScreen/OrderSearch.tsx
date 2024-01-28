@@ -1,8 +1,34 @@
 import { Input } from "@nextui-org/react";
 import React from "react";
 import { SearchIcon } from "icons/SearchIcon";
+import { debounce } from "lodash";
+import { useSearchParams } from "react-router-dom";
 
 function OrderSearch() {
+    const [queryParams, setQueryParams] = useSearchParams();
+    const [searchedOrder, setSearchedOrder] = React.useState<string>(
+        queryParams.get("search") || ""
+    );
+
+    // Search after 500ms of user typing.
+    const debouncedSearch = React.useMemo(() => {
+        const performSearch = (value: string) => {
+            if (value === "") {
+                queryParams.delete("search");
+            } else {
+                queryParams.set("search", value);
+            }
+            setQueryParams(queryParams);
+        };
+
+        return debounce(performSearch, 500);
+    }, []);
+
+    const handleSearchValueChange = (value: string) => {
+        setSearchedOrder(value);
+        debouncedSearch(value);
+    };
+
     return (
         <div className="grid xl:grid-cols-3">
             <div className="xl:col-span-2 flex justify-between">
@@ -13,6 +39,8 @@ function OrderSearch() {
                         variant="flat"
                         radius="md"
                         placeholder="Search all orders"
+                        value={searchedOrder}
+                        onValueChange={handleSearchValueChange}
                         startContent={
                             <SearchIcon
                                 className="text-default-400"

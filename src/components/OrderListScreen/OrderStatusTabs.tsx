@@ -1,24 +1,32 @@
 import { Chip, Spacer, Tab, Tabs } from "@nextui-org/react";
 
+import { Order } from "utils/types";
 import OrderCard from "./OrderCard";
 import React from "react";
 import { useReduxSelector } from "hooks/redux";
+import { useSearchParams } from "react-router-dom";
 
 function OrderStatusTabs() {
     const { orders } = useReduxSelector((state) => state.orderList);
+    const [selectedTab, setSelectedTab] = React.useState<string | number>("confirmed-orders");
+    const [queryParams] = useSearchParams();
+    const searchedOrder = queryParams.get("search")?.toLowerCase() ?? "";
 
-    const completedOrders = orders.filter(
-        (order) =>
-            order.status === "PENDING" ||
-            "CONFIRMED" ||
-            "SHIPPED" ||
-            "OUT_FOR_DELIVERY" ||
-            "DELIVERED"
-    );
+    const handleFilterBookedOrderStatus = (order: Order) => {
+        return ["CONFIRMED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"].includes(order.status);
+    };
+
+    const handleFilterProductNameSearch = (order: Order) => {
+        return order.order_items.some((orderItem) =>
+            orderItem.product.name.toLowerCase().includes(searchedOrder)
+        );
+    };
+
+    const completedOrders = orders
+        .filter(handleFilterBookedOrderStatus)
+        .filter(handleFilterProductNameSearch);
 
     const cancelledOrders = orders.filter((order) => order.status === "CANCELLED");
-
-    const [selectedTab, setSelectedTab] = React.useState<string | number>("confirmed-orders");
 
     return (
         <div>
