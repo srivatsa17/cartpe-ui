@@ -1,7 +1,7 @@
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ErrorResponse, Order, OrderListState } from "utils/types";
 
-import { ORDER_API } from "constants/api";
+import { ORDER_URI } from "constants/api";
 import { axiosInstance } from "utils/axios";
 import { throwErrorResponse } from "utils/errorResponse";
 
@@ -14,7 +14,7 @@ const initialState: OrderListState = {
 export const getOrderList = () => async (dispatch: Dispatch) => {
     try {
         dispatch(getOrderListRequest());
-        const { data } = await axiosInstance.get(ORDER_API);
+        const { data } = await axiosInstance.get(ORDER_URI);
         dispatch(getOrderListSuccess(data));
     } catch (error) {
         const err = error as ErrorResponse;

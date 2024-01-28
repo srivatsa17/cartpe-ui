@@ -208,6 +208,12 @@ export type OrderListState = {
     error: Error;
 };
 
+export type OrderDetailsState = {
+    isLoading: boolean;
+    order: Order | null;
+    error: Error;
+};
+
 /* Payment Types */
 export type Payment = {
     id: bigint;
