@@ -16,6 +16,14 @@ function OrderStatusTabs() {
         return ["CONFIRMED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"].includes(order.status);
     };
 
+    const handleFilterCancelledOrderStatus = (order: Order) => {
+        return ["CANCELLED"].includes(order.status);
+    };
+
+    const handleFilterReturnedOrderStatus = (order: Order) => {
+        return ["RETURNED"].includes(order.status);
+    };
+
     const handleFilterProductNameSearch = (order: Order) => {
         return order.order_items.some((orderItem) =>
             orderItem.product.name.toLowerCase().includes(searchedOrder)
@@ -25,8 +33,8 @@ function OrderStatusTabs() {
     const completedOrders = orders
         .filter(handleFilterBookedOrderStatus)
         .filter(handleFilterProductNameSearch);
-
-    const cancelledOrders = orders.filter((order) => order.status === "CANCELLED");
+    const cancelledOrders = orders.filter(handleFilterCancelledOrderStatus);
+    const returnedOrders = orders.filter(handleFilterReturnedOrderStatus);
 
     return (
         <div>
@@ -90,6 +98,28 @@ function OrderStatusTabs() {
                         })
                     ) : (
                         <div>No orders have been cancelled</div>
+                    )}
+                </Tab>
+                <Tab
+                    key="returned-orders"
+                    title={
+                        <div className="flex items-center space-x-2">
+                            <span>Returned Orders</span>
+                            <Chip
+                                size="sm"
+                                color={selectedTab === "returned-orders" ? "primary" : "default"}
+                            >
+                                {returnedOrders.length}
+                            </Chip>
+                        </div>
+                    }
+                >
+                    {returnedOrders.length ? (
+                        returnedOrders.map((order) => {
+                            return <div key={order.id}>{order.id.toString()}</div>;
+                        })
+                    ) : (
+                        <div>No orders have been returned</div>
                     )}
                 </Tab>
             </Tabs>
