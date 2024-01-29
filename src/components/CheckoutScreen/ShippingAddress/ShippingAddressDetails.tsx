@@ -120,16 +120,20 @@ function ShippingAddressDetails({
                 )}
             </RadioGroup>
             <Spacer y={2} />
-            <div className="xs:flex flex-col gap-3">
-                <Button
-                    color="success"
-                    variant="ghost"
-                    isDisabled={isAddressListEmpty || isLoading}
-                    onClick={handleUseSelectedAddress}
-                >
-                    Use this address
-                </Button>
-                <AddNewAddress />
+            <div className="flex gap-3">
+                <div>
+                    <Button
+                        color="success"
+                        variant="ghost"
+                        isDisabled={isAddressListEmpty || isLoading}
+                        onClick={handleUseSelectedAddress}
+                    >
+                        Use this address
+                    </Button>
+                </div>
+                <div>
+                    <AddNewAddress />
+                </div>
             </div>
         </div>
     );
