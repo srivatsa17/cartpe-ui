@@ -11,6 +11,7 @@ import {
     ORDER_SCREEN,
     PRODUCT_SCREEN,
     REGISTER_USER_SCREEN,
+    SAVED_ADDRESSES_SCREEN,
     VERIFY_USER_EMAIL_SCREEN
 } from "constants/routes";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -30,6 +31,7 @@ import ProductScreen from "screens/ProductService/ProductScreen";
 import ProtectedUserRoute from "routings/ProtectedUserRoute";
 import React from "react";
 import RegisterScreen from "screens/AuthService/RegisterScreen";
+import SavedAddressListScreen from "screens/SavedAddressListScreen";
 import VerifyEmailScreen from "screens/AuthService/VerifyEmailScreen";
 
 export default function App() {
@@ -55,6 +57,7 @@ export default function App() {
                     />
                     <Route path={ORDER_SCREEN} element={<OrderListScreen />} />
                     <Route path={ORDER_DETAIL_SCREEN} element={<OrderDetailScreen />} />
+                    <Route path={SAVED_ADDRESSES_SCREEN} element={<SavedAddressListScreen />} />
                 </Route>
             </Routes>
         </Router>

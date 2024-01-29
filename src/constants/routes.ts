@@ -9,7 +9,7 @@ export const RESET_PASSWORD_CONFIRM_SCREEN = "/user/reset-password-confirm/:id/:
 export const HOME_SCREEN = "/";
 export const WISHLIST_SCREEN = "/wishlist";
 export const CONTACT_US_SCREEN = "/contact-us";
-export const SAVED_ADDRESSES_SCREEN = "/saved-addresses";
+export const SAVED_ADDRESSES_SCREEN = "/addresses";
 export const EDIT_PROFILE_SCREEN = "/edit-profile";
 
 /* Product service routes */

@@ -35,7 +35,7 @@ function AddNewAddress() {
 
     return (
         <React.Fragment>
-            <Button color="secondary" variant="ghost" className="sm:ml-2" onPress={onOpen}>
+            <Button color="secondary" variant="ghost" onPress={onOpen}>
                 Add new address
             </Button>
             <Modal
