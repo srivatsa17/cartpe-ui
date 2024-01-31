@@ -64,7 +64,7 @@ export const registerUser = (registerForm: registerForm) => async (dispatch: Dis
 export const verifyUserEmail = (id: string, token: string) => async (dispatch: Dispatch) => {
     try {
         dispatch(verifyUserRequest());
-        const verifyUserEmailData = { uidb64: id, token: token };
+        const verifyUserEmailData = { uid: id, token: token };
         await publicAxiosInstance.patch(VERIFY_EMAIL, verifyUserEmailData);
         dispatch(verifyUserSuccess());
         const updateData = {
