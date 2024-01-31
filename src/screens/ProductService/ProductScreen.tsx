@@ -29,7 +29,7 @@ function ProductScreen() {
                 <BreadcrumbItem href={HOME_SCREEN}>Home</BreadcrumbItem>
                 <BreadcrumbItem href={CATEGORY_SCREEN}>Categories</BreadcrumbItem>
                 <BreadcrumbItem
-                    href={`/categories/${product.category_slug}?rawQuery=${product.category}`}
+                    href={`/categories/${product.categorySlug}?rawQuery=${product.category}`}
                 >
                     {product.category}
                 </BreadcrumbItem>

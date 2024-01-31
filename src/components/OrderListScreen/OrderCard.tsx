@@ -27,7 +27,7 @@ function OrderCard({ order }: OrderCardProps) {
                 <CardHeader className="px-7 grid xs:grid-flow-row sm:grid-flow-col justify-between gap-3 md:gap-6">
                     <div>
                         <div className="text-default-500">Order Placed on</div>
-                        <div>{order.created_at}</div>
+                        <div>{order.createdAt}</div>
                     </div>
                     <div>
                         <div className="text-default-500">Total amount</div>
@@ -43,21 +43,21 @@ function OrderCard({ order }: OrderCardProps) {
                             color="default"
                             content={
                                 <div className="p-1">
-                                    <div className="font-semibold">{order.user_address.name}</div>
+                                    <div className="font-semibold">{order.userAddress.name}</div>
                                     <Spacer y={1} />
                                     <div className="max-w-44">
-                                        {order.user_address.address.line1},{" "}
-                                        {order.user_address.address.line2},{" "}
-                                        {order.user_address.address.city},{" "}
-                                        {order.user_address.address.state},{" "}
-                                        {order.user_address.address.country},{" "}
-                                        {order.user_address.address.pin_code}
+                                        {order.userAddress.address.building},{" "}
+                                        {order.userAddress.address.area},{" "}
+                                        {order.userAddress.address.city},{" "}
+                                        {order.userAddress.address.state},{" "}
+                                        {order.userAddress.address.country},{" "}
+                                        {order.userAddress.address.pinCode}
                                     </div>
                                 </div>
                             }
                         >
                             <div className="flex text-[#006FEE]">
-                                {order.user_address.name}
+                                {order.userAddress.name}
                                 <ChevronDown
                                     width={13}
                                     height={13}
@@ -81,11 +81,11 @@ function OrderCard({ order }: OrderCardProps) {
                         Status: <span className="font-semibold">{order.status}</span>
                     </div>
                     <Spacer y={3} />
-                    {order.order_items.map((orderItem) => {
+                    {order.orderItems.map((orderItem) => {
                         return (
                             <div key={orderItem.id} className="flex gap-12">
                                 <Image
-                                    src={orderItem.product.featured_image}
+                                    src={orderItem.product.featuredImage}
                                     height={100}
                                     width={100}
                                 />
@@ -119,7 +119,7 @@ function OrderCard({ order }: OrderCardProps) {
                         <div className="flex text-default-500">
                             Pending amount:
                             <RupeeIcon width={17} height={17} size={17} className="mt-1 ml-1" />
-                            {order.pending_amount.toFixed(2)}
+                            {order.pendingAmount.toFixed(2)}
                         </div>
                     </div>
                     <Button

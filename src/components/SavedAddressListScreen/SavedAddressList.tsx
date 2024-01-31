@@ -23,7 +23,7 @@ function SavedAddressList() {
                                 <CardHeader className="flex justify-between gap-4">
                                     <div className="font-semibold">{userAddress.name}</div>
                                     <div className="flex h-6 items-center">
-                                        {userAddress.is_default && (
+                                        {userAddress.isDefault && (
                                             <>
                                                 <Chip className="mr-2" color="primary">
                                                     Default
@@ -42,12 +42,12 @@ function SavedAddressList() {
                                 </CardHeader>
                                 <CardBody className="space-y-3">
                                     <div>
-                                        {userAddress.address.line1}, {userAddress.address.line2},{" "}
+                                        {userAddress.address.building}, {userAddress.address.area},{" "}
                                         {userAddress.address.city}, {userAddress.address.state},{" "}
-                                        {userAddress.address.country},{" "}
-                                        {userAddress.address.pin_code}.
+                                        {userAddress.address.country}, {userAddress.address.pinCode}
+                                        .
                                     </div>
-                                    <div>Phone Number: {userAddress.alternate_phone}</div>
+                                    <div>Phone Number: {userAddress.alternatePhone}</div>
                                 </CardBody>
                             </Card>
                         );

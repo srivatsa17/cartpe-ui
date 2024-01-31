@@ -113,18 +113,16 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                             <Field
                                                 as={Input}
                                                 type="text"
-                                                name="alternate_phone"
+                                                name="alternatePhone"
                                                 label="Phone Number"
                                                 placeholder="Enter your phone number."
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 isInvalid={
-                                                    touched.alternate_phone &&
-                                                    errors.alternate_phone
+                                                    touched.alternatePhone && errors.alternatePhone
                                                 }
                                                 isValid={
-                                                    touched.alternate_phone &&
-                                                    !errors.alternate_phone
+                                                    touched.alternatePhone && !errors.alternatePhone
                                                 }
                                                 variant="flat"
                                                 isClearable
@@ -134,12 +132,11 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 className="max-w-md"
                                                 autoComplete="off"
                                                 errorMessage={
-                                                    touched.alternate_phone &&
-                                                    errors.alternate_phone
+                                                    touched.alternatePhone && errors.alternatePhone
                                                 }
                                                 color={
-                                                    touched.alternate_phone
-                                                        ? errors.alternate_phone
+                                                    touched.alternatePhone
+                                                        ? errors.alternatePhone
                                                             ? "danger"
                                                             : "success"
                                                         : "default"
@@ -162,18 +159,18 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                             <Field
                                                 as={Input}
                                                 type="text"
-                                                name="address.line1"
+                                                name="address.building"
                                                 label="Building"
                                                 placeholder="Flat, House no., Building, Company, Apartment."
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 isInvalid={
-                                                    getIn(touched, "address.line1") &&
-                                                    getIn(errors, "address.line1")
+                                                    getIn(touched, "address.building") &&
+                                                    getIn(errors, "address.building")
                                                 }
                                                 isValid={
-                                                    getIn(touched, "address.line1") &&
-                                                    !getIn(errors, "address.line1")
+                                                    getIn(touched, "address.building") &&
+                                                    !getIn(errors, "address.building")
                                                 }
                                                 variant="flat"
                                                 isClearable
@@ -183,12 +180,12 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 className="max-w-md"
                                                 autoComplete="off"
                                                 errorMessage={
-                                                    getIn(touched, "address.line1") &&
-                                                    getIn(errors, "address.line1")
+                                                    getIn(touched, "address.building") &&
+                                                    getIn(errors, "address.building")
                                                 }
                                                 color={
-                                                    getIn(touched, "address.line1")
-                                                        ? getIn(errors, "address.line1")
+                                                    getIn(touched, "address.building")
+                                                        ? getIn(errors, "address.building")
                                                             ? "danger"
                                                             : "success"
                                                         : "default"
@@ -197,18 +194,18 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                             <Field
                                                 as={Input}
                                                 type="text"
-                                                name="address.line2"
+                                                name="address.area"
                                                 label="Area"
                                                 placeholder="Enter Area, Street, Sector, Village."
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 isInvalid={
-                                                    getIn(touched, "address.line2") &&
-                                                    getIn(errors, "address.line2")
+                                                    getIn(touched, "address.area") &&
+                                                    getIn(errors, "address.area")
                                                 }
                                                 isValid={
-                                                    getIn(touched, "address.line2") &&
-                                                    !getIn(errors, "address.line2")
+                                                    getIn(touched, "address.area") &&
+                                                    !getIn(errors, "address.area")
                                                 }
                                                 variant="flat"
                                                 isClearable
@@ -218,12 +215,12 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 className="max-w-md"
                                                 autoComplete="off"
                                                 errorMessage={
-                                                    getIn(touched, "address.line2") &&
-                                                    getIn(errors, "address.line2")
+                                                    getIn(touched, "address.area") &&
+                                                    getIn(errors, "address.area")
                                                 }
                                                 color={
-                                                    getIn(touched, "address.line2")
-                                                        ? getIn(errors, "address.line2")
+                                                    getIn(touched, "address.area")
+                                                        ? getIn(errors, "address.area")
                                                             ? "danger"
                                                             : "success"
                                                         : "default"
@@ -310,18 +307,18 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                             <Field
                                                 as={Input}
                                                 type="text"
-                                                name="address.pin_code"
+                                                name="address.pinCode"
                                                 label="Pin Code"
                                                 placeholder="Pin Code"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 isInvalid={
-                                                    getIn(touched, "address.pin_code") &&
-                                                    getIn(errors, "address.pin_code")
+                                                    getIn(touched, "address.pinCode") &&
+                                                    getIn(errors, "address.pinCode")
                                                 }
                                                 isValid={
-                                                    getIn(touched, "address.pin_code") &&
-                                                    !getIn(errors, "address.pin_code")
+                                                    getIn(touched, "address.pinCode") &&
+                                                    !getIn(errors, "address.pinCode")
                                                 }
                                                 variant="flat"
                                                 isClearable
@@ -331,12 +328,12 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 className="max-w-md"
                                                 autoComplete="off"
                                                 errorMessage={
-                                                    getIn(touched, "address.pin_code") &&
-                                                    getIn(errors, "address.pin_code")
+                                                    getIn(touched, "address.pinCode") &&
+                                                    getIn(errors, "address.pinCode")
                                                 }
                                                 color={
-                                                    getIn(touched, "address.pin_code")
-                                                        ? getIn(errors, "address.pin_code")
+                                                    getIn(touched, "address.pinCode")
+                                                        ? getIn(errors, "address.pinCode")
                                                             ? "danger"
                                                             : "success"
                                                         : "default"
@@ -364,10 +361,10 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                         </Field>
                                         <Field
                                             as={Checkbox}
-                                            name="is_default"
-                                            isSelected={values.is_default}
+                                            name="isDefault"
+                                            isSelected={values.isDefault}
                                             onChange={handleChange}
-                                            isInvalid={touched.is_default && errors.is_default}
+                                            isInvalid={touched.isDefault && errors.isDefault}
                                             color="secondary"
                                         >
                                             Mark as default address

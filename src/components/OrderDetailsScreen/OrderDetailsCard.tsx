@@ -11,28 +11,28 @@ function OrderDetailsCard() {
     return (
         <div>
             <div className="flex h-6 items-center space-x-3">
-                <div>Ordered on {order.created_at}</div>
+                <div>Ordered on {order.createdAt}</div>
                 <Divider orientation="vertical" />
                 <div>Order #{order.id.toString()}</div>
             </div>
             <Spacer y={10} />
             <Card>
-                <CardBody className="grid lg:grid-cols-2 space-y-5 lg:space-y-0 lg:p-5">
+                <CardBody className="grid lg:grid-cols-2 space-y-5 lg:space-y-0 p-5">
                     <div>
                         <div className="grid lg:grid-cols-2 gap-3">
                             <div>
                                 <div className="font-semibold">Shipping Address</div>
                                 <Spacer y={1.5} />
-                                <div>{order.user_address.name}</div>
+                                <div>{order.userAddress.name}</div>
                                 <div>
-                                    {order.user_address.address.line1},{" "}
-                                    {order.user_address.address.line2},{" "}
-                                    {order.user_address.address.city},{" "}
-                                    {order.user_address.address.state},{" "}
-                                    {order.user_address.address.country},{" "}
-                                    {order.user_address.address.pin_code}
+                                    {order.userAddress.address.building},{" "}
+                                    {order.userAddress.address.area},{" "}
+                                    {order.userAddress.address.city},{" "}
+                                    {order.userAddress.address.state},{" "}
+                                    {order.userAddress.address.country},{" "}
+                                    {order.userAddress.address.pinCode}
                                 </div>
-                                <div>Phone number: {order.user_address.alternate_phone}</div>
+                                <div>Phone number: {order.userAddress.alternatePhone}</div>
                             </div>
                             <div className="lg:justify-self-center">
                                 <div className="font-semibold">Payment Method</div>
@@ -47,11 +47,11 @@ function OrderDetailsCard() {
                             </div>
                             <Spacer y={5} />
                             <div className="space-y-4">
-                                {order.order_items.map((orderItem) => {
+                                {order.orderItems.map((orderItem) => {
                                     return (
                                         <div key={orderItem.id} className="flex gap-12">
                                             <Image
-                                                src={orderItem.product.featured_image}
+                                                src={orderItem.product.featuredImage}
                                                 height={100}
                                                 width={100}
                                             />
@@ -77,7 +77,7 @@ function OrderDetailsCard() {
                         <div className="flex text-default-500">
                             Pending amount:{" "}
                             <RupeeIcon height={17} width={17} size={17} className="ml-1 mt-1" />
-                            {order.pending_amount.toFixed(2)}
+                            {order.pendingAmount.toFixed(2)}
                         </div>
                         <Spacer y={4} />
                         <Button
@@ -96,7 +96,7 @@ function OrderDetailsCard() {
                             <div>Total MRP</div>
                             <div className="flex">
                                 <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                                {order.payment_details.total_mrp.toFixed(2)}
+                                {order.paymentDetails.totalMrp.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
@@ -104,7 +104,7 @@ function OrderDetailsCard() {
                             <div>Discount on MRP</div>
                             <div className="flex text-green-600">
                                 -<RupeeIcon width={17} height={17} size={17} className="my-1" />
-                                {order.payment_details.total_discount_price.toFixed(2)}
+                                {order.paymentDetails.totalDiscountPrice.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
@@ -112,16 +112,16 @@ function OrderDetailsCard() {
                             <div>Convenience Fee</div>
                             <div className="flex">
                                 <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                                {order.payment_details.convenience_fee.toFixed(2)}
+                                {order.paymentDetails.convenienceFee.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
                         <div className="flex justify-between">
                             <div>Shipping Fee</div>
                             <div className="text-green-600">
-                                {order.payment_details.shipping_fee === 0
+                                {order.paymentDetails.shippingFee === 0
                                     ? "FREE"
-                                    : order.payment_details.shipping_fee}
+                                    : order.paymentDetails.shippingFee}
                             </div>
                         </div>
                         <Spacer y={0.5} />
@@ -129,17 +129,16 @@ function OrderDetailsCard() {
                             <div>Round Off</div>
                             <div
                                 className={`flex ${
-                                    order.payment_details.total_amount <
-                                        order.payment_details.total_selling_price &&
-                                    "text-green-600"
+                                    order.paymentDetails.totalAmount <
+                                        order.paymentDetails.totalSellingPrice && "text-green-600"
                                 }`}
                             >
-                                {order.payment_details.total_amount <
-                                order.payment_details.total_selling_price
+                                {order.paymentDetails.totalAmount <
+                                order.paymentDetails.totalSellingPrice
                                     ? "-"
                                     : ""}
                                 <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                                {order.payment_details.round_off_price.toFixed(2)}
+                                {order.paymentDetails.roundOffPrice.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={2} />
@@ -149,15 +148,15 @@ function OrderDetailsCard() {
                             <div>Total Amount</div>
                             <div className="flex">
                                 <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                                {order.payment_details.total_amount.toFixed(2)}
+                                {order.paymentDetails.totalAmount.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={1} />
                         <div className="flex text-rose-600">
                             Your savings:
                             <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                            {order.payment_details.savings_amount.toFixed(2)} (
-                            {order.payment_details.savings_percent.toFixed(2)}%)
+                            {order.paymentDetails.savingsAmount.toFixed(2)} (
+                            {order.paymentDetails.savingsPercent.toFixed(2)}%)
                         </div>
                     </div>
                 </CardBody>

@@ -1,4 +1,5 @@
 import { Input } from "@nextui-org/react";
+import { ORDER_SEARCH } from "constants/queryParam";
 import React from "react";
 import { SearchIcon } from "icons/SearchIcon";
 import { debounce } from "lodash";
@@ -7,16 +8,16 @@ import { useSearchParams } from "react-router-dom";
 function OrderSearch() {
     const [queryParams, setQueryParams] = useSearchParams();
     const [searchedOrder, setSearchedOrder] = React.useState<string>(
-        queryParams.get("search") || ""
+        queryParams.get(ORDER_SEARCH) || ""
     );
 
     // Search after 500ms of user typing.
     const debouncedSearch = React.useMemo(() => {
         const performSearch = (value: string) => {
             if (value === "") {
-                queryParams.delete("search");
+                queryParams.delete(ORDER_SEARCH);
             } else {
-                queryParams.set("search", value);
+                queryParams.set(ORDER_SEARCH, value);
             }
             setQueryParams(queryParams);
         };

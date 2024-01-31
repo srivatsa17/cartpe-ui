@@ -29,11 +29,11 @@ export const ShippingAddressDescription = ({
     return (
         <React.Fragment>
             <div>
-                {shippingAddress.address.line1}, {shippingAddress.address.line2},{" "}
+                {shippingAddress.address.building}, {shippingAddress.address.area},{" "}
                 {shippingAddress.address.city}, {shippingAddress.address.state},{" "}
-                {shippingAddress.address.country} - {shippingAddress.address.pin_code}
+                {shippingAddress.address.country} - {shippingAddress.address.pinCode}
             </div>
-            <div className="pt-2">Phone Number - {shippingAddress.alternate_phone}</div>
+            <div className="pt-2">Phone Number - {shippingAddress.alternatePhone}</div>
             {selectedAddress.id === shippingAddress.id && (
                 <div className="pt-2 flex gap-2">
                     <EditAddress shippingAddress={shippingAddress} />

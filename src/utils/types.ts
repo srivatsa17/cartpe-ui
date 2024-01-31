@@ -52,7 +52,7 @@ export type CategorySearchState = {
 export type ProductImages = {
     id: bigint;
     image: string;
-    is_featured: boolean;
+    isFeatured: boolean;
 };
 
 export type Product = {
@@ -60,18 +60,18 @@ export type Product = {
     name: string;
     brand: string;
     category: string;
-    category_slug: string;
+    categorySlug: string;
     slug: string;
     description?: string;
     rating?: number;
     reviewCount?: number;
-    stock_count: number;
+    stockCount: number;
     price: number;
-    selling_price: number;
-    discounted_price: number;
+    sellingPrice: number;
+    discountedPrice: number;
     discount: number;
-    product_images: Array<ProductImages>;
-    created_at: string;
+    productImages: Array<ProductImages>;
+    createdAt: string;
 };
 
 export type ProductListState = {
@@ -102,13 +102,13 @@ export type CartState = {
 /* Order Service Types */
 export type Address = {
     id: bigint;
-    line1: string;
-    line2: string;
+    building: string;
+    area: string;
     city: string;
     state: string;
-    pin_code: string;
-    created_at: string;
-    updated_at: string;
+    pinCode: string;
+    createdAt: string;
+    updatedAt: string;
     country: string;
 };
 
@@ -117,11 +117,11 @@ export type ShippingAddressType = "Home" | "Work" | "Other";
 export type ShippingAddress = {
     id: bigint;
     name: string;
-    alternate_phone: string;
+    alternatePhone: string;
     type: ShippingAddressType;
-    is_default: boolean;
-    created_at: string;
-    updated_at: string;
+    isDefault: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: Address;
     user: string;
 };
@@ -135,12 +135,12 @@ export type ShippingAddressState = {
 export type ShippingAddressFormData = NestedOmit<
     ShippingAddress,
     | "id"
-    | "created_at"
-    | "updated_at"
+    | "createdAt"
+    | "updatedAt"
     | "user"
     | "address.id"
-    | "address.created_at"
-    | "address.updated_at"
+    | "address.createdAt"
+    | "address.updatedAt"
 >;
 
 export type OrderDetails = {
@@ -173,18 +173,18 @@ export type PaymentStatus =
 export type Order = {
     id: bigint;
     amount: number;
-    pending_amount: number;
+    pendingAmount: number;
     user: string;
-    user_address: ShippingAddress;
-    is_paid: boolean;
+    userAddress: ShippingAddress;
+    isPaid: boolean;
     status: PaymentStatus;
     method: PaymentMethods;
-    razorpay_order_id: string | null;
-    razorpay_payment_id: string | null;
-    razorpay_signature: string | null;
-    created_at: string;
-    updated_at: string;
-    order_items: Array<{
+    razorpayOrderId: string | null;
+    razorpayPaymentId: string | null;
+    razorpaySignature: string | null;
+    createdAt: string;
+    updatedAt: string;
+    orderItems: Array<{
         id: bigint;
         order: bigint;
         product: {
@@ -193,13 +193,13 @@ export type Order = {
             slug: string;
             description: string;
             brand: string;
-            featured_image: string;
+            featuredImage: string;
         };
         quantity: number;
-        created_at: string;
-        updated_at: string;
+        createdAt: string;
+        updatedAt: string;
     }>;
-    payment_details: Payment;
+    paymentDetails: Payment;
 };
 
 export type OrderListState = {
@@ -218,15 +218,15 @@ export type OrderDetailsState = {
 export type Payment = {
     id: bigint;
     order: bigint;
-    total_mrp: number;
-    total_discount_price: number;
-    total_selling_price: number;
-    convenience_fee: number;
-    shipping_fee: number;
-    total_amount: number;
-    round_off_price: number;
-    savings_amount: number;
-    savings_percent: number;
+    totalMrp: number;
+    totalDiscountPrice: number;
+    totalSellingPrice: number;
+    convenienceFee: number;
+    shippingFee: number;
+    totalAmount: number;
+    roundOffPrice: number;
+    savingsAmount: number;
+    savingsPercent: number;
 };
 
 /* Razorpay Types */

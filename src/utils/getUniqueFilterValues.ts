@@ -31,11 +31,11 @@ function getDiscountRanges() {
 }
 
 function getPriceRange(products: Product[]) {
-    let minPrice = products[0]?.selling_price ?? 0;
-    let maxPrice = products[0]?.selling_price ?? 1000;
+    let minPrice = products[0]?.sellingPrice ?? 0;
+    let maxPrice = products[0]?.sellingPrice ?? 1000;
 
     for (let i = 0; i < products.length; i++) {
-        const price = products[i].selling_price;
+        const price = products[i].sellingPrice;
         if (price > maxPrice) {
             maxPrice = price;
         }

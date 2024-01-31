@@ -28,13 +28,13 @@ export const createOrder = async ({
     try {
         const orderData = {
             method: method,
-            user_address: shippingAddressId,
+            userAddress: shippingAddressId,
             amount: amount,
-            order_items: orderItems,
-            razorpay_order_id: razorpayOrderDetails?.razorpay_order_id || null,
-            razorpay_payment_id: razorpayOrderDetails?.razorpay_payment_id || null,
-            razorpay_signature: razorpayOrderDetails?.razorpay_signature || null,
-            payment_details: paymentDetails
+            orderItems: orderItems,
+            razorpayOrderId: razorpayOrderDetails?.razorpay_order_id || null,
+            razorpayPaymentId: razorpayOrderDetails?.razorpay_payment_id || null,
+            razorpaySignature: razorpayOrderDetails?.razorpay_signature || null,
+            paymentDetails: paymentDetails
         };
         const { data } = await axiosInstance.post(ORDER_URI, orderData);
         return data;
