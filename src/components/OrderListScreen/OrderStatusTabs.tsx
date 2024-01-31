@@ -1,5 +1,6 @@
 import { Chip, Spacer, Tab, Tabs } from "@nextui-org/react";
 
+import { ORDER_SEARCH } from "constants/queryParam";
 import { Order } from "utils/types";
 import OrderCard from "./OrderCard";
 import React from "react";
@@ -33,7 +34,7 @@ function OrderStatusTabs() {
     const { orders } = useReduxSelector((state) => state.orderList);
     const [selectedTab, setSelectedTab] = React.useState<string | number>("confirmed-orders");
     const [queryParams] = useSearchParams();
-    const searchedOrder = queryParams.get("search")?.toLowerCase() ?? "";
+    const searchedOrder = queryParams.get(ORDER_SEARCH)?.toLowerCase() ?? "";
 
     const handleFilterBookedOrderStatus = (order: Order) => {
         return ["CONFIRMED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"].includes(order.status);
