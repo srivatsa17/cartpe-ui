@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { ORDER_CONFIRMED_SCREEN, ORDER_FAILED_SCREEN } from "constants/routes";
 import { Order, PaymentMethods } from "utils/types";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";

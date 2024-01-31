@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import {
     ORDER_CONFIRMED_SCREEN,
@@ -78,6 +77,7 @@ const DisplayRazorPayCheckoutForm = ({
                 currency: "INR",
                 name: "CartPe",
                 image: CARTPE_ICON_BLACK,
+                // eslint-disable-next-line camelcase
                 order_id: razorpayOrder.id,
                 handler: function (response: RazorpaySuccessHandlerArgs) {
                     if (shippingAddressId && orderItems && amount > 0) {
