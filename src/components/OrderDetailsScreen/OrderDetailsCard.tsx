@@ -17,7 +17,7 @@ function OrderDetailsCard() {
             </div>
             <Spacer y={10} />
             <Card>
-                <CardBody className="grid lg:grid-cols-2 space-y-5 lg:space-y-0 lg:p-5">
+                <CardBody className="grid lg:grid-cols-2 space-y-5 lg:space-y-0 p-5">
                     <div>
                         <div className="grid lg:grid-cols-2 gap-3">
                             <div>
