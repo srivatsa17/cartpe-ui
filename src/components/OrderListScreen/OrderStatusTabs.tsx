@@ -48,7 +48,7 @@ function OrderStatusTabs() {
     };
 
     const handleFilterProductNameSearch = (order: Order) => {
-        return order.order_items.some((orderItem) =>
+        return order.orderItems.some((orderItem) =>
             orderItem.product.name.toLowerCase().includes(searchedOrder)
         );
     };

@@ -45,7 +45,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
             <div className="flex py-2 text-2xl xs:text-lg">
                 <div className="flex font-semibold">
                     <RupeeIcon height={22} width={22} size={22} className="my-1" />{" "}
-                    {product.selling_price}
+                    {product.sellingPrice}
                 </div>
                 <div className="flex pl-3 line-through text-default-500 font-semibold">
                     <RupeeIcon height={22} width={22} size={22} className="my-1" /> {product.price}
@@ -58,12 +58,12 @@ function ProductDetails({ product }: ProductDetailsProps) {
                 <Spacer />
                 <div
                     className={
-                        product.stock_count !== undefined && product.stock_count <= 0
+                        product.stockCount !== undefined && product.stockCount <= 0
                             ? "text-red-500 font-semibold"
                             : "text-green-600 font-semibold"
                     }
                 >
-                    {product.stock_count !== undefined && product.stock_count > 0
+                    {product.stockCount !== undefined && product.stockCount > 0
                         ? "In Stock"
                         : "Out of Stock"}
                 </div>
@@ -88,7 +88,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
             <Divider />
 
             <div>
-                {product.stock_count && product.stock_count > 0 && (
+                {product.stockCount && product.stockCount > 0 && (
                     <div>
                         <div className="flex py-3 text-xl font-medium">
                             Delivery Options{" "}

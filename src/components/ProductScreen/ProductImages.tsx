@@ -10,8 +10,8 @@ interface ProductDetailsProps {
 }
 
 function ProductImages({ product, isLoading }: ProductDetailsProps) {
-    const featuredImage = product.product_images?.find(
-        (productImage) => productImage.is_featured === true
+    const featuredImage = product.productImages?.find(
+        (productImage) => productImage.isFeatured === true
     );
 
     // Add carousel once NextUI supports.

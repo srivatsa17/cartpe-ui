@@ -13,14 +13,14 @@ export const getCartPriceDetails = () => {
     const totalDiscountPrice = Number(
         cartItems.reduce(
             (sum: number, cartItem: Cart) =>
-                sum + cartItem.quantity * cartItem.product.discounted_price,
+                sum + cartItem.quantity * cartItem.product.discountedPrice,
             0
         )
     );
     const totalSellingPrice = Number(
         cartItems.reduce(
             (sum: number, cartItem: Cart) =>
-                sum + cartItem.quantity * cartItem.product.selling_price,
+                sum + cartItem.quantity * cartItem.product.sellingPrice,
             0
         )
     );

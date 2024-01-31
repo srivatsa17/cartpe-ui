@@ -11,8 +11,8 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
-    const featuredImage = product.product_images.find(
-        (productImage) => productImage.is_featured === true
+    const featuredImage = product.productImages.find(
+        (productImage) => productImage.isFeatured === true
     );
 
     return (
@@ -32,7 +32,7 @@ function ProductCard({ product }: ProductCardProps) {
                 <div className="flex">
                     <div className="flex font-semibold">
                         <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
-                        {product.selling_price}
+                        {product.sellingPrice}
                     </div>
                     <div className="flex pl-3 line-through text-default-500 font-semibold">
                         <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}

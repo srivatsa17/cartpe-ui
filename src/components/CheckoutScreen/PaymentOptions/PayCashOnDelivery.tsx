@@ -26,17 +26,17 @@ function PayCashOnDelivery() {
                     orderItems: orderItems,
                     amount: amount,
                     paymentDetails: {
-                        total_mrp: Number(cartPriceDetails.totalMRP.toFixed(2)),
-                        total_discount_price: Number(
+                        totalMrp: Number(cartPriceDetails.totalMRP.toFixed(2)),
+                        totalDiscountPrice: Number(
                             cartPriceDetails.totalDiscountPrice.toFixed(2)
                         ),
-                        total_selling_price: Number(cartPriceDetails.totalSellingPrice.toFixed(2)),
-                        convenience_fee: cartPriceDetails.convenienceFee,
-                        shipping_fee: cartPriceDetails.shippingFee,
-                        total_amount: Number(cartPriceDetails.totalAmount.toFixed(2)),
-                        round_off_price: Number(cartPriceDetails.roundOffPrice.toFixed(2)),
-                        savings_amount: Number(cartPriceDetails.savingsAmount.toFixed(2)),
-                        savings_percent: Number(cartPriceDetails.savingsPercent.toFixed(2))
+                        totalSellingPrice: Number(cartPriceDetails.totalSellingPrice.toFixed(2)),
+                        convenienceFee: cartPriceDetails.convenienceFee,
+                        shippingFee: cartPriceDetails.shippingFee,
+                        totalAmount: Number(cartPriceDetails.totalAmount.toFixed(2)),
+                        roundOffPrice: Number(cartPriceDetails.roundOffPrice.toFixed(2)),
+                        savingsAmount: Number(cartPriceDetails.savingsAmount.toFixed(2)),
+                        savingsPercent: Number(cartPriceDetails.savingsPercent.toFixed(2))
                     }
                 };
                 const order: Order = await createOrder(createOrderProps);

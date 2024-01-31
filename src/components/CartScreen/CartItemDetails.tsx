@@ -104,8 +104,8 @@ function CartItemDetails() {
     };
 
     const renderCell = React.useCallback((cartItem: Cart, columnKey: React.Key) => {
-        const featuredImage = cartItem.product.product_images.find(
-            (productImage) => productImage.is_featured === true
+        const featuredImage = cartItem.product.productImages.find(
+            (productImage) => productImage.isFeatured === true
         );
 
         switch (columnKey) {
@@ -137,7 +137,7 @@ function CartItemDetails() {
                     <div className="text-base">
                         <div className="flex font-semibold">
                             <RupeeIcon height={16} width={16} size={16} className="my-1" />{" "}
-                            {cartItem.product.selling_price}
+                            {cartItem.product.sellingPrice}
                         </div>
                         <div className="flex line-through text-default-500 font-semibold">
                             <RupeeIcon height={16} width={16} size={16} className="my-1" />{" "}

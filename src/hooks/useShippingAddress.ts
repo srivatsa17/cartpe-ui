@@ -1,26 +1,24 @@
 import * as yup from "yup";
 
-import { ShippingAddressType } from "utils/types";
+import { NestedOmit, ShippingAddress, ShippingAddressType } from "utils/types";
+
 import { getIndianStates } from "utils/getIndianStates";
 
 export function useShippingAddress() {
     const addressTypeOptions = ["Home", "Work", "Other"];
     const { indianStates } = getIndianStates();
-    const initialAddNewAddressFormData = {
+    const initialAddNewAddressFormData: NestedOmit<ShippingAddress, "id" | "createdAt" | "updatedAt" | "user" | "address.id" | "address.createdAt" | "address.updatedAt"> = {
         name: "",
-        // eslint-disable-next-line camelcase
-        alternate_phone: "",
+        alternatePhone: "",
         type: addressTypeOptions[0] as ShippingAddressType,
-        // eslint-disable-next-line camelcase
-        is_default: false,
+        isDefault: false,
         address: {
-            line1: "",
-            line2: "",
+            building: "",
+            area: "",
             city: "",
             state: "",
             country: "India",
-            // eslint-disable-next-line camelcase
-            pin_code: ""
+            pinCode: ""
         }
     };
 
@@ -32,8 +30,7 @@ export function useShippingAddress() {
             .min(2, "Length is too short.")
             .max(200, "Length is too long.")
             .required("Name is required."),
-        // eslint-disable-next-line camelcase
-        alternate_phone: yup
+        alternatePhone: yup
             .string()
             .trim()
             .matches(/^\d+$/, "Phone number must contain only digits.")
@@ -44,16 +41,15 @@ export function useShippingAddress() {
             .default("Home")
             .required()
             .oneOf(addressTypeOptions, "Address type is required."),
-        // eslint-disable-next-line camelcase
-        is_default: yup.bool().oneOf([true, false]).required(),
+        isDefault: yup.bool().oneOf([true, false]).required(),
         address: yup.object().shape({
-            line1: yup
+            building: yup
                 .string()
                 .trim()
                 .min(2, "Length is too short.")
                 .max(200, "Length is too long.")
                 .required("Building Name is required."),
-            line2: yup
+            area: yup
                 .string()
                 .trim()
                 .min(2, "Length is too short.")
@@ -71,8 +67,7 @@ export function useShippingAddress() {
                 .trim()
                 .oneOf(indianStates, "Enter a valid Indian state.")
                 .required("State is required."),
-            // eslint-disable-next-line camelcase
-            pin_code: yup
+            pinCode: yup
                 .string()
                 .trim()
                 .matches(/^\d+$/, "Pin code must contain only digits.")

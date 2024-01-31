@@ -61,10 +61,10 @@ function CategorySearchScreen() {
     };
 
     const handleFilterPriceRanges = (product: Product) => {
-        if (product.selling_price !== undefined && typeof product.selling_price === "number") {
+        if (product.sellingPrice !== undefined && typeof product.sellingPrice === "number") {
             return filteredPriceRange
-                ? product.selling_price >= +filteredPriceRange[0] &&
-                      product.selling_price <= +filteredPriceRange[1]
+                ? product.sellingPrice >= +filteredPriceRange[0] &&
+                      product.sellingPrice <= +filteredPriceRange[1]
                 : true;
         }
         return false;
@@ -74,13 +74,13 @@ function CategorySearchScreen() {
         switch (sortBy) {
             // Add cases for customer-rating, popularity
             case "whats-new":
-                return a.created_at.localeCompare(b.created_at);
+                return a.createdAt.localeCompare(b.createdAt);
             case "better-discount":
                 return b.discount - a.discount;
             case "price-high-to-low":
-                return b.selling_price - a.selling_price;
+                return b.sellingPrice - a.sellingPrice;
             case "price-low-to-high":
-                return a.selling_price - b.selling_price;
+                return a.sellingPrice - b.sellingPrice;
             default:
                 return a.name.localeCompare(b.name);
         }

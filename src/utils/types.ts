@@ -102,8 +102,8 @@ export type CartState = {
 /* Order Service Types */
 export type Address = {
     id: bigint;
-    line1: string;
-    line2: string;
+    building: string;
+    area: string;
     city: string;
     state: string;
     pinCode: string;
