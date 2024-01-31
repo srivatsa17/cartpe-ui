@@ -44,8 +44,8 @@ function SavedAddressList() {
                                     <div>
                                         {userAddress.address.building}, {userAddress.address.area},{" "}
                                         {userAddress.address.city}, {userAddress.address.state},{" "}
-                                        {userAddress.address.country},{" "}
-                                        {userAddress.address.pinCode}.
+                                        {userAddress.address.country}, {userAddress.address.pinCode}
+                                        .
                                     </div>
                                     <div>Phone Number: {userAddress.alternatePhone}</div>
                                 </CardBody>

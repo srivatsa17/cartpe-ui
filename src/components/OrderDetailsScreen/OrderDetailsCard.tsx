@@ -130,8 +130,7 @@ function OrderDetailsCard() {
                             <div
                                 className={`flex ${
                                     order.paymentDetails.totalAmount <
-                                        order.paymentDetails.totalSellingPrice &&
-                                    "text-green-600"
+                                        order.paymentDetails.totalSellingPrice && "text-green-600"
                                 }`}
                             >
                                 {order.paymentDetails.totalAmount <

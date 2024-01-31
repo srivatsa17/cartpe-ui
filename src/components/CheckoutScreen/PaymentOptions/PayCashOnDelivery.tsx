@@ -26,9 +26,7 @@ function PayCashOnDelivery() {
                     amount: amount,
                     paymentDetails: {
                         totalMrp: Number(cartPriceDetails.totalMRP.toFixed(2)),
-                        totalDiscountPrice: Number(
-                            cartPriceDetails.totalDiscountPrice.toFixed(2)
-                        ),
+                        totalDiscountPrice: Number(cartPriceDetails.totalDiscountPrice.toFixed(2)),
                         totalSellingPrice: Number(cartPriceDetails.totalSellingPrice.toFixed(2)),
                         convenienceFee: cartPriceDetails.convenienceFee,
                         shippingFee: cartPriceDetails.shippingFee,

@@ -119,12 +119,10 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 isInvalid={
-                                                    touched.alternatePhone &&
-                                                    errors.alternatePhone
+                                                    touched.alternatePhone && errors.alternatePhone
                                                 }
                                                 isValid={
-                                                    touched.alternatePhone &&
-                                                    !errors.alternatePhone
+                                                    touched.alternatePhone && !errors.alternatePhone
                                                 }
                                                 variant="flat"
                                                 isClearable
@@ -134,8 +132,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 className="max-w-md"
                                                 autoComplete="off"
                                                 errorMessage={
-                                                    touched.alternatePhone &&
-                                                    errors.alternatePhone
+                                                    touched.alternatePhone && errors.alternatePhone
                                                 }
                                                 color={
                                                     touched.alternatePhone

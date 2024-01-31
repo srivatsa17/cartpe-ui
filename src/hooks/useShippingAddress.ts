@@ -7,7 +7,16 @@ import { getIndianStates } from "utils/getIndianStates";
 export function useShippingAddress() {
     const addressTypeOptions = ["Home", "Work", "Other"];
     const { indianStates } = getIndianStates();
-    const initialAddNewAddressFormData: NestedOmit<ShippingAddress, "id" | "createdAt" | "updatedAt" | "user" | "address.id" | "address.createdAt" | "address.updatedAt"> = {
+    const initialAddNewAddressFormData: NestedOmit<
+        ShippingAddress,
+        | "id"
+        | "createdAt"
+        | "updatedAt"
+        | "user"
+        | "address.id"
+        | "address.createdAt"
+        | "address.updatedAt"
+    > = {
         name: "",
         alternatePhone: "",
         type: addressTypeOptions[0] as ShippingAddressType,
