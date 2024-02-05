@@ -42,7 +42,7 @@ function FilterBrands({ uniqueBrands }: FilterBrands) {
                                 className="w-2/5"
                                 variant="ghost"
                                 color="danger"
-                                onClick={handleClearBrandsFilter}
+                                onPress={handleClearBrandsFilter}
                             >
                                 Clear Filter
                             </Button>

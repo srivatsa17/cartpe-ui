@@ -110,7 +110,7 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
                     variant="ghost"
                     fullWidth
                     color="success"
-                    onClick={handleAddOrderItems}
+                    onPress={handleAddOrderItems}
                     isDisabled={totalCartItemsQuantity === 0 || shippingAddressId === null}
                 >
                     Place order items

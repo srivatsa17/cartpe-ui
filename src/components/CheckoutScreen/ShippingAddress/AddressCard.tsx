@@ -39,7 +39,7 @@ function AddressCard({ setSelectedAccordionKeys, selectedAddress }: AddressCardP
         <Card className="px-2">
             <Spacer y={4} />
             <CardHeader>
-                <Button fullWidth variant="ghost" color="success" onClick={handleUseAddressClick}>
+                <Button fullWidth variant="ghost" color="success" onPress={handleUseAddressClick}>
                     Use the selected address
                 </Button>
             </CardHeader>

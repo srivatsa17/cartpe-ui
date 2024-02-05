@@ -64,7 +64,7 @@ function PaymentOptions({
             <Button
                 variant="ghost"
                 color="success"
-                onClick={handlePayment}
+                onPress={handlePayment}
                 isDisabled={shippingAddressId === null || orderItems.length === 0 || amount === 0}
                 isLoading={isPayNowButtonLoading}
                 className="w-40"

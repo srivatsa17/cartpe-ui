@@ -44,7 +44,7 @@ function FilterDiscounts({ discountRanges }: FilterDiscounts) {
                                 className="w-2/5"
                                 variant="ghost"
                                 color="danger"
-                                onClick={handleClearDiscountFilter}
+                                onPress={handleClearDiscountFilter}
                             >
                                 Clear Filter
                             </Button>

@@ -76,7 +76,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
                     className="capitalize"
                     variant="ghost"
                     color="warning"
-                    onClick={addToCartHandler}
+                    onPress={addToCartHandler}
                 >
                     Add to cart
                 </Button>
