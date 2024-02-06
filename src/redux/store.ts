@@ -77,7 +77,7 @@ const persistedState: {
     },
     wishlist: {
         isLoading: false,
-        products: wishListFromStorage,
+        wishListedProducts: wishListFromStorage,
         error: null
     },
     address: {

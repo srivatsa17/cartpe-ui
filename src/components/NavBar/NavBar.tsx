@@ -23,9 +23,9 @@ import { useReduxSelector } from "hooks/redux";
 function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const { cartItems } = useReduxSelector((state) => state.cart);
-    const { products } = useReduxSelector((state) => state.wishlist);
+    const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
     const totalCartItemsQuantity = cartItems.length;
-    const totalWishListedProducts = products.length;
+    const totalWishListedProducts = wishListedProducts.length;
 
     return (
         <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>

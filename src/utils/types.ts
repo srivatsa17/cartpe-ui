@@ -96,7 +96,7 @@ export type WishList = {
 
 export type WishListState = {
     isLoading?: boolean;
-    products: Array<WishList>;
+    wishListedProducts: Array<WishList>;
     error?: Error;
 };
 

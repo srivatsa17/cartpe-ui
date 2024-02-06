@@ -10,7 +10,7 @@ import { throwErrorResponse } from "utils/errorResponse";
 
 const initialState: WishListState = {
     isLoading: false,
-    products: [],
+    wishListedProducts: [],
     error: null
 };
 
@@ -19,7 +19,7 @@ export const getWishList = () => async (dispatch: Dispatch, getState: () => Root
         dispatch(getWishListRequest());
         const { data } = await axiosInstance.get(WISHLIST_URI);
         dispatch(getWishListSuccess(data));
-        saveItemInStorage(WISHLIST, getState().wishlist.products);
+        saveItemInStorage(WISHLIST, getState().wishlist.wishListedProducts);
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(getWishListFailed(throwErrorResponse(err)));
@@ -65,7 +65,7 @@ const wishlistSlice = createSlice({
         },
         getWishListSuccess: (state, action: PayloadAction<Array<WishList>>) => {
             state.isLoading = false;
-            state.products = action.payload;
+            state.wishListedProducts = action.payload;
         },
         getWishListFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
