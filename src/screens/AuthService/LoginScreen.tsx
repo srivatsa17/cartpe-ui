@@ -14,6 +14,7 @@ import { LOGIN_USER_IMAGE } from "constants/images";
 import LockIcon from "icons/LockIcon";
 import React from "react";
 import { getCartItems } from "redux/CartService/cartSlice";
+import { getWishList } from "redux/ProductService/wishlistSlice";
 import { loginUser } from "redux/AuthService/loginSlice";
 
 function LoginScreen() {
@@ -28,6 +29,7 @@ function LoginScreen() {
         if (isLoggedIn === true) {
             navigate(HOME_SCREEN);
             dispatch(getCartItems());
+            dispatch(getWishList());
         }
     }, [isLoggedIn, navigate, dispatch]);
 

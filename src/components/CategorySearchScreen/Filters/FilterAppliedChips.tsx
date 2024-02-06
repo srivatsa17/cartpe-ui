@@ -15,7 +15,7 @@ function FilterAppliedChips() {
     if (filteredPriceRange) {
         filtersApplied.push(`₹${filteredPriceRange[0]} - ₹${filteredPriceRange[1]}`);
     }
-    if(sortBy) {
+    if (sortBy) {
         filtersApplied.push(sortBy);
     }
 
