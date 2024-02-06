@@ -12,7 +12,8 @@ import {
     PRODUCT_SCREEN,
     REGISTER_USER_SCREEN,
     SAVED_ADDRESSES_SCREEN,
-    VERIFY_USER_EMAIL_SCREEN
+    VERIFY_USER_EMAIL_SCREEN,
+    WISHLIST_SCREEN
 } from "constants/routes";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
@@ -33,6 +34,7 @@ import React from "react";
 import RegisterScreen from "screens/AuthService/RegisterScreen";
 import SavedAddressListScreen from "screens/SavedAddressListScreen";
 import VerifyEmailScreen from "screens/AuthService/VerifyEmailScreen";
+import WishListScreen from "screens/ProductService/WishListScreen";
 
 export default function App() {
     return (
@@ -47,6 +49,7 @@ export default function App() {
                     <Route path={HOME_SCREEN} element={<HomeScreen />} />
                     <Route path={CATEGORY_SEARCH_SCREEN} element={<CategorySearchScreen />} />
                     <Route path={PRODUCT_SCREEN} element={<ProductScreen />} />
+                    <Route path={WISHLIST_SCREEN} element={<WishListScreen />} />
                     <Route path={CART_SCREEN} element={<CartScreen />} />
                     <Route path={CHECKOUT_SCREEN} element={<CheckoutScreen />} />
                     <Route path={ORDER_CONFIRMED_SCREEN} element={<OrderConfirmedScreen />} />
