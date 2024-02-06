@@ -25,8 +25,14 @@ function WishListScreen() {
             <Spacer y={6} />
             <div className="text-3xl">Your Wish List ({wishListedProducts.length} items)</div>
             <Spacer y={6} />
-            <div>
-                <WishListCard />
+            <div className="grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {wishListedProducts.map((wishListedProduct) => {
+                    return (
+                        <div key={wishListedProduct.id}>
+                            <WishListCard wishListedProduct={wishListedProduct} />
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

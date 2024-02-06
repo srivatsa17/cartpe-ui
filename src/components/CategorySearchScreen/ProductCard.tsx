@@ -37,7 +37,9 @@ function ProductCard({ product }: ProductCardProps) {
 
     const isProductInWishList = wishListedProducts.find((p) => p.product.id === product.id);
 
-    const [isWishlisted, setIsWishlisted] = React.useState<boolean>(isProductInWishList ? true : false);
+    const [isWishlisted, setIsWishlisted] = React.useState<boolean>(
+        isProductInWishList ? true : false
+    );
 
     const handleWishlist = () => {
         setIsWishlisted(!isWishlisted);
