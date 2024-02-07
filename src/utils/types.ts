@@ -87,6 +87,19 @@ export type ProductDetailsState = {
     error?: Error;
 };
 
+export type WishList = {
+    id: bigint;
+    product: Product;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type WishListState = {
+    isLoading?: boolean;
+    wishListedProducts: Array<WishList>;
+    error?: Error;
+};
+
 /* Cart Service Types */
 export type Cart = {
     product: Product;

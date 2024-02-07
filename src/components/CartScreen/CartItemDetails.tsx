@@ -183,7 +183,7 @@ function CartItemDetails() {
                                             isDisabled={isLoading || values.quantity <= 1}
                                             type="submit"
                                             className="bg-foreground/0"
-                                            onClick={() =>
+                                            onPress={() =>
                                                 handleSubtractQuantity(
                                                     values.quantity,
                                                     setFieldValue,
@@ -200,7 +200,7 @@ function CartItemDetails() {
                                             isDisabled={isLoading || values.quantity >= 10}
                                             type="submit"
                                             className="bg-foreground/0"
-                                            onClick={() =>
+                                            onPress={() =>
                                                 handleAddQuantity(
                                                     values.quantity,
                                                     setFieldValue,

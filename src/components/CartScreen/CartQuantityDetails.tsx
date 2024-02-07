@@ -27,7 +27,7 @@ function CartQuantityDetails() {
                     variant="ghost"
                     color="danger"
                     endContent={<TrashIcon width={22} height={20} />}
-                    onClick={handleEmptyCart}
+                    onPress={handleEmptyCart}
                 >
                     Empty cart
                 </Button>

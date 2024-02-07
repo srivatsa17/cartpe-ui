@@ -3,14 +3,16 @@ import {
     CART_ITEMS,
     PRODUCT_LIST,
     USER_LOGIN_DETAILS,
-    USER_REGISTER_DETAILS
+    USER_REGISTER_DETAILS,
+    WISHLIST
 } from "constants/localStorage";
 import {
     CartState,
     LoginState,
     ProductListState,
     RegisterState,
-    ShippingAddressState
+    ShippingAddressState,
+    WishListState
 } from "utils/types";
 
 import cartSlice from "./CartService/cartSlice";
@@ -25,11 +27,13 @@ import productsSlice from "./ProductService/productsSlice";
 import registerSlice from "./AuthService/registerSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 import shippingAddressSlice from "./OrderService/shippingAddressSlice";
+import wishlistSlice from "./ProductService/wishlistSlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 const userRegisterDetailsFromStorage = getItemFromStorage(USER_REGISTER_DETAILS) ?? {};
 const productListFromStorage = getItemFromStorage(PRODUCT_LIST) ?? {};
 const cartItemsFromStorage = getItemFromStorage(CART_ITEMS) ?? [];
+const wishListFromStorage = getItemFromStorage(WISHLIST) ?? [];
 const addressListFromStorage = getItemFromStorage(ADDRESS_LIST) ?? [];
 
 const persistedState: {
@@ -37,6 +41,7 @@ const persistedState: {
     userRegisterDetails: RegisterState;
     productList: ProductListState;
     cart: CartState;
+    wishlist: WishListState;
     address: ShippingAddressState;
 } = {
     productList: {
@@ -70,6 +75,11 @@ const persistedState: {
         cartItems: cartItemsFromStorage,
         error: null
     },
+    wishlist: {
+        isLoading: false,
+        wishListedProducts: wishListFromStorage,
+        error: null
+    },
     address: {
         isLoading: false,
         addressList: addressListFromStorage,
@@ -87,6 +97,7 @@ const store = configureStore({
         productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice,
         cart: cartSlice,
+        wishlist: wishlistSlice,
         address: shippingAddressSlice,
         checkoutDetails: checkoutStepsSlice,
         orderList: orderListSlice,

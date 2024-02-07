@@ -126,7 +126,7 @@ function ShippingAddressDetails({
                         color="success"
                         variant="ghost"
                         isDisabled={isAddressListEmpty || isLoading}
-                        onClick={handleUseSelectedAddress}
+                        onPress={handleUseSelectedAddress}
                     >
                         Use this address
                     </Button>

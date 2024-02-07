@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-export const HeartIcon = ({ size = 24, width, height, ...props }) => (
+export const HeartIcon = ({ size = 24, width, height, fill = "currentColor", ...props }) => (
     <svg
         viewBox="0 0 1024 1024"
-        fill="currentColor"
+        fill={fill}
         height={height || size || "1em"}
         width={width || size || "1em"}
         {...props}
@@ -16,5 +16,6 @@ export const HeartIcon = ({ size = 24, width, height, ...props }) => (
 HeartIcon.propTypes = {
     size: PropTypes.number,
     width: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    fill: PropTypes.string
 };

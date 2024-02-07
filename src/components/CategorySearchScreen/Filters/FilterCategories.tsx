@@ -42,7 +42,7 @@ function FilterCategories({ uniqueCategories }: FilterCategories) {
                                 className="w-2/5"
                                 variant="ghost"
                                 color="danger"
-                                onClick={handleClearCategoryFilter}
+                                onPress={handleClearCategoryFilter}
                             >
                                 Clear Filter
                             </Button>

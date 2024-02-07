@@ -22,9 +22,10 @@ import { useReduxSelector } from "hooks/redux";
 
 function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const cart = useReduxSelector((state) => state.cart);
-    const { cartItems } = cart;
+    const { cartItems } = useReduxSelector((state) => state.cart);
+    const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
     const totalCartItemsQuantity = cartItems.length;
+    const totalWishListedProducts = wishListedProducts.length;
 
     return (
         <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
@@ -63,7 +64,9 @@ function NavBar() {
                     >
                         <Badge
                             color="danger"
-                            content={0}
+                            content={
+                                totalWishListedProducts <= 99 ? totalWishListedProducts : "99+"
+                            }
                             size="sm"
                             variant="shadow"
                             showOutline={false}

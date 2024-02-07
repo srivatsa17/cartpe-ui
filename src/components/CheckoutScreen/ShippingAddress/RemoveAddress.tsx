@@ -28,7 +28,7 @@ function RemoveAddress({ shippingAddressId }: RemoveShippingAddressProps) {
                 className="bg-foreground/0 text-rose-600"
                 variant="solid"
                 isLoading={isSubmitting}
-                onClick={handleRemoveShippingAddress}
+                onPress={handleRemoveShippingAddress}
             >
                 <TrashIcon height={22} width={22} />
             </Button>

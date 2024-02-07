@@ -33,7 +33,7 @@ function OrderItemDetails({ setSelectedAccordionKeys }: OrderItemDetailsProps) {
                 color="success"
                 variant="ghost"
                 isDisabled={isCartEmpty || shippingAddressId === null}
-                onClick={handleAddOrderItems}
+                onPress={handleAddOrderItems}
             >
                 Place order items
             </Button>
