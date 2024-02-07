@@ -1,4 +1,5 @@
 import { Button, Divider, Spacer } from "@nextui-org/react";
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CashIcon } from "icons/CashIcon";
 import { ExchangeIcon } from "icons/ExchangeIcon";
@@ -9,7 +10,7 @@ import { RupeeIcon } from "icons/RupeeIcon";
 import { TruckFastIcon } from "icons/TruckFastIcon";
 import { TruckIcon } from "icons/TruckIcon";
 import { addCartItem } from "redux/CartService/cartSlice";
-import { useReduxDispatch } from "hooks/redux";
+import { addProductToWishList } from "redux/ProductService/wishlistSlice";
 
 interface ProductDetailsProps {
     product: Partial<Product>;
@@ -28,11 +29,24 @@ function getDeliveryDate() {
 
 function ProductDetails({ product }: ProductDetailsProps) {
     const dispatch = useReduxDispatch();
+    const { cartItems } = useReduxSelector((state) => state.cart);
+    const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
 
-    const addToCartHandler = () => {
+    const isProductInCart = cartItems.some((cartItem) => cartItem.product.id === product.id);
+    const isProductInWishList = wishListedProducts.some(
+        (wishListedProduct) => wishListedProduct.product.id === product.id
+    );
+
+    const handleAddToCart = () => {
         // Handle already exists condition as well with alert message.
         const productWithStrictType = product as Product;
         dispatch(addCartItem(productWithStrictType, 1));
+    };
+
+    const handleAddToWishList = () => {
+        if (product.id) {
+            dispatch(addProductToWishList(product.id));
+        }
     };
 
     return (
@@ -73,16 +87,23 @@ function ProductDetails({ product }: ProductDetailsProps) {
                 <Button
                     fullWidth
                     size="lg"
-                    className="capitalize"
                     variant="ghost"
                     color="warning"
-                    onPress={addToCartHandler}
+                    onPress={handleAddToCart}
+                    isDisabled={isProductInCart}
                 >
-                    Add to cart
+                    Add to Cart
                 </Button>
                 <Spacer x={7} />
-                <Button fullWidth size="lg" className="capitalize" variant="ghost" color="danger">
-                    Wishlist
+                <Button
+                    fullWidth
+                    size="lg"
+                    variant="ghost"
+                    color="danger"
+                    onPress={handleAddToWishList}
+                    isDisabled={isProductInWishList}
+                >
+                    Add to Wishlist
                 </Button>
             </div>
             <Divider />
