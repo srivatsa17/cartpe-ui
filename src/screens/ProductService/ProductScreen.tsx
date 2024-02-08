@@ -37,7 +37,7 @@ function ProductScreen() {
                     {product.name}
                 </BreadcrumbItem>
             </Breadcrumbs>
-            <div className="grid md:grid-cols-2 py-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <ProductImages product={product} isLoading={isLoading} />
                 </div>
