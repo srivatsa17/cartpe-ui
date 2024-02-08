@@ -8,9 +8,9 @@ interface RatingProps {
 
 function Rating({ rating, reviewCount }: RatingProps) {
     return (
-        <div className="flex max-w-xs my-2">
+        <div className="flex max-w-xs gap-4">
             <CreateRatingStars rating={rating} />
-            <div className="mx-6">{reviewCount} Reviews</div>
+            <div>{reviewCount} Reviews</div>
         </div>
     );
 }

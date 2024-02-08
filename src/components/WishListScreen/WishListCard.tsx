@@ -72,13 +72,13 @@ function WishListCard({ wishListedProduct }: WishListCardProps) {
                     {wishListedProduct.product.description}
                 </div>
                 <Spacer y={2} />
-                <div className="flex">
-                    <div className="flex font-semibold">
-                        <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
+                <div className="flex items-center ">
+                    <div className="flex items-center font-semibold">
+                        <RupeeIcon height={18} width={18} size={18} />{" "}
                         {wishListedProduct.product.sellingPrice}
                     </div>
-                    <div className="flex pl-3 line-through text-default-500 font-semibold">
-                        <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
+                    <div className="flex items-center pl-3 line-through text-default-500 font-semibold">
+                        <RupeeIcon height={18} width={18} size={18} />{" "}
                         {wishListedProduct.product.price}
                     </div>
                     <div className="pl-3 text-green-600 font-medium">

@@ -94,24 +94,24 @@ function OrderDetailsCard() {
                         <Spacer y={1.5} />
                         <div className="flex justify-between">
                             <div>Total MRP</div>
-                            <div className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.totalMrp.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
                         <div className="flex justify-between">
                             <div>Discount on MRP</div>
-                            <div className="flex text-green-600">
-                                -<RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center text-green-600">
+                                -<RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.totalDiscountPrice.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
-                        <div className="flex justify-between">
+                        <div className="flex items-center justify-between">
                             <div>Convenience Fee</div>
                             <div className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.convenienceFee.toFixed(2)}
                             </div>
                         </div>
@@ -128,7 +128,7 @@ function OrderDetailsCard() {
                         <div className="flex justify-between">
                             <div>Round Off</div>
                             <div
-                                className={`flex ${
+                                className={`flex items-center ${
                                     order.paymentDetails.totalAmount <
                                         order.paymentDetails.totalSellingPrice && "text-green-600"
                                 }`}
@@ -137,7 +137,7 @@ function OrderDetailsCard() {
                                 order.paymentDetails.totalSellingPrice
                                     ? "-"
                                     : ""}
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.roundOffPrice.toFixed(2)}
                             </div>
                         </div>
@@ -146,15 +146,15 @@ function OrderDetailsCard() {
                         <Spacer y={2} />
                         <div className="flex justify-between font-semibold">
                             <div>Total Amount</div>
-                            <div className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.totalAmount.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={1} />
-                        <div className="flex text-rose-600">
+                        <div className="flex items-center text-rose-600">
                             Your savings:
-                            <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <RupeeIcon width={17} height={17} size={17} />
                             {order.paymentDetails.savingsAmount.toFixed(2)} (
                             {order.paymentDetails.savingsPercent.toFixed(2)}%)
                         </div>

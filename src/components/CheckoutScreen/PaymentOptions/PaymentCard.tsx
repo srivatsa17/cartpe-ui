@@ -30,38 +30,42 @@ function PaymentCard() {
             <CardBody>
                 <div className="flex justify-between text-lg">
                     <div>Total MRP</div>
-                    <div className="flex">
-                        <RupeeIcon width={22} height={22} size={22} className="my-1" />
+                    <div className="flex items-center">
+                        <RupeeIcon width={20} height={20} size={20} />
                         {totalMRP.toFixed(2)}
                     </div>
                 </div>
                 <Spacer y={0.5} />
                 <div className="flex justify-between text-lg">
                     <div>Discount on MRP</div>
-                    <div className="flex text-green-600">
-                        -<RupeeIcon width={22} height={22} size={22} className="my-1" />
+                    <div className="flex items-center  text-green-600">
+                        -<RupeeIcon width={20} height={20} size={20} />
                         {totalDiscountPrice.toFixed(2)}
                     </div>
                 </div>
                 <Spacer y={0.5} />
                 <div className="flex justify-between text-lg">
                     <div>Convenience Fee</div>
-                    <div className="flex">
-                        <RupeeIcon width={22} height={22} size={22} className="my-1" />
+                    <div className="flex items-center">
+                        <RupeeIcon width={20} height={20} size={20} />
                         {convenienceFee.toFixed(2)}
                     </div>
                 </div>
                 <Spacer y={0.5} />
-                <div className="flex justify-between text-lg">
+                <div className="flex items-center justify-between text-lg">
                     <div>Shipping Fee</div>
                     <div className="text-green-600">{shippingFee === 0 ? "FREE" : shippingFee}</div>
                 </div>
                 <Spacer y={0.5} />
-                <div className="flex justify-between text-lg">
+                <div className="flex items-center justify-between text-lg">
                     <div>Round Off</div>
-                    <div className={`flex ${totalAmount < totalSellingPrice && "text-green-600"}`}>
+                    <div
+                        className={`flex items-center ${
+                            totalAmount < totalSellingPrice && "text-green-600"
+                        }`}
+                    >
                         {totalAmount < totalSellingPrice ? "-" : ""}
-                        <RupeeIcon width={22} height={22} size={22} className="my-1" />
+                        <RupeeIcon width={20} height={20} size={20} />
                         {roundOffPrice.toFixed(2)}
                     </div>
                 </div>
@@ -70,15 +74,15 @@ function PaymentCard() {
                 <Spacer y={2} />
                 <div className="flex justify-between text-xl font-semibold">
                     <div>Total Amount</div>
-                    <div className="flex">
-                        <RupeeIcon width={22} height={22} size={22} className="my-1" />
+                    <div className="flex items-center">
+                        <RupeeIcon width={20} height={20} size={20} />
                         {totalAmount.toFixed(2)}
                     </div>
                 </div>
                 <Spacer y={2} />
-                <div className="flex text-lg text-rose-600">
+                <div className="flex items-center text-lg text-rose-600">
                     Your savings:
-                    <RupeeIcon width={22} height={22} size={22} className="my-1" />
+                    <RupeeIcon width={20} height={20} size={20} />
                     {savingsAmount.toFixed(2)} ({savingsPercent.toFixed(2)}%)
                 </div>
             </CardBody>

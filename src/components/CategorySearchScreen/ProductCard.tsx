@@ -79,7 +79,7 @@ function ProductCard({ product }: ProductCardProps) {
                     </Button>
                 </Tooltip>
             </CardHeader>
-            <CardBody className="py-3 px-4">
+            <CardBody className="py-3 px-4 space-y-2.5">
                 <div className="lg:h-80 xl:h-64 items-center">
                     <Image
                         src={featuredImage?.image || PLACEHOLDER_IMAGE}
@@ -89,16 +89,14 @@ function ProductCard({ product }: ProductCardProps) {
                 </div>
                 <div className="line-clamp-2 text-default-500">{product.description}</div>
                 <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
-                <div className="flex">
-                    <div className="flex font-semibold">
-                        <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
-                        {product.sellingPrice}
+                <div className="flex gap-3">
+                    <div className="flex items-center font-semibold">
+                        <RupeeIcon height={18} width={18} size={18} /> {product.sellingPrice}
                     </div>
-                    <div className="flex pl-3 line-through text-default-500 font-semibold">
-                        <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
-                        {product.price}
+                    <div className="flex items-center line-through text-default-500 font-semibold">
+                        <RupeeIcon height={18} width={18} size={18} /> {product.price}
                     </div>
-                    <div className="pl-3 text-green-600 font-medium">({product.discount}% Off)</div>
+                    <div className="text-green-600 font-medium">({product.discount}% Off)</div>
                 </div>
             </CardBody>
             <Divider />

@@ -135,13 +135,12 @@ function CartItemDetails() {
             case "price":
                 return (
                     <div className="text-base">
-                        <div className="flex font-semibold">
-                            <RupeeIcon height={16} width={16} size={16} className="my-1" />{" "}
+                        <div className="flex items-center font-semibold">
+                            <RupeeIcon height={16} width={16} size={16} />{" "}
                             {cartItem.product.sellingPrice}
                         </div>
-                        <div className="flex line-through text-default-500 font-semibold">
-                            <RupeeIcon height={16} width={16} size={16} className="my-1" />{" "}
-                            {cartItem.product.price}
+                        <div className="flex items-center line-through text-default-500 font-semibold">
+                            <RupeeIcon height={16} width={16} size={16} /> {cartItem.product.price}
                         </div>
                     </div>
                 );
