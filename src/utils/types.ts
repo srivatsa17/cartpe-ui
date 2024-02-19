@@ -49,41 +49,54 @@ export type CategorySearchState = {
     error: Error;
 };
 
-export type ProductImages = {
+export type ProductVariantPropertyValues = {
     id: bigint;
-    image: string;
-    isFeatured: boolean;
+    propertyId: bigint;
+    name: string;
+    value: string;
 };
+
+export type ProductVariant = {
+    id: bigint;
+    name: string;
+    sku: string;
+    images: Array<string>;
+    price: number;
+    discount: number;
+    discountedPrice: number;
+    sellingPrice: number;
+    stockCount: number;
+    properties: Array<ProductVariantPropertyValues>;
+    availableProperties: Array<string>;
+    createdAt: string;
+    updatedAt: string;
+}
 
 export type Product = {
     id: bigint;
     name: string;
+    slug: string;
+    description: string;
     brand: string;
     category: string;
     categorySlug: string;
-    slug: string;
-    description?: string;
-    rating?: number;
-    reviewCount?: number;
-    stockCount: number;
-    price: number;
-    sellingPrice: number;
-    discountedPrice: number;
-    discount: number;
-    productImages: Array<ProductImages>;
+    productVariants: Array<ProductVariant>;
+    rating: number;
+    reviewCount: number;
     createdAt: string;
+    updatedAt: string;
 };
 
 export type ProductListState = {
-    isLoading?: boolean;
+    isLoading: boolean;
     products: Array<Product> | [];
     searchedCategory: string;
-    error?: Error;
+    error: Error;
 };
 
 export type ProductDetailsState = {
     isLoading?: boolean;
-    product: Partial<Product>;
+    product: Product;
     error?: Error;
 };
 
