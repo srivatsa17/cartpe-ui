@@ -202,7 +202,10 @@ function ProductDetails({
                     color="warning"
                     variant="ghost"
                     startContent={<CartIcon width={22} height={22} size={22} />}
-                    isDisabled={!selectedColor || !selectedSize}
+                    isDisabled={
+                        (availableColors.length > 0 && !selectedColor) ||
+                        (availableSizes.length > 0 && !selectedSize)
+                    }
                 >
                     Add to cart
                 </Button>
@@ -212,12 +215,22 @@ function ProductDetails({
                     color="danger"
                     variant="ghost"
                     startContent={<HeartIcon width={24} height={24} size={24} />}
-                    isDisabled={!selectedColor || !selectedSize}
+                    isDisabled={
+                        (availableColors.length > 0 && !selectedColor) ||
+                        (availableSizes.length > 0 && !selectedSize)
+                    }
                 >
                     Add to wishlist
                 </Button>
             </div>
-            <div className="text-default-500 text-lg">{product.description}</div>
+            <Spacer y={3} />
+            <div className="space-y-2">
+                <div className="text-lg font-semibold">Product Details</div>
+                <div className="text-default-500 text-lg">{product.description}</div>
+            </div>
+            <div>
+                {/* Todo: Add ratings here */}
+            </div>
         </div>
     );
 }
