@@ -6,7 +6,7 @@ import { throwErrorResponse } from "utils/errorResponse";
 
 const initialState: ProductDetailsState = {
     isLoading: false,
-    product: {},
+    product: {} as Product,
     error: null
 };
 
@@ -27,11 +27,10 @@ const productDetailsSlice = createSlice({
     reducers: {
         productDetailsRequest: (state) => {
             state.isLoading = true;
-            state.product = {};
         },
-        productDetailsSuccess: (state, action: PayloadAction<ProductDetailsState>) => {
+        productDetailsSuccess: (state, action: PayloadAction<Product>) => {
             state.isLoading = false;
-            state.product = action.payload as Partial<Product>;
+            state.product = action.payload;
         },
         productDetailsFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
