@@ -81,6 +81,7 @@ function CartItemDetails() {
             quantity = Number(quantity);
         }
         setFieldValue("quantity", quantity - 1, true);
+        // cartItem.product.id basically refers to the Product Variant ID.
         dispatch(updateCartItem(cartItem.product.id, quantity - 1));
     };
 
@@ -96,38 +97,38 @@ function CartItemDetails() {
             quantity = Number(quantity);
         }
         setFieldValue("quantity", quantity + 1, true);
+        // cartItem.product.id basically refers to the Product Variant ID.
         dispatch(updateCartItem(cartItem.product.id, quantity + 1));
     };
 
     const handleRemoveCartItem = (cartItem: Cart) => {
+        // cartItem.product.id basically refers to the Product Variant ID.
         dispatch(removeCartItem(cartItem.product.id));
     };
 
     const renderCell = React.useCallback((cartItem: Cart, columnKey: React.Key) => {
-        const featuredImage = cartItem.product.productImages.find(
-            (productImage) => productImage.isFeatured === true
-        );
-
         switch (columnKey) {
             case "name":
                 return (
                     <div className="md:flex">
                         <Image
-                            src={featuredImage?.image}
+                            src={cartItem.product.images[0]}
                             width={60}
                             height={60}
                             className="self-center"
                         />
                         <Link
-                            href={`/products/${cartItem.product.slug}/${cartItem.product.id}/buy`}
+                            href={`/products/${cartItem.product.productSlug}/${cartItem.product.productId}/buy`}
                             isExternal
                             color="foreground"
                         >
                             <div className="md:pl-2 pt-1 text-base">
                                 <div className="uppercase font-semibold">
-                                    {cartItem.product.brand}
+                                    {cartItem.product.productBrand}
                                 </div>
-                                <div className="text-default-500">{cartItem.product.name}</div>
+                                <div className="text-default-500">
+                                    {cartItem.product.productName}
+                                </div>
                             </div>
                         </Link>
                     </div>

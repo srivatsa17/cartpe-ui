@@ -58,6 +58,7 @@ export type ProductVariantPropertyValues = {
 
 export type ProductVariant = {
     id: bigint;
+    productId: bigint;
     name: string;
     sku: string;
     images: Array<string>;
@@ -102,7 +103,7 @@ export type ProductDetailsState = {
 
 export type WishList = {
     id: bigint;
-    product: Product;
+    product: CartProductData;
     createdAt: string;
     updatedAt: string;
 };
@@ -114,8 +115,17 @@ export type WishListState = {
 };
 
 /* Cart Service Types */
+export interface CartProductData extends ProductVariant {
+    productName: string;
+    productSlug: string;
+    productBrand: string;
+    productCategory: string;
+    productCategorySlug: string;
+    productDescription: string;
+}
+
 export type Cart = {
-    product: Product;
+    product: CartProductData;
     quantity: number;
 };
 
