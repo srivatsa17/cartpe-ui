@@ -1,7 +1,9 @@
-import { Button, Image, Spacer } from "@nextui-org/react";
+import { Button, Image, Link, Spacer } from "@nextui-org/react";
 import { CartProductData, Product, ProductVariant } from "utils/types";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
+import { ArrowRightIcon } from "icons/ArrowRightIcon";
+import { CART_SCREEN } from "constants/routes";
 import { CartIcon } from "icons/CartIcon";
 import { CashIcon } from "icons/CashIcon";
 import { ExchangeIcon } from "icons/ExchangeIcon";
@@ -204,22 +206,36 @@ function ProductDetails({
             )}
             <Spacer y={2} />
             <div className="flex gap-3">
-                <Button
-                    fullWidth
-                    size="lg"
-                    color="warning"
-                    variant="ghost"
-                    startContent={<CartIcon width={22} height={22} size={22} />}
-                    isDisabled={
-                        isProductVariantInCart ||
-                        selectedProductVariant.stockCount <= 0 ||
-                        (availableColors.length > 0 && !selectedColor) ||
-                        (availableSizes.length > 0 && !selectedSize)
-                    }
-                    onPress={handleAddToCart}
-                >
-                    Add to cart
-                </Button>
+                {!isProductVariantInCart ? (
+                    <Button
+                        fullWidth
+                        size="lg"
+                        color="warning"
+                        variant="ghost"
+                        startContent={<CartIcon width={22} height={22} size={22} />}
+                        isDisabled={
+                            selectedProductVariant.stockCount <= 0 ||
+                            (availableColors.length > 0 && !selectedColor) ||
+                            (availableSizes.length > 0 && !selectedSize)
+                        }
+                        onPress={handleAddToCart}
+                    >
+                        Add to cart
+                    </Button>
+                ) : (
+                    <Link className="w-full" href={CART_SCREEN}>
+                        <Button
+                            fullWidth
+                            size="lg"
+                            color="primary"
+                            variant="ghost"
+                            startContent={<CartIcon width={22} height={22} size={22} />}
+                            endContent={<ArrowRightIcon width={22} height={22} />}
+                        >
+                            Go to cart
+                        </Button>
+                    </Link>
+                )}
                 <Button
                     fullWidth
                     size="lg"
