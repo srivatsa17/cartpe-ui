@@ -1,22 +1,20 @@
 import { Button, Image, Spacer } from "@nextui-org/react";
-// import { CashIcon } from "icons/CashIcon";
-// import { ExchangeIcon } from "icons/ExchangeIcon";
-// import { HeartFillIcon } from "icons/HeartFillIcon";
-import { Product, ProductVariant } from "utils/types";
+import { CartProductData, Product, ProductVariant } from "utils/types";
+import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CartIcon } from "icons/CartIcon";
+import { CashIcon } from "icons/CashIcon";
+import { ExchangeIcon } from "icons/ExchangeIcon";
 import { HeartIcon } from "icons/HeartIcon";
 import { PLACEHOLDER_IMAGE } from "constants/images";
 import Rating from "components/CategorySearchScreen/Rating";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
+import { TruckFastIcon } from "icons/TruckFastIcon";
+import { TruckIcon } from "icons/TruckIcon";
+import { addCartItem } from "redux/CartService/cartSlice";
 import { getProductVariantProperties } from "utils/getProductVariantProperties";
 
-// import { useReduxDispatch, useReduxSelector } from "hooks/redux";
-
-// import { TruckFastIcon } from "icons/TruckFastIcon";
-// import { TruckIcon } from "icons/TruckIcon";
-// import { addCartItem } from "redux/CartService/cartSlice";
 // import { addProductToWishList } from "redux/ProductService/wishlistSlice";
 
 interface ProductDetailsProps {
@@ -25,36 +23,46 @@ interface ProductDetailsProps {
     setSelectedProductVariant: React.Dispatch<React.SetStateAction<ProductVariant>>;
 }
 
-// function getDeliveryDate() {
-//     const today = new Date();
-//     today.setDate(today.getDate() + 3);
-//     const formattedDate = today.toLocaleDateString("en-IN", {
-//         weekday: "short",
-//         month: "short",
-//         day: "numeric"
-//     });
-//     return formattedDate;
-// }
+function getDeliveryDate() {
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    const formattedDate = today.toLocaleDateString("en-IN", {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+    });
+    return formattedDate;
+}
 
 function ProductDetails({
     product,
     selectedProductVariant,
     setSelectedProductVariant
 }: ProductDetailsProps) {
-    // const dispatch = useReduxDispatch();
-    // const { cartItems } = useReduxSelector((state) => state.cart);
+    const dispatch = useReduxDispatch();
+    const { cartItems } = useReduxSelector((state) => state.cart);
     // const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
 
-    // const isProductInCart = cartItems.some((cartItem) => cartItem.product.id === product.id);
+    const isProductVariantInCart = cartItems.some(
+        (cartItem) => cartItem.product.id === selectedProductVariant.id
+    );
     // const isProductInWishList = wishListedProducts.some(
     //     (wishListedProduct) => wishListedProduct.product.id === product.id
     // );
 
-    // const handleAddToCart = () => {
-    //     // Handle already exists condition as well with alert message.
-    //     const productWithStrictType = product as Product;
-    //     dispatch(addCartItem(productWithStrictType, 1));
-    // };
+    const handleAddToCart = () => {
+        // Handle already exists condition as well with alert message.
+        const cartProductData: CartProductData = {
+            ...selectedProductVariant,
+            productName: product.name,
+            productSlug: product.slug,
+            productDescription: product.description,
+            productBrand: product.brand,
+            productCategory: product.category,
+            productCategorySlug: product.categorySlug
+        };
+        dispatch(addCartItem(cartProductData, 1));
+    };
 
     // const handleAddToWishList = () => {
     //     if (product.id) {
@@ -134,7 +142,7 @@ function ProductDetails({
                 </div>
             </div>
             <span className="text-green-600">inclusive of all taxes</span>
-            {availableColors.length && (
+            {availableColors.length > 0 && (
                 <div className="space-y-4">
                     <div className="capitalize text-lg font-semibold">Available Colors</div>
                     <div className="flex flex-wrap gap-4 justify-start items-center">
@@ -157,7 +165,7 @@ function ProductDetails({
                 </div>
             )}
             <Spacer y={2} />
-            {availableSizes.length && (
+            {availableSizes.length > 0 && (
                 <div className="space-y-2">
                     <div className="capitalize text-lg font-semibold">Available Sizes</div>
                     {!selectedSize && (
@@ -203,9 +211,12 @@ function ProductDetails({
                     variant="ghost"
                     startContent={<CartIcon width={22} height={22} size={22} />}
                     isDisabled={
+                        isProductVariantInCart ||
+                        selectedProductVariant.stockCount <= 0 ||
                         (availableColors.length > 0 && !selectedColor) ||
                         (availableSizes.length > 0 && !selectedSize)
                     }
+                    onPress={handleAddToCart}
                 >
                     Add to cart
                 </Button>
@@ -225,12 +236,30 @@ function ProductDetails({
             </div>
             <Spacer y={3} />
             <div className="space-y-2">
+                <div className="flex items-center text-lg font-semibold">
+                    Delivery Options{" "}
+                    <TruckIcon width={24} height={24} size={24} strokeWidth={2} className="mx-3" />
+                </div>
+                <div className="space-y-2">
+                    <div className="flex items-center">
+                        <TruckFastIcon width={24} height={24} size={24} className="mr-3" />
+                        Get it by {getDeliveryDate()}
+                    </div>
+                    <div className="flex">
+                        <CashIcon width={28} height={28} size={24} className="mr-3" />
+                        Pay on Delivery available
+                    </div>
+                    <div className="flex">
+                        <ExchangeIcon width={28} height={28} size={24} className="mr-3" />
+                        Easy 14 days return & exchange available
+                    </div>
+                </div>
+            </div>
+            <div className="space-y-2">
                 <div className="text-lg font-semibold">Product Details</div>
                 <div className="text-default-500 text-lg">{product.description}</div>
             </div>
-            <div>
-                {/* Todo: Add ratings here */}
-            </div>
+            <div>{/* Todo: Add ratings here */}</div>
         </div>
     );
 }
