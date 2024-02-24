@@ -5,6 +5,7 @@ import {
     Image,
     Input,
     Link,
+    Spacer,
     Table,
     TableBody,
     TableCell,
@@ -30,9 +31,9 @@ function CartItemDetails() {
     const { cartItems, isLoading } = useReduxSelector((state) => state.cart);
 
     const columns = [
-        { key: "name", label: "Name" },
-        { key: "price", label: "Price" },
-        { key: "quantity", label: "Quantity" }
+        { key: "product", label: "Product" },
+        { key: "quantity", label: "Quantity" },
+        { key: "delete", label: "" }
     ];
 
     const schema = yup.object().shape({
@@ -108,40 +109,51 @@ function CartItemDetails() {
 
     const renderCell = React.useCallback((cartItem: Cart, columnKey: React.Key) => {
         switch (columnKey) {
-            case "name":
+            case "product":
                 return (
-                    <div className="md:flex">
-                        <Image
-                            src={cartItem.product.images[0]}
-                            width={60}
-                            height={60}
-                            className="self-center"
-                        />
-                        <Link
-                            href={`/products/${cartItem.product.productSlug}/${cartItem.product.productId}/buy`}
-                            isExternal
-                            color="foreground"
-                        >
-                            <div className="md:pl-2 pt-1 text-base">
-                                <div className="uppercase font-semibold">
-                                    {cartItem.product.productBrand}
+                    <div className="md:flex gap-4 items-center">
+                        <div>
+                            <Image src={cartItem.product.images[0]} width={75} height={75} />
+                        </div>
+                        <div>
+                            <Link
+                                href={`/products/${cartItem.product.productSlug}/${cartItem.product.productId}/buy`}
+                                isExternal
+                                color="foreground"
+                            >
+                                <div>
+                                    <div className="uppercase font-semibold">
+                                        {cartItem.product.productBrand}
+                                    </div>
+                                    <div className="text-default-500">
+                                        {cartItem.product.productName}
+                                    </div>
                                 </div>
-                                <div className="text-default-500">
-                                    {cartItem.product.productName}
+                            </Link>
+                            <div className="capitalize text-default-500 text-md">
+                                {cartItem.product.properties.map((property) => {
+                                    return (
+                                        <div key={property.id}>
+                                            {property.name} - {property.value}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <Spacer y={1} />
+                            <div className="flex text-base gap-3">
+                                <div className="flex items-center font-semibold">
+                                    <RupeeIcon height={16} width={16} size={16} />{" "}
+                                    {cartItem.product.sellingPrice}
+                                </div>
+                                <div className="flex items-center line-through text-default-500 font-semibold">
+                                    <RupeeIcon height={16} width={16} size={16} />{" "}
+                                    {cartItem.product.price}
+                                </div>
+                                <div className="text-rose-500 font-semibold">
+                                    ({cartItem.product.discount}% Off)
                                 </div>
                             </div>
-                        </Link>
-                    </div>
-                );
-            case "price":
-                return (
-                    <div className="text-base">
-                        <div className="flex items-center font-semibold">
-                            <RupeeIcon height={16} width={16} size={16} />{" "}
-                            {cartItem.product.sellingPrice}
-                        </div>
-                        <div className="flex items-center line-through text-default-500 font-semibold">
-                            <RupeeIcon height={16} width={16} size={16} /> {cartItem.product.price}
+                            <Spacer y={1} />
                         </div>
                     </div>
                 );
@@ -218,15 +230,18 @@ function CartItemDetails() {
                                 />
                             )}
                         </Formik>
-                        <Tooltip color="foreground" content="Remove Cart Item">
-                            <span
-                                className="text-lg text-danger cursor-pointer active:opacity-50 self-center pl-5"
-                                onClick={() => handleRemoveCartItem(cartItem)}
-                            >
-                                <TrashIcon height={20} width={20} />
-                            </span>
-                        </Tooltip>
                     </div>
+                );
+            case "delete":
+                return (
+                    <Tooltip color="foreground" content="Remove Cart Item">
+                        <div
+                            className="text-lg text-danger cursor-pointer active:opacity-50 self-center"
+                            onClick={() => handleRemoveCartItem(cartItem)}
+                        >
+                            <TrashIcon height={20} width={20} />
+                        </div>
+                    </Tooltip>
                 );
         }
     }, []);
@@ -235,7 +250,7 @@ function CartItemDetails() {
         <Table aria-label="Cart Items" isStriped>
             <TableHeader columns={columns}>
                 {(column) => (
-                    <TableColumn key={column.key} align="center" className="uppercase">
+                    <TableColumn key={column.key} className="uppercase text-center">
                         {column.label}
                     </TableColumn>
                 )}

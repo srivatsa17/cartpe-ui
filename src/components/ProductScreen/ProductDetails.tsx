@@ -230,6 +230,11 @@ function ProductDetails({
                             variant="ghost"
                             startContent={<CartIcon width={22} height={22} size={22} />}
                             endContent={<ArrowRightIcon width={22} height={22} />}
+                            isDisabled={
+                                selectedProductVariant.stockCount <= 0 ||
+                                (availableColors.length > 0 && !selectedColor) ||
+                                (availableSizes.length > 0 && !selectedSize)
+                            }
                         >
                             Go to cart
                         </Button>
