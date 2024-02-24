@@ -1,9 +1,9 @@
 import { Button, Image, Link, Spacer } from "@nextui-org/react";
+import { CART_SCREEN, WISHLIST_SCREEN } from "constants/routes";
 import { CartProductData, Product, ProductVariant } from "utils/types";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { ArrowRightIcon } from "icons/ArrowRightIcon";
-import { CART_SCREEN } from "constants/routes";
 import { CartIcon } from "icons/CartIcon";
 import { CashIcon } from "icons/CashIcon";
 import { ExchangeIcon } from "icons/ExchangeIcon";
@@ -15,9 +15,8 @@ import { RupeeIcon } from "icons/RupeeIcon";
 import { TruckFastIcon } from "icons/TruckFastIcon";
 import { TruckIcon } from "icons/TruckIcon";
 import { addCartItem } from "redux/CartService/cartSlice";
+import { addProductToWishList } from "redux/ProductService/wishlistSlice";
 import { getProductVariantProperties } from "utils/getProductVariantProperties";
-
-// import { addProductToWishList } from "redux/ProductService/wishlistSlice";
 
 interface ProductDetailsProps {
     product: Product;
@@ -41,16 +40,21 @@ function ProductDetails({
     selectedProductVariant,
     setSelectedProductVariant
 }: ProductDetailsProps) {
+    // Todo: Return fallback error component
+    if (product === null || product === undefined) {
+        return null;
+    }
+
     const dispatch = useReduxDispatch();
     const { cartItems } = useReduxSelector((state) => state.cart);
-    // const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
+    const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
 
     const isProductVariantInCart = cartItems.some(
         (cartItem) => cartItem.product.id === selectedProductVariant.id
     );
-    // const isProductInWishList = wishListedProducts.some(
-    //     (wishListedProduct) => wishListedProduct.product.id === product.id
-    // );
+    const isProductInWishList = wishListedProducts.some(
+        (wishListedProduct) => wishListedProduct.productVariant.id === selectedProductVariant.id
+    );
 
     const handleAddToCart = () => {
         // Handle already exists condition as well with alert message.
@@ -66,16 +70,11 @@ function ProductDetails({
         dispatch(addCartItem(cartProductData, 1));
     };
 
-    // const handleAddToWishList = () => {
-    //     if (product.id) {
-    //         dispatch(addProductToWishList(product.id));
-    //     }
-    // };
-
-    // Todo: Return fallback error component
-    if (product === null || product === undefined) {
-        return null;
-    }
+    const handleAddToWishList = () => {
+        if (!isProductInWishList && selectedProductVariant.id) {
+            dispatch(addProductToWishList(selectedProductVariant.id));
+        }
+    };
 
     const { availableColors, availableSizes, productVariantProperty } =
         getProductVariantProperties(product);
@@ -236,19 +235,35 @@ function ProductDetails({
                         </Button>
                     </Link>
                 )}
-                <Button
-                    fullWidth
-                    size="lg"
-                    color="danger"
-                    variant="ghost"
-                    startContent={<HeartIcon width={24} height={24} size={24} />}
-                    isDisabled={
-                        (availableColors.length > 0 && !selectedColor) ||
-                        (availableSizes.length > 0 && !selectedSize)
-                    }
-                >
-                    Add to wishlist
-                </Button>
+                {!isProductInWishList ? (
+                    <Button
+                        fullWidth
+                        size="lg"
+                        color="danger"
+                        variant="ghost"
+                        startContent={<HeartIcon width={24} height={24} size={24} />}
+                        isDisabled={
+                            (availableColors.length > 0 && !selectedColor) ||
+                            (availableSizes.length > 0 && !selectedSize)
+                        }
+                        onPress={handleAddToWishList}
+                    >
+                        Add to wishlist
+                    </Button>
+                ) : (
+                    <Link className="w-full" href={WISHLIST_SCREEN}>
+                        <Button
+                            fullWidth
+                            size="lg"
+                            color="secondary"
+                            variant="ghost"
+                            startContent={<HeartIcon width={22} height={22} size={22} />}
+                            endContent={<ArrowRightIcon width={22} height={22} />}
+                        >
+                            Go to wishlist
+                        </Button>
+                    </Link>
+                )}
             </div>
             <Spacer y={3} />
             <div className="space-y-2">

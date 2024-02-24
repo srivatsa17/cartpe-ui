@@ -31,7 +31,9 @@ function ProductCard({ product }: ProductCardProps) {
     const dispatch = useReduxDispatch();
     const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
 
-    const isProductInWishList = wishListedProducts.find((p) => p.product.id === product.id);
+    const isProductInWishList = wishListedProducts.find(
+        (p) => p.productVariant.id === product.productVariants[0].id
+    );
 
     const [isWishlisted, setIsWishlisted] = React.useState<boolean>(
         isProductInWishList ? true : false
@@ -42,7 +44,7 @@ function ProductCard({ product }: ProductCardProps) {
         if (isProductInWishList && isWishlisted) {
             dispatch(removeProductFromWishList(isProductInWishList.id));
         } else {
-            dispatch(addProductToWishList(product.id));
+            dispatch(addProductToWishList(product.productVariants[0].id));
         }
     };
 
@@ -56,9 +58,7 @@ function ProductCard({ product }: ProductCardProps) {
                     <div className="line-clamp-1 font-medium">{product.name}</div>
                 </div>
                 <Tooltip
-                    content={
-                        isWishlisted ? "Remove from wishlist" : "Add to wishlist"
-                    }
+                    content={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
                     color={isWishlisted ? "danger" : "foreground"}
                 >
                     <Button
@@ -78,20 +78,15 @@ function ProductCard({ product }: ProductCardProps) {
                 </Tooltip>
             </CardHeader>
             <CardBody className="py-3 px-4 space-y-2.5">
-                <div className="lg:h-80 xl:h-64 items-center">
+                <div className="items-center">
                     <Image
                         src={product.productVariants[0].images[0] || PLACEHOLDER_IMAGE}
                         isBlurred
                         alt="product-image"
                     />
                 </div>
-                <div className="line-clamp-2 text-default-500">
-                    {product.description}
-                </div>
-                <Rating
-                    rating={product.rating || 0}
-                    reviewCount={product.reviewCount || 0}
-                />
+                <div className="line-clamp-2 text-default-500">{product.description}</div>
+                <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
                 <div className="flex gap-3">
                     <div className="flex items-center font-semibold">
                         <RupeeIcon height={18} width={18} size={18} />{" "}
