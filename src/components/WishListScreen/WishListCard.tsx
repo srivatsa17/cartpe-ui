@@ -6,15 +6,15 @@ import {
     CardHeader,
     Divider,
     Image,
-    Spacer,
     Tooltip
 } from "@nextui-org/react";
+import { CartProductData, WishList } from "utils/types";
 
+import { CartIcon } from "icons/CartIcon";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { PLACEHOLDER_IMAGE } from "constants/images";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
-import { WishList } from "utils/types";
 import { addCartItem } from "redux/CartService/cartSlice";
 import { removeProductFromWishList } from "redux/ProductService/wishlistSlice";
 import { useReduxDispatch } from "hooks/redux";
@@ -26,16 +26,21 @@ interface WishListCardProps {
 function WishListCard({ wishListedProduct }: WishListCardProps) {
     const dispatch = useReduxDispatch();
 
-    const featuredImage = wishListedProduct.product.productImages.find(
-        (productImage) => productImage.isFeatured === true
-    );
-
     const handleRemoveProductFromWishlist = () => {
         dispatch(removeProductFromWishList(wishListedProduct.id));
     };
 
     const handleMoveToCart = () => {
-        dispatch(addCartItem(wishListedProduct.product, 1));
+        const cartProductData: CartProductData = {
+            ...wishListedProduct.productVariant,
+            productName: wishListedProduct.product.name,
+            productSlug: wishListedProduct.product.slug,
+            productDescription: wishListedProduct.product.description,
+            productBrand: wishListedProduct.product.brand,
+            productCategory: wishListedProduct.product.category,
+            productCategorySlug: wishListedProduct.product.categorySlug
+        };
+        dispatch(addCartItem(cartProductData, 1));
         dispatch(removeProductFromWishList(wishListedProduct.id));
     };
 
@@ -59,11 +64,10 @@ function WishListCard({ wishListedProduct }: WishListCardProps) {
                     </Button>
                 </Tooltip>
             </CardHeader>
-            <CardBody className="px-4">
-                <Spacer y={6} />
-                <div className="xs:h-full md:h-80 xl:h-64 items-center">
+            <CardBody className="space-y-3 px-4">
+                <div className="items-center">
                     <Image
-                        src={featuredImage?.image || PLACEHOLDER_IMAGE}
+                        src={wishListedProduct.productVariant.images[0] || PLACEHOLDER_IMAGE}
                         isBlurred
                         alt="product-image"
                     />
@@ -71,25 +75,44 @@ function WishListCard({ wishListedProduct }: WishListCardProps) {
                 <div className="line-clamp-2 text-default-500">
                     {wishListedProduct.product.description}
                 </div>
-                <Spacer y={2} />
-                <div className="flex items-center ">
+                <div className="flex items-center">
                     <div className="flex items-center font-semibold">
                         <RupeeIcon height={18} width={18} size={18} />{" "}
-                        {wishListedProduct.product.sellingPrice}
+                        {wishListedProduct.productVariant.sellingPrice}
                     </div>
                     <div className="flex items-center pl-3 line-through text-default-500 font-semibold">
                         <RupeeIcon height={18} width={18} size={18} />{" "}
-                        {wishListedProduct.product.price}
+                        {wishListedProduct.productVariant.price}
                     </div>
                     <div className="pl-3 text-green-600 font-medium">
-                        ({wishListedProduct.product.discount}% Off)
+                        ({wishListedProduct.productVariant.discount}% Off)
                     </div>
+                </div>
+                <div>
+                    {wishListedProduct.productVariant.properties.map((property) => {
+                        return (
+                            <div
+                                key={property.id}
+                                className="flex gap-3 capitalize text-default-500"
+                            >
+                                <div>
+                                    {property.name} - {property.value}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </CardBody>
             <Divider />
             <CardFooter>
-                <Button fullWidth color="danger" variant="ghost" onPress={handleMoveToCart}>
-                    Move to cart
+                <Button
+                    fullWidth
+                    color="danger"
+                    variant="ghost"
+                    onPress={handleMoveToCart}
+                    startContent={<CartIcon width={22} height={22} size={22} />}
+                >
+                    Move item to cart
                 </Button>
             </CardFooter>
         </Card>

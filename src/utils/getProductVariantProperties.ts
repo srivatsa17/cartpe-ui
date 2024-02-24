@@ -52,7 +52,10 @@ const getAvailableSizes = (product: Product) => {
     const availableSizes = product.productVariants
         .reduce((sizeList: Array<string>, productVariant) => {
             productVariant.properties.forEach((property) => {
-                if (property.name.toLowerCase() === productVariantProperty.SIZE && !sizeList.includes(property.value.toString())) {
+                if (
+                    property.name.toLowerCase() === productVariantProperty.SIZE &&
+                    !sizeList.includes(property.value.toString())
+                ) {
                     sizeList.push(property.value.toString());
                 }
             });
@@ -68,6 +71,8 @@ export const getProductVariantProperties = (product: Product) => {
     const availableSizes = getAvailableSizes(product);
 
     return {
-        availableColors, availableSizes, productVariantProperty
+        availableColors,
+        availableSizes,
+        productVariantProperty
     };
 };
