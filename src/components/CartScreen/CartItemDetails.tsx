@@ -5,6 +5,7 @@ import {
     Image,
     Input,
     Link,
+    Pagination,
     Spacer,
     Table,
     TableBody,
@@ -246,8 +247,34 @@ function CartItemDetails() {
         }
     }, []);
 
+    const [page, setPage] = React.useState(1);
+    const rowsPerPage = 1;
+    const pages = Math.ceil(cartItems.length / rowsPerPage);
+    const items = React.useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        return cartItems.slice(start, end);
+    }, [page, cartItems]);
+
     return (
-        <Table aria-label="Cart Items" isStriped>
+        <Table
+            aria-label="Cart Items"
+            isStriped
+            bottomContent={
+                <div className="flex w-full justify-center">
+                    <Pagination
+                        isCompact
+                        showControls
+                        showShadow
+                        color="secondary"
+                        page={page}
+                        total={pages}
+                        onChange={(page) => setPage(page)}
+                    />
+                </div>
+            }
+        >
             <TableHeader columns={columns}>
                 {(column) => (
                     <TableColumn key={column.key} className="uppercase text-center">
@@ -255,7 +282,7 @@ function CartItemDetails() {
                     </TableColumn>
                 )}
             </TableHeader>
-            <TableBody items={cartItems} emptyContent={"Cart is empty."}>
+            <TableBody items={items} emptyContent={"Cart is empty."}>
                 {(cartItem: Cart) => (
                     <TableRow key={cartItem ? cartItem.product.id : "1"}>
                         {(columnKey) => <TableCell>{renderCell(cartItem, columnKey)}</TableCell>}
