@@ -71,7 +71,7 @@ export type ProductVariant = {
     availableProperties: Array<string>;
     createdAt: string;
     updatedAt: string;
-}
+};
 
 export type Product = {
     id: bigint;
@@ -103,7 +103,11 @@ export type ProductDetailsState = {
 
 export type WishList = {
     id: bigint;
-    product: CartProductData;
+    product: Omit<
+        Product,
+        "productVariants" | "rating" | "reviewCount" | "createdAt" | "updatedAt"
+    >;
+    productVariant: ProductVariant;
     createdAt: string;
     updatedAt: string;
 };

@@ -46,7 +46,10 @@ const productListSlice = createSlice({
             state.isLoading = true;
             state.products = [];
         },
-        productListSuccess: (state, action: PayloadAction<Omit<ProductListState, "isLoading" | "error">>) => {
+        productListSuccess: (
+            state,
+            action: PayloadAction<Omit<ProductListState, "isLoading" | "error">>
+        ) => {
             state.isLoading = false;
             state.products = action.payload.products;
             state.searchedCategory = action.payload.searchedCategory;
