@@ -90,7 +90,7 @@ function OrderStatusTabs() {
                 onSelectionChange={(value: string | number) => setSelectedTab(value)}
                 classNames={{
                     tabList: "gap-x-6",
-                    tab: "text-md px-0 h-12 max-w-fit",
+                    tab: "text-base px-0 h-12 max-w-fit",
                     cursor: "w-full"
                 }}
             >

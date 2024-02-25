@@ -22,7 +22,7 @@ function CategoryMegaMenu() {
                             <DropdownTrigger>
                                 <Button
                                     disableRipple
-                                    className="p-0 bg-transparent data-[hover=true]:bg-transparent text-md"
+                                    className="p-0 bg-transparent data-[hover=true]:bg-transparent text-base"
                                     endContent={
                                         <ChevronDown
                                             fill="currentColor"
@@ -52,7 +52,7 @@ function CategoryMegaMenu() {
                                         title={section.label}
                                         classNames={{
                                             base: "text-center",
-                                            heading: `text-md font-semibold text-sm ${category.color}`
+                                            heading: `text-base font-semibold text-sm ${category.color}`
                                         }}
                                     >
                                         {section.children.map((child) => {
