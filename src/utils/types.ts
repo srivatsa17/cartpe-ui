@@ -183,7 +183,7 @@ export type ShippingAddressFormData = NestedOmit<
     | "address.updatedAt"
 >;
 
-export type OrderDetails = {
+export type CheckoutOrderDetails = {
     orderItems: Array<Cart>;
     amount: number;
 };
@@ -192,7 +192,7 @@ export type CheckoutStepsState = {
     isLoading: boolean;
     shippingAddressId: bigint | null;
     orderItems: Array<{
-        product: bigint;
+        productVariant: bigint;
         quantity: number;
     }>;
     amount: number;
@@ -233,8 +233,10 @@ export type Order = {
             slug: string;
             description: string;
             brand: string;
-            featuredImage: string;
+            category: string;
+            category_slug: string;
         };
+        productVariant: ProductVariant;
         quantity: number;
         createdAt: string;
         updatedAt: string;

@@ -6,6 +6,7 @@ import { useReduxSelector } from "hooks/redux";
 
 function OrderDetailsCard() {
     const { order } = useReduxSelector((state) => state.orderDetails);
+    // Todo: Return fallback component
     if (order === null) return null;
 
     return (
@@ -49,13 +50,16 @@ function OrderDetailsCard() {
                             <div className="space-y-4">
                                 {order.orderItems.map((orderItem) => {
                                     return (
-                                        <div key={orderItem.id} className="flex gap-12">
+                                        <div
+                                            key={orderItem.id}
+                                            className="flex items-center gap-12"
+                                        >
                                             <Image
-                                                src={orderItem.product.featuredImage}
+                                                src={orderItem.productVariant.images[0]}
                                                 height={100}
                                                 width={100}
                                             />
-                                            <div className="mt-2">
+                                            <div>
                                                 <div className="font-semibold">
                                                     {orderItem.product.brand}
                                                 </div>
@@ -66,6 +70,42 @@ function OrderDetailsCard() {
                                                 >
                                                     {orderItem.product.name}
                                                 </Link>
+                                                <div>
+                                                    {orderItem.productVariant.properties.map(
+                                                        (property) => {
+                                                            return (
+                                                                <div
+                                                                    key={property.id}
+                                                                    className="text-default-500 capitalize text-sm"
+                                                                >
+                                                                    {property.name} -{" "}
+                                                                    {property.value}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    )}
+                                                </div>
+                                                <div className="flex text-base gap-3">
+                                                    <div className="flex items-center font-semibold">
+                                                        <RupeeIcon
+                                                            height={16}
+                                                            width={16}
+                                                            size={16}
+                                                        />{" "}
+                                                        {orderItem.productVariant.sellingPrice}
+                                                    </div>
+                                                    <div className="flex items-center line-through text-default-500 font-semibold">
+                                                        <RupeeIcon
+                                                            height={16}
+                                                            width={16}
+                                                            size={16}
+                                                        />{" "}
+                                                        {orderItem.productVariant.price}
+                                                    </div>
+                                                    <div className="text-rose-500 font-semibold">
+                                                        ({orderItem.productVariant.discount}% Off)
+                                                    </div>
+                                                </div>
                                                 <div>Quantity: {orderItem.quantity}</div>
                                             </div>
                                         </div>
@@ -74,10 +114,12 @@ function OrderDetailsCard() {
                             </div>
                         </div>
                         <Spacer y={8} />
-                        <div className="flex text-default-500">
-                            Pending amount:{" "}
-                            <RupeeIcon height={17} width={17} size={17} className="ml-1 mt-1" />
-                            {order.pendingAmount.toFixed(2)}
+                        <div className="flex items-center gap-2 text-default-500">
+                            <div>Pending amount: </div>
+                            <div className="flex items-center">
+                                <RupeeIcon height={17} width={17} size={17} />
+                                {order.pendingAmount.toFixed(2)}
+                            </div>
                         </div>
                         <Spacer y={4} />
                         <Button

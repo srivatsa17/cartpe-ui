@@ -31,8 +31,8 @@ function OrderCard({ order }: OrderCardProps) {
                     </div>
                     <div>
                         <div className="text-default-500">Total amount</div>
-                        <div className="flex">
-                            <RupeeIcon width={17} height={17} size={17} className="mt-1" />
+                        <div className="flex items-center">
+                            <RupeeIcon width={17} height={17} size={17} />
                             {order.amount.toFixed(2)}
                         </div>
                     </div>
@@ -81,45 +81,53 @@ function OrderCard({ order }: OrderCardProps) {
                         Status: <span className="font-semibold">{order.status}</span>
                     </div>
                     <Spacer y={3} />
-                    {order.orderItems.map((orderItem) => {
-                        return (
-                            <div key={orderItem.id} className="flex gap-12">
-                                <Image
-                                    src={orderItem.product.featuredImage}
-                                    height={100}
-                                    width={100}
-                                />
-                                <div className="mt-2">
-                                    <div className="font-semibold">{orderItem.product.brand}</div>
-                                    <Link
-                                        href={`/products/${orderItem.product.slug}/${orderItem.product.id}/buy`}
-                                        className="text-default-500"
-                                        underline="hover"
-                                    >
-                                        {orderItem.product.name}
-                                    </Link>
-                                    <div>Quantity: {orderItem.quantity}</div>
+                    <div className="space-y-3">
+                        {order.orderItems.map((orderItem) => {
+                            return (
+                                <div key={orderItem.id} className="flex items-center gap-12">
+                                    <Image
+                                        src={orderItem.productVariant.images[0]}
+                                        height={70}
+                                        width={70}
+                                    />
+                                    <div>
+                                        <div className="font-semibold">
+                                            {orderItem.product.brand}
+                                        </div>
+                                        <Link
+                                            href={`/products/${orderItem.product.slug}/${orderItem.product.id}/buy`}
+                                            className="text-default-500"
+                                            underline="hover"
+                                        >
+                                            {orderItem.product.name}
+                                        </Link>
+                                        <div className="capitalize text-base">
+                                            Quantity: {orderItem.quantity}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </CardBody>
                 <CardFooter className="px-7 grid grid-flow-col xs:grid-flow-row">
                     <div>
                         <div>
                             Payment Method: <span className="text-blue-700">{order.method}</span>
                         </div>
-                        <div className="flex">
+                        <div className="flex gap-1">
                             Total amount:
-                            <span className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="mt-1 ml-1" />
+                            <span className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.amount.toFixed(2)}
                             </span>
                         </div>
-                        <div className="flex text-default-500">
+                        <div className="flex text-default-500 gap-1">
                             Pending amount:
-                            <RupeeIcon width={17} height={17} size={17} className="mt-1 ml-1" />
-                            {order.pendingAmount.toFixed(2)}
+                            <span className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
+                                {order.pendingAmount.toFixed(2)}
+                            </span>
                         </div>
                     </div>
                     <Button

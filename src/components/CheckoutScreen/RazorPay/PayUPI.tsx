@@ -28,7 +28,7 @@ import { getCartPriceDetails } from "utils/getCartPriceDetails";
 interface OrderDetails {
     shippingAddressId: bigint | null;
     orderItems: Array<{
-        product: bigint;
+        productVariant: bigint;
         quantity: number;
     }>;
     amount: number;
@@ -108,7 +108,7 @@ const DisplayRazorPayCheckoutForm = ({
                 prefill: {
                     name: firstName && lastName ? firstName + lastName : "",
                     email: email ? email : "youremail@example.com"
-                    // Add phone number field once its implemented from backend
+                    // TODO: Add phone number field once its implemented from backend
                     // contact: "9999999999"
                 },
                 theme: {
