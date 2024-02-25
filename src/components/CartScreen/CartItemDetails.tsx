@@ -248,7 +248,7 @@ function CartItemDetails() {
     }, []);
 
     const [page, setPage] = React.useState(1);
-    const rowsPerPage = 1;
+    const rowsPerPage = 4;
     const pages = Math.ceil(cartItems.length / rowsPerPage);
     const items = React.useMemo(() => {
         const start = (page - 1) * rowsPerPage;
