@@ -54,20 +54,14 @@ function CategorySearchScreen() {
     };
 
     const handleFilterDiscount = (product: Product) => {
-        if (product.discount !== undefined && typeof product.discount === "number") {
-            return filteredDiscount ? product.discount >= +filteredDiscount : true;
-        }
-        return false;
+        return filteredDiscount ? product.productVariants[0].discount >= +filteredDiscount : true;
     };
 
     const handleFilterPriceRanges = (product: Product) => {
-        if (product.sellingPrice !== undefined && typeof product.sellingPrice === "number") {
-            return filteredPriceRange
-                ? product.sellingPrice >= +filteredPriceRange[0] &&
-                      product.sellingPrice <= +filteredPriceRange[1]
-                : true;
-        }
-        return false;
+        return filteredPriceRange
+            ? product.productVariants[0].sellingPrice >= +filteredPriceRange[0] &&
+                  product.productVariants[0].sellingPrice <= +filteredPriceRange[1]
+            : true;
     };
 
     const handleSort = (a: Product, b: Product) => {
@@ -76,11 +70,11 @@ function CategorySearchScreen() {
             case "whats-new":
                 return a.createdAt.localeCompare(b.createdAt);
             case "better-discount":
-                return b.discount - a.discount;
+                return b.productVariants[0].discount - a.productVariants[0].discount;
             case "price-high-to-low":
-                return b.sellingPrice - a.sellingPrice;
+                return b.productVariants[0].sellingPrice - a.productVariants[0].sellingPrice;
             case "price-low-to-high":
-                return a.sellingPrice - b.sellingPrice;
+                return a.productVariants[0].sellingPrice - b.productVariants[0].sellingPrice;
             default:
                 return a.name.localeCompare(b.name);
         }
@@ -134,7 +128,7 @@ function CategorySearchScreen() {
                     {isLoading ? (
                         <ProductCardSkeletonList />
                     ) : (
-                        filteredAndSortedProducts?.map((product, index) => {
+                        filteredAndSortedProducts.map((product, index) => {
                             return (
                                 <div key={index}>
                                     <ProductCard product={product} />
