@@ -30,6 +30,7 @@ import { debounce } from "lodash";
 function CartItemDetails() {
     const dispatch = useReduxDispatch();
     const { cartItems, isLoading } = useReduxSelector((state) => state.cart);
+    const cartItemsCount = cartItems.length;
 
     const columns = [
         { key: "product", label: "Product" },
@@ -131,7 +132,7 @@ function CartItemDetails() {
                                     </div>
                                 </div>
                             </Link>
-                            <div className="capitalize text-default-500 text-md">
+                            <div className="capitalize text-default-500 text-base">
                                 {cartItem.product.properties.map((property) => {
                                     return (
                                         <div key={property.id}>
@@ -249,7 +250,7 @@ function CartItemDetails() {
 
     const [page, setPage] = React.useState(1);
     const rowsPerPage = 4;
-    const pages = Math.ceil(cartItems.length / rowsPerPage);
+    const pages = Math.ceil(cartItemsCount / rowsPerPage);
     const items = React.useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
@@ -262,17 +263,19 @@ function CartItemDetails() {
             aria-label="Cart Items"
             isStriped
             bottomContent={
-                <div className="flex w-full justify-center">
-                    <Pagination
-                        isCompact
-                        showControls
-                        showShadow
-                        color="secondary"
-                        page={page}
-                        total={pages}
-                        onChange={(page) => setPage(page)}
-                    />
-                </div>
+                cartItemsCount > 0 && (
+                    <div className="flex w-full justify-center">
+                        <Pagination
+                            isCompact
+                            showControls
+                            showShadow
+                            color="secondary"
+                            page={page}
+                            total={pages}
+                            onChange={(page) => setPage(page)}
+                        />
+                    </div>
+                )
             }
         >
             <TableHeader columns={columns}>
