@@ -293,7 +293,14 @@ function ProductDetails({
             </div>
             <div className="space-y-2">
                 <div className="text-lg font-semibold">Product Details</div>
-                <div className="text-default-500 text-lg">{product.description}</div>
+                <ul className="text-default-500 text-base list-disc list-inside">
+                    {product.description
+                        .split(".")
+                        .filter((point) => point.trim() !== "")
+                        .map((point, index) => {
+                            return <li key={index}>{point.trim()}.</li>;
+                        })}
+                </ul>
             </div>
             <div>{/* Todo: Add ratings here */}</div>
         </div>
