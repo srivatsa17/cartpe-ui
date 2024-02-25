@@ -1,13 +1,13 @@
 import { Button, Card, CardBody, Divider, Image, Link, Spacer } from "@nextui-org/react";
 
+import BadRequest400 from "screens/Error/BadRequest400";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 import { useReduxSelector } from "hooks/redux";
 
 function OrderDetailsCard() {
     const { order } = useReduxSelector((state) => state.orderDetails);
-    // Todo: Return fallback component
-    if (order === null) return null;
+    if (order === null) return <BadRequest400 />;
 
     return (
         <div>

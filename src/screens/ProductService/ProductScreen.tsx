@@ -1,6 +1,7 @@
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { CATEGORY_SCREEN, HOME_SCREEN } from "constants/routes";
 
+import BadRequest400 from "screens/Error/BadRequest400";
 import ProductDetails from "components/ProductScreen/ProductDetails";
 import ProductDetailsSkeleton from "components/ProductScreen/ProductDetailsSkeleton";
 import ProductImages from "components/ProductScreen/ProductImages";
@@ -13,16 +14,14 @@ import { useReduxSelector } from "hooks/redux";
 function ProductScreen() {
     const { id } = useParams();
 
-    // Todo: Return fallback error component instead of null
     if (id === undefined) {
-        return null;
+        return <BadRequest400 />;
     }
 
     const { products, isLoading } = useReduxSelector((state) => state.productList);
     const product = products.find((product) => Number(product.id) === Number(id));
 
-    // Todo: Return fallback error component instead of null
-    if (!products || !products.length || !product) return null;
+    if (!products || !products.length || !product) return <BadRequest400 />;
 
     const [selectedProductVariant, setSelectedProductVariant] = React.useState<ProductVariant>(
         product.productVariants[0]
