@@ -171,16 +171,12 @@ function OrderDetailsCard() {
                             <div>Round Off</div>
                             <div
                                 className={`flex items-center ${
-                                    order.paymentDetails.totalAmount <
-                                        order.paymentDetails.totalSellingPrice && "text-green-600"
+                                    order.paymentDetails.roundOffPrice < 0 && "text-green-600"
                                 }`}
                             >
-                                {order.paymentDetails.totalAmount <
-                                order.paymentDetails.totalSellingPrice
-                                    ? "-"
-                                    : ""}
+                                {order.paymentDetails.roundOffPrice < 0 ? "-" : ""}
                                 <RupeeIcon width={17} height={17} size={17} />
-                                {order.paymentDetails.roundOffPrice.toFixed(2)}
+                                {Math.abs(order.paymentDetails.roundOffPrice).toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={2} />

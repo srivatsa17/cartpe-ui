@@ -30,7 +30,7 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
         totalDiscountPrice,
         convenienceFee,
         shippingFee,
-        totalSellingPrice,
+        // totalSellingPrice,
         totalAmount,
         savingsAmount,
         roundOffPrice,
@@ -80,14 +80,10 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
                 <Spacer y={0.5} />
                 <div className="flex justify-between text-lg">
                     <div>Round Off</div>
-                    <div
-                        className={`flex items-center ${
-                            totalAmount < totalSellingPrice && "text-green-600"
-                        }`}
-                    >
-                        {totalAmount < totalSellingPrice ? "-" : ""}
+                    <div className={`flex items-center ${roundOffPrice < 0 && "text-green-600"}`}>
+                        {roundOffPrice < 0 ? "-" : ""}
                         <RupeeIcon width={20} height={20} size={20} />
-                        {roundOffPrice.toFixed(2)}
+                        {Math.abs(roundOffPrice).toFixed(2)}
                     </div>
                 </div>
                 <Spacer y={2} />
