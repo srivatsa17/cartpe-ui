@@ -6,14 +6,22 @@ import { throwErrorResponse } from "utils/errorResponse";
 
 const initialState: ProductDetailsState = {
     isLoading: false,
-    product: {} as Product,
+    product: null,
     error: null
 };
 
-export const getProductDetails = (id: bigint) => async (dispatch: Dispatch) => {
+export const getProductDetails = (productId: bigint | string) => async (dispatch: Dispatch) => {
+    let typeCastedId: bigint;
+
+    if (typeof productId === "string") {
+        typeCastedId = BigInt(productId);
+    } else {
+        typeCastedId = productId;
+    }
+
     try {
         dispatch(productDetailsRequest());
-        const { data } = await axiosInstance.get(`products/${id}`);
+        const { data } = await axiosInstance.get(`products/${typeCastedId}`);
         dispatch(productDetailsSuccess(data));
     } catch (error) {
         const err = error as ErrorResponse;

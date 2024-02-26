@@ -4,7 +4,6 @@ import { CartProductData, Product, ProductVariant } from "utils/types";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { ArrowRightIcon } from "icons/ArrowRightIcon";
-import BadRequest400 from "screens/Error/BadRequest400";
 import { CartIcon } from "icons/CartIcon";
 import { CashIcon } from "icons/CashIcon";
 import { ExchangeIcon } from "icons/ExchangeIcon";
@@ -41,10 +40,6 @@ function ProductDetails({
     selectedProductVariant,
     setSelectedProductVariant
 }: ProductDetailsProps) {
-    if (product === null || product === undefined) {
-        return <BadRequest400 />;
-    }
-
     const dispatch = useReduxDispatch();
     const { cartItems } = useReduxSelector((state) => state.cart);
     const { wishListedProducts } = useReduxSelector((state) => state.wishlist);

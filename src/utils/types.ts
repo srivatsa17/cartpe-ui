@@ -96,9 +96,9 @@ export type ProductListState = {
 };
 
 export type ProductDetailsState = {
-    isLoading?: boolean;
-    product: Product;
-    error?: Error;
+    isLoading: boolean;
+    product: Product | null;
+    error: Error;
 };
 
 export type WishList = {
