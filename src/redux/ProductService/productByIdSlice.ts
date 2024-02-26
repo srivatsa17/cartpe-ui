@@ -11,17 +11,17 @@ const initialState: ProductDetailsState = {
 };
 
 export const getProductDetails = (productId: bigint | string) => async (dispatch: Dispatch) => {
-    let typeCastedId: bigint;
+    let typeCastedProductId: bigint;
 
     if (typeof productId === "string") {
-        typeCastedId = BigInt(productId);
+        typeCastedProductId = BigInt(productId);
     } else {
-        typeCastedId = productId;
+        typeCastedProductId = productId;
     }
 
     try {
         dispatch(productDetailsRequest());
-        const { data } = await axiosInstance.get(`products/${typeCastedId}`);
+        const { data } = await axiosInstance.get(`products/${typeCastedProductId}`);
         dispatch(productDetailsSuccess(data));
     } catch (error) {
         const err = error as ErrorResponse;

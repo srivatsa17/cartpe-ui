@@ -11,10 +11,18 @@ const initialState: OrderDetailsState = {
     error: null
 };
 
-export const getOrderDetails = (orderId: bigint) => async (dispatch: Dispatch) => {
+export const getOrderDetails = (orderId: bigint | string) => async (dispatch: Dispatch) => {
+    let typeCastedOrderId: bigint;
+
+    if (typeof orderId === "string") {
+        typeCastedOrderId = BigInt(orderId);
+    } else {
+        typeCastedOrderId = orderId;
+    }
+
     try {
         dispatch(getOrderDetailsRequest());
-        const { data } = await axiosInstance.get(ORDER_BY_ID_URI(orderId));
+        const { data } = await axiosInstance.get(ORDER_BY_ID_URI(typeCastedOrderId));
         dispatch(getOrderDetailsSuccess(data));
     } catch (error) {
         const err = error as ErrorResponse;
