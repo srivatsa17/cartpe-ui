@@ -1,6 +1,7 @@
 import { Button, Card, CardBody, Divider, Image, Link, Spacer } from "@nextui-org/react";
 
 import { Order } from "utils/types";
+import { OrderStatus } from "utils/getOrderStatus";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 
@@ -115,7 +116,12 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                         </div>
                         <Spacer y={8} />
                         <div className="flex items-center gap-2 text-default-500">
-                            <div>Pending amount: </div>
+                            <div>
+                                {order.status === (OrderStatus.CANCELLED || OrderStatus.RETURNED)
+                                    ? "Refundable amount"
+                                    : "Pending amount"}
+                                :{" "}
+                            </div>
                             <div className="flex items-center">
                                 <RupeeIcon height={17} width={17} size={17} />
                                 {order.pendingAmount.toFixed(2)}

@@ -3,15 +3,10 @@ import { Chip, Spacer, Tab, Tabs } from "@nextui-org/react";
 import { ORDER_SEARCH } from "constants/queryParam";
 import { Order } from "utils/types";
 import OrderCard from "./OrderCard";
+import { OrderStatus } from "utils/getOrderStatus";
 import React from "react";
 import { useReduxSelector } from "hooks/redux";
 import { useSearchParams } from "react-router-dom";
-
-const OrderStatus = {
-    CONFIRMED: "CONFIRMED",
-    CANCELLED: "CANCELLED",
-    RETURNED: "RETURNED"
-};
 
 function OrderStatusTabs() {
     const { orders } = useReduxSelector((state) => state.orderList);

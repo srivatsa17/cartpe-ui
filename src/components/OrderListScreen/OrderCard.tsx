@@ -13,6 +13,7 @@ import {
 
 import { ChevronDown } from "icons/ChevronDown";
 import { Order } from "utils/types";
+import { OrderStatus } from "utils/getOrderStatus";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 
@@ -123,7 +124,10 @@ function OrderCard({ order }: OrderCardProps) {
                             </span>
                         </div>
                         <div className="flex text-default-500 gap-1">
-                            Pending amount:
+                            {order.status === (OrderStatus.CANCELLED || OrderStatus.RETURNED)
+                                ? "Refundable amount"
+                                : "Pending amount"}
+                            :{" "}
                             <span className="flex items-center">
                                 <RupeeIcon width={17} height={17} size={17} />
                                 {order.pendingAmount.toFixed(2)}
