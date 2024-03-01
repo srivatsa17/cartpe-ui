@@ -45,7 +45,19 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                         <Spacer y={5} />
                         <div>
                             <div>
-                                Status: <span className="font-semibold">{order.status}</span>
+                                Status:{" "}
+                                <span
+                                    className={`font-semibold ${
+                                        order.status === OrderStatus.CONFIRMED ||
+                                        order.status === OrderStatus.SHIPPED ||
+                                        order.status === OrderStatus.OUT_FOR_DELIVERY ||
+                                        order.status === OrderStatus.DELIVERED
+                                            ? "text-green-600"
+                                            : "text-rose-600"
+                                    }`}
+                                >
+                                    {order.status}
+                                </span>
                             </div>
                             <Spacer y={5} />
                             <div className="space-y-4">
@@ -201,6 +213,28 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             <RupeeIcon width={17} height={17} size={17} />
                             {order.paymentDetails.savingsAmount.toFixed(2)} (
                             {order.paymentDetails.savingsPercent.toFixed(2)}%)
+                        </div>
+                        <Spacer y={10} />
+                        <div>
+                            <Button
+                                fullWidth
+                                color="danger"
+                                variant="ghost"
+                                // Cancellation available only if order is confirmed.
+                                isDisabled={order.status !== OrderStatus.CONFIRMED}
+                            >
+                                Cancel order
+                            </Button>
+                            <Spacer y={5} />
+                            <Button
+                                fullWidth
+                                color="warning"
+                                variant="ghost"
+                                // Return available only if order is delivered.
+                                isDisabled={order.status !== OrderStatus.DELIVERED}
+                            >
+                                Return order
+                            </Button>
                         </div>
                     </div>
                 </CardBody>

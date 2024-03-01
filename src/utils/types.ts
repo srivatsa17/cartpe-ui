@@ -200,7 +200,7 @@ export type CheckoutStepsState = {
 };
 
 export type PaymentMethods = "UPI" | "Cash On Delivery";
-export type PaymentStatus =
+export type OrderStatus =
     | "PENDING"
     | "CONFIRMED"
     | "SHIPPED"
@@ -217,7 +217,7 @@ export type Order = {
     user: string;
     userAddress: ShippingAddress;
     isPaid: boolean;
-    status: PaymentStatus;
+    status: OrderStatus;
     method: PaymentMethods;
     razorpayOrderId: string | null;
     razorpayPaymentId: string | null;

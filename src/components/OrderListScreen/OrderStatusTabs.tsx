@@ -17,13 +17,16 @@ function OrderStatusTabs() {
     const handleFilterOrdersByStatus = (order: Order, status: string): boolean => {
         switch (status) {
             case OrderStatus.CONFIRMED:
-                return ["CONFIRMED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"].includes(
-                    order.status
-                );
+                return [
+                    OrderStatus.CONFIRMED,
+                    OrderStatus.SHIPPED,
+                    OrderStatus.OUT_FOR_DELIVERY,
+                    OrderStatus.DELIVERED
+                ].includes(order.status);
             case OrderStatus.CANCELLED:
-                return order.status === "CANCELLED";
+                return order.status === OrderStatus.CANCELLED;
             case OrderStatus.RETURNED:
-                return order.status === "RETURNED";
+                return order.status === OrderStatus.RETURNED;
             default:
                 return false;
         }

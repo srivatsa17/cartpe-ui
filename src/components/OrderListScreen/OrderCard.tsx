@@ -79,7 +79,19 @@ function OrderCard({ order }: OrderCardProps) {
                 <Divider />
                 <CardBody className="px-7">
                     <div>
-                        Status: <span className="font-semibold">{order.status}</span>
+                        Status:{" "}
+                        <span
+                            className={`font-semibold ${
+                                order.status === OrderStatus.CONFIRMED ||
+                                order.status === OrderStatus.SHIPPED ||
+                                order.status === OrderStatus.OUT_FOR_DELIVERY ||
+                                order.status === OrderStatus.DELIVERED
+                                    ? "text-green-600"
+                                    : "text-rose-600"
+                            }`}
+                        >
+                            {order.status}
+                        </span>
                     </div>
                     <Spacer y={3} />
                     <div className="space-y-3">
