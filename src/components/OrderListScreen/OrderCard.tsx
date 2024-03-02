@@ -97,7 +97,13 @@ function OrderCard({ order }: OrderCardProps) {
                         ) : (
                             <div>
                                 Refund Status:{" "}
-                                <span className="font-semibold text-rose-600">
+                                <span
+                                    className={`font-semibold ${
+                                        order.refundStatus === OrderRefundStatus.FAILED
+                                            ? "text-rose-600"
+                                            : "text-green-600"
+                                    }`}
+                                >
                                     {order.refundStatus}
                                 </span>
                             </div>

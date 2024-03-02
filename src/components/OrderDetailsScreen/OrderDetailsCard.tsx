@@ -51,8 +51,8 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                         </div>
                         <Spacer y={5} />
                         {order.status === OrderStatus.CANCELLED ? (
-                            <div className="flex gap-2 items-center text-lg text-rose-600">
-                                <CloseCircleIcon width={28} height={28} /> Order has been cancelled
+                            <div className="flex gap-2 items-center text-base text-rose-600">
+                                <CloseCircleIcon width={22} height={22} /> Order has been cancelled
                                 as per your request.
                             </div>
                         ) : order.status === OrderStatus.RETURNED ? (
@@ -71,7 +71,13 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                 ) : (
                                     <div>
                                         Refund Status:{" "}
-                                        <span className="font-semibold text-rose-600">
+                                        <span
+                                            className={`font-semibold ${
+                                                order.refundStatus === OrderRefundStatus.FAILED
+                                                    ? "text-rose-600"
+                                                    : "text-green-600"
+                                            }`}
+                                        >
                                             {order.refundStatus}
                                         </span>
                                     </div>
