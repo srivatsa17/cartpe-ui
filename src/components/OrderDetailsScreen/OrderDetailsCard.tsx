@@ -1,7 +1,8 @@
 import { Button, Card, CardBody, Divider, Image, Link, Spacer } from "@nextui-org/react";
+import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
+import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
-import { OrderStatus } from "utils/getOrderStatus";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 
@@ -25,16 +26,22 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             <div>
                                 <div className="font-semibold">Shipping Address</div>
                                 <Spacer y={1.5} />
-                                <div>{order.userAddress.name}</div>
-                                <div>
-                                    {order.userAddress.address.building},{" "}
-                                    {order.userAddress.address.area},{" "}
-                                    {order.userAddress.address.city},{" "}
-                                    {order.userAddress.address.state},{" "}
-                                    {order.userAddress.address.country},{" "}
-                                    {order.userAddress.address.pinCode}
-                                </div>
-                                <div>Phone number: {order.userAddress.alternatePhone}</div>
+                                {order.refundStatus === OrderRefundStatus.NA ? (
+                                    <div>
+                                        <div>{order.userAddress.name}</div>
+                                        <div>
+                                            {order.userAddress.address.building},{" "}
+                                            {order.userAddress.address.area},{" "}
+                                            {order.userAddress.address.city},{" "}
+                                            {order.userAddress.address.state},{" "}
+                                            {order.userAddress.address.country},{" "}
+                                            {order.userAddress.address.pinCode}
+                                        </div>
+                                        <div>Phone number: {order.userAddress.alternatePhone}</div>
+                                    </div>
+                                ) : (
+                                    <div>N/A</div>
+                                )}
                             </div>
                             <div className="lg:justify-self-center">
                                 <div className="font-semibold">Payment Method</div>
@@ -43,21 +50,32 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             </div>
                         </div>
                         <Spacer y={5} />
+                        {order.status === OrderStatus.CANCELLED ? (
+                            <div className="flex gap-2 items-center text-lg text-rose-600">
+                                <CloseCircleIcon width={28} height={28} /> Order has been cancelled
+                                as per your request.
+                            </div>
+                        ) : order.status === OrderStatus.RETURNED ? (
+                            <div>Return for your order has been initiated.</div>
+                        ) : null}
+                        <Spacer y={3} />
                         <div>
                             <div>
-                                Status:{" "}
-                                <span
-                                    className={`font-semibold ${
-                                        order.status === OrderStatus.CONFIRMED ||
-                                        order.status === OrderStatus.SHIPPED ||
-                                        order.status === OrderStatus.OUT_FOR_DELIVERY ||
-                                        order.status === OrderStatus.DELIVERED
-                                            ? "text-green-600"
-                                            : "text-rose-600"
-                                    }`}
-                                >
-                                    {order.status}
-                                </span>
+                                {order.refundStatus === OrderRefundStatus.NA ? (
+                                    <div>
+                                        Status:{" "}
+                                        <span className="font-semibold text-green-600">
+                                            {order.status}
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        Refund Status:{" "}
+                                        <span className="font-semibold text-rose-600">
+                                            {order.refundStatus}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <Spacer y={5} />
                             <div className="space-y-4">
@@ -127,17 +145,33 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             </div>
                         </div>
                         <Spacer y={8} />
-                        <div className="flex items-center gap-2 text-default-500">
-                            <div>
-                                {order.status === (OrderStatus.CANCELLED || OrderStatus.RETURNED)
-                                    ? "Refundable amount"
-                                    : "Pending amount"}
-                                :{" "}
-                            </div>
-                            <div className="flex items-center">
-                                <RupeeIcon height={17} width={17} size={17} />
-                                {order.pendingAmount.toFixed(2)}
-                            </div>
+                        <div>
+                            {order.refundStatus === OrderRefundStatus.NA ? (
+                                <div>
+                                    <div className="flex items-center gap-1">
+                                        Amount Paid:
+                                        <span className="flex items-center">
+                                            <RupeeIcon width={17} height={17} size={17} />
+                                            {order.amountPaid.toFixed(2)}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-1">
+                                        Amount Due:
+                                        <span className="flex items-center">
+                                            <RupeeIcon width={17} height={17} size={17} />
+                                            {order.amountDue.toFixed(2)}
+                                        </span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="flex gap-1">
+                                    Refundable amount:
+                                    <span className="flex items-center">
+                                        <RupeeIcon width={17} height={17} size={17} />
+                                        {order.amountRefundable.toFixed(2)}
+                                    </span>
+                                </div>
+                            )}
                         </div>
                         <Spacer y={4} />
                         <Button
@@ -208,12 +242,14 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             </div>
                         </div>
                         <Spacer y={1} />
-                        <div className="flex items-center text-rose-600">
-                            Your savings:
-                            <RupeeIcon width={17} height={17} size={17} />
-                            {order.paymentDetails.savingsAmount.toFixed(2)} (
-                            {order.paymentDetails.savingsPercent.toFixed(2)}%)
-                        </div>
+                        {order.refundStatus === OrderRefundStatus.NA && (
+                            <div className="flex items-center text-rose-600">
+                                Your savings:
+                                <RupeeIcon width={17} height={17} size={17} />
+                                {order.paymentDetails.savingsAmount.toFixed(2)} (
+                                {order.paymentDetails.savingsPercent.toFixed(2)}%)
+                            </div>
+                        )}
                         <Spacer y={10} />
                         <div>
                             <Button

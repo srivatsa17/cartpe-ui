@@ -210,14 +210,19 @@ export type OrderStatus =
     | "RETURNED"
     | "REFUNDED";
 
+export type OrderRefundStatus = "NA" | "INITIATED" | "PARTIAL" | "COMPLETED" | "FAILED";
+
 export type Order = {
     id: bigint;
     amount: number;
-    pendingAmount: number;
+    amountPaid: number;
+    amountDue: number;
+    amountRefundable: number;
     user: string;
     userAddress: ShippingAddress;
     isPaid: boolean;
     status: OrderStatus;
+    refundStatus: OrderRefundStatus;
     method: PaymentMethods;
     razorpayOrderId: string | null;
     razorpayPaymentId: string | null;

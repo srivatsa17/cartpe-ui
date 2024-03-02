@@ -8,3 +8,11 @@ export const OrderStatus = {
     RETURNED: "RETURNED",
     REFUNDED: "REFUNDED"
 };
+
+export const OrderRefundStatus = {
+    NA: "NA",
+    INITIATED: "INITIATED",
+    PARTIAL: "PARTIAL",
+    COMPLETED: "COMPLETED",
+    FAILED: "FAILED"
+};

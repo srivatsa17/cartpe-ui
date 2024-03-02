@@ -10,10 +10,11 @@ import {
     Spacer,
     Tooltip
 } from "@nextui-org/react";
+import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
 import { ChevronDown } from "icons/ChevronDown";
+import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
-import { OrderStatus } from "utils/getOrderStatus";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
 
@@ -78,20 +79,29 @@ function OrderCard({ order }: OrderCardProps) {
                 </CardHeader>
                 <Divider />
                 <CardBody className="px-7">
+                    {order.status === OrderStatus.CANCELLED ? (
+                        <div className="flex gap-2 items-center text-base text-rose-600">
+                            <CloseCircleIcon width={22} height={22} /> Order has been cancelled as
+                            per your request.
+                        </div>
+                    ) : order.status === OrderStatus.RETURNED ? (
+                        <div>Return for your order has been initiated.</div>
+                    ) : null}
+                    <Spacer y={3} />
                     <div>
-                        Status:{" "}
-                        <span
-                            className={`font-semibold ${
-                                order.status === OrderStatus.CONFIRMED ||
-                                order.status === OrderStatus.SHIPPED ||
-                                order.status === OrderStatus.OUT_FOR_DELIVERY ||
-                                order.status === OrderStatus.DELIVERED
-                                    ? "text-green-600"
-                                    : "text-rose-600"
-                            }`}
-                        >
-                            {order.status}
-                        </span>
+                        {order.refundStatus === OrderRefundStatus.NA ? (
+                            <div>
+                                Status:{" "}
+                                <span className="font-semibold text-green-600">{order.status}</span>
+                            </div>
+                        ) : (
+                            <div>
+                                Refund Status:{" "}
+                                <span className="font-semibold text-rose-600">
+                                    {order.refundStatus}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <Spacer y={3} />
                     <div className="space-y-3">
@@ -128,23 +138,32 @@ function OrderCard({ order }: OrderCardProps) {
                         <div>
                             Payment Method: <span className="text-blue-700">{order.method}</span>
                         </div>
-                        <div className="flex gap-1">
-                            Total amount:
-                            <span className="flex items-center">
-                                <RupeeIcon width={17} height={17} size={17} />
-                                {order.amount.toFixed(2)}
-                            </span>
-                        </div>
-                        <div className="flex text-default-500 gap-1">
-                            {order.status === (OrderStatus.CANCELLED || OrderStatus.RETURNED)
-                                ? "Refundable amount"
-                                : "Pending amount"}
-                            :{" "}
-                            <span className="flex items-center">
-                                <RupeeIcon width={17} height={17} size={17} />
-                                {order.pendingAmount.toFixed(2)}
-                            </span>
-                        </div>
+                        {order.refundStatus === OrderRefundStatus.NA ? (
+                            <div>
+                                <div className="flex gap-1">
+                                    Amount Paid:
+                                    <span className="flex items-center">
+                                        <RupeeIcon width={17} height={17} size={17} />
+                                        {order.amountPaid.toFixed(2)}
+                                    </span>
+                                </div>
+                                <div className="flex gap-1">
+                                    Amount Due:
+                                    <span className="flex items-center">
+                                        <RupeeIcon width={17} height={17} size={17} />
+                                        {order.amountDue.toFixed(2)}
+                                    </span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex text-default-500 gap-1">
+                                Refundable amount
+                                <span className="flex items-center">
+                                    <RupeeIcon width={17} height={17} size={17} />
+                                    {order.amountRefundable.toFixed(2)}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <Button
                         className="sm:justify-self-end sm:self-end xs:mt-5"
