@@ -227,6 +227,7 @@ export type Order = {
     razorpayOrderId: string | null;
     razorpayPaymentId: string | null;
     razorpaySignature: string | null;
+    razorpayRefundId: string | null;
     createdAt: string;
     updatedAt: string;
     orderItems: Array<{

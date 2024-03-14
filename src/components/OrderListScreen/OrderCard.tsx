@@ -4,6 +4,7 @@ import {
     CardBody,
     CardFooter,
     CardHeader,
+    Code,
     Divider,
     Image,
     Link,
@@ -95,21 +96,29 @@ function OrderCard({ order }: OrderCardProps) {
                                 <span className="font-semibold text-green-600">{order.status}</span>
                             </div>
                         ) : (
-                            <div>
-                                Refund Status:{" "}
-                                <span
-                                    className={`font-semibold ${
-                                        order.refundStatus === OrderRefundStatus.FAILED
-                                            ? "text-rose-600"
-                                            : "text-green-600"
-                                    }`}
-                                >
-                                    {order.refundStatus}
-                                </span>
+                            <div className="space-y-3">
+                                <div>
+                                    Refund Status:{" "}
+                                    <span
+                                        className={`font-semibold ${
+                                            order.refundStatus === OrderRefundStatus.FAILED
+                                                ? "text-rose-600"
+                                                : "text-green-600"
+                                        }`}
+                                    >
+                                        {order.refundStatus}
+                                    </span>
+                                </div>
+                                {order.method === "UPI" && (
+                                    <Code color="warning">
+                                        Refund amount will be credited to the source account within
+                                        7 working days.
+                                    </Code>
+                                )}
                             </div>
                         )}
                     </div>
-                    <Spacer y={3} />
+                    <Spacer y={4} />
                     <div className="space-y-3">
                         {order.orderItems.map((orderItem) => {
                             return (

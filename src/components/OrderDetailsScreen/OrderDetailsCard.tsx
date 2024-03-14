@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Divider, Image, Link, Spacer } from "@nextui-org/react";
+import { Button, Card, CardBody, Code, Divider, Image, Link, Spacer } from "@nextui-org/react";
 import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
@@ -69,17 +69,25 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                         </span>
                                     </div>
                                 ) : (
-                                    <div>
-                                        Refund Status:{" "}
-                                        <span
-                                            className={`font-semibold ${
-                                                order.refundStatus === OrderRefundStatus.FAILED
-                                                    ? "text-rose-600"
-                                                    : "text-green-600"
-                                            }`}
-                                        >
-                                            {order.refundStatus}
-                                        </span>
+                                    <div className="space-y-3">
+                                        <div>
+                                            Refund Status:{" "}
+                                            <span
+                                                className={`font-semibold ${
+                                                    order.refundStatus === OrderRefundStatus.FAILED
+                                                        ? "text-rose-600"
+                                                        : "text-green-600"
+                                                }`}
+                                            >
+                                                {order.refundStatus}
+                                            </span>
+                                        </div>
+                                        {order.method === "UPI" && (
+                                            <Code color="warning">
+                                                Refund amount will be credited to the source account
+                                                within 7 working days.
+                                            </Code>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -208,9 +216,9 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             </div>
                         </div>
                         <Spacer y={0.5} />
-                        <div className="flex items-center justify-between">
+                        <div className="flex justify-between">
                             <div>Convenience Fee</div>
-                            <div className="flex">
+                            <div className="flex items-center">
                                 <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.convenienceFee.toFixed(2)}
                             </div>
