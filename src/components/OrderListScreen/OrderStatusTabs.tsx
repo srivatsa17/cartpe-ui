@@ -51,17 +51,17 @@ function OrderStatusTabs() {
     const tabData = [
         {
             key: OrderStatus.CONFIRMED,
-            title: "Orders",
-            emptyListTitle: "No orders found."
+            title: "Completed",
+            emptyListTitle: "No completed orders found."
         },
         {
             key: OrderStatus.CANCELLED,
-            title: "Cancelled Orders",
+            title: "Cancelled",
             emptyListTitle: "No cancelled orders found."
         },
         {
             key: OrderStatus.RETURNED,
-            title: "Returned Orders",
+            title: "Returned",
             emptyListTitle: "No returned orders found."
         }
     ];
