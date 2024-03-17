@@ -49,47 +49,65 @@ export type CategorySearchState = {
     error: Error;
 };
 
-export type ProductImages = {
+export type ProductVariantPropertyValues = {
     id: bigint;
-    image: string;
-    isFeatured: boolean;
+    propertyId: bigint;
+    name: string;
+    value: string;
+};
+
+export type ProductVariant = {
+    id: bigint;
+    productId: bigint;
+    name: string;
+    sku: string;
+    images: Array<string>;
+    price: number;
+    discount: number;
+    discountedPrice: number;
+    sellingPrice: number;
+    stockCount: number;
+    properties: Array<ProductVariantPropertyValues>;
+    availableProperties: Array<string>;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type Product = {
     id: bigint;
     name: string;
+    slug: string;
+    description: string;
     brand: string;
     category: string;
     categorySlug: string;
-    slug: string;
-    description?: string;
-    rating?: number;
-    reviewCount?: number;
-    stockCount: number;
-    price: number;
-    sellingPrice: number;
-    discountedPrice: number;
-    discount: number;
-    productImages: Array<ProductImages>;
+    productVariants: Array<ProductVariant>;
+    rating: number;
+    reviewCount: number;
     createdAt: string;
+    updatedAt: string;
 };
 
 export type ProductListState = {
-    isLoading?: boolean;
+    isLoading: boolean;
     products: Array<Product> | [];
     searchedCategory: string;
-    error?: Error;
+    error: Error;
 };
 
 export type ProductDetailsState = {
-    isLoading?: boolean;
-    product: Partial<Product>;
-    error?: Error;
+    isLoading: boolean;
+    product: Product | null;
+    error: Error;
 };
 
 export type WishList = {
     id: bigint;
-    product: Product;
+    product: Omit<
+        Product,
+        "productVariants" | "rating" | "reviewCount" | "createdAt" | "updatedAt"
+    >;
+    productVariant: ProductVariant;
     createdAt: string;
     updatedAt: string;
 };
@@ -101,8 +119,17 @@ export type WishListState = {
 };
 
 /* Cart Service Types */
+export interface CartProductData extends ProductVariant {
+    productName: string;
+    productSlug: string;
+    productBrand: string;
+    productCategory: string;
+    productCategorySlug: string;
+    productDescription: string;
+}
+
 export type Cart = {
-    product: Product;
+    product: CartProductData;
     quantity: number;
 };
 
@@ -156,7 +183,7 @@ export type ShippingAddressFormData = NestedOmit<
     | "address.updatedAt"
 >;
 
-export type OrderDetails = {
+export type CheckoutOrderDetails = {
     orderItems: Array<Cart>;
     amount: number;
 };
@@ -165,7 +192,7 @@ export type CheckoutStepsState = {
     isLoading: boolean;
     shippingAddressId: bigint | null;
     orderItems: Array<{
-        product: bigint;
+        productVariant: bigint;
         quantity: number;
     }>;
     amount: number;
@@ -173,7 +200,7 @@ export type CheckoutStepsState = {
 };
 
 export type PaymentMethods = "UPI" | "Cash On Delivery";
-export type PaymentStatus =
+export type OrderStatus =
     | "PENDING"
     | "CONFIRMED"
     | "SHIPPED"
@@ -183,18 +210,24 @@ export type PaymentStatus =
     | "RETURNED"
     | "REFUNDED";
 
+export type OrderRefundStatus = "NA" | "INITIATED" | "PARTIAL" | "COMPLETED" | "FAILED";
+
 export type Order = {
     id: bigint;
     amount: number;
-    pendingAmount: number;
+    amountPaid: number;
+    amountDue: number;
+    amountRefundable: number;
     user: string;
     userAddress: ShippingAddress;
     isPaid: boolean;
-    status: PaymentStatus;
+    status: OrderStatus;
+    refundStatus: OrderRefundStatus;
     method: PaymentMethods;
     razorpayOrderId: string | null;
     razorpayPaymentId: string | null;
     razorpaySignature: string | null;
+    razorpayRefundId: string | null;
     createdAt: string;
     updatedAt: string;
     orderItems: Array<{
@@ -206,8 +239,10 @@ export type Order = {
             slug: string;
             description: string;
             brand: string;
-            featuredImage: string;
+            category: string;
+            category_slug: string;
         };
+        productVariant: ProductVariant;
         quantity: number;
         createdAt: string;
         updatedAt: string;

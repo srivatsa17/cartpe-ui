@@ -1,4 +1,4 @@
-import { Cart, CheckoutStepsState, ErrorResponse, OrderDetails } from "utils/types";
+import { Cart, CheckoutOrderDetails, CheckoutStepsState, ErrorResponse } from "utils/types";
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { throwErrorResponse } from "utils/errorResponse";
@@ -56,9 +56,10 @@ const checkoutStepsSlice = createSlice({
         addOrderItemsRequest: (state) => {
             state.isLoading = true;
         },
-        addOrderItemsSuccess: (state, action: PayloadAction<OrderDetails>) => {
+        addOrderItemsSuccess: (state, action: PayloadAction<CheckoutOrderDetails>) => {
             const extractedData = action.payload.orderItems.map((orderItem) => ({
-                product: orderItem.product.id,
+                // orderItem.product.id will refer to the product variant id.
+                productVariant: orderItem.product.id,
                 quantity: orderItem.quantity
             }));
 

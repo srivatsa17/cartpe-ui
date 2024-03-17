@@ -1,6 +1,6 @@
 import { Product } from "./types";
 
-function getUniqueCategories(products: Product[]) {
+function getUniqueCategories(products: Array<Product>) {
     const categories: string[] = [];
 
     products.forEach((product) => {
@@ -12,7 +12,7 @@ function getUniqueCategories(products: Product[]) {
     return categories;
 }
 
-function getUniqueBrands(products: Product[]) {
+function getUniqueBrands(products: Array<Product>) {
     const brands: string[] = [];
 
     products.forEach((product) => {
@@ -30,12 +30,12 @@ function getDiscountRanges() {
         .map(String);
 }
 
-function getPriceRange(products: Product[]) {
-    let minPrice = products[0]?.sellingPrice ?? 0;
-    let maxPrice = products[0]?.sellingPrice ?? 1000;
+function getPriceRange(products: Array<Product>) {
+    let minPrice = products[0]?.productVariants[0]?.sellingPrice ?? 0;
+    let maxPrice = products[0]?.productVariants[0]?.sellingPrice ?? 1000;
 
     for (let i = 0; i < products.length; i++) {
-        const price = products[i].sellingPrice;
+        const price = products[i].productVariants[0]?.sellingPrice;
         if (price > maxPrice) {
             maxPrice = price;
         }
@@ -51,7 +51,7 @@ function getPriceRange(products: Product[]) {
     return { minPrice, maxPrice };
 }
 
-export function getUniqueFilterValues(products: Product[]) {
+export function getUniqueFilterValues(products: Array<Product>) {
     const uniqueCategories = getUniqueCategories(products);
     const uniqueBrands = getUniqueBrands(products);
     const discountRanges = getDiscountRanges();

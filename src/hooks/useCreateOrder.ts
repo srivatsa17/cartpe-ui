@@ -10,7 +10,7 @@ type CreateOrderProps = {
     razorpayOrderDetails?: RazorpaySuccessHandlerArgs;
     shippingAddressId: bigint | null;
     orderItems: Array<{
-        product: bigint;
+        productVariant: bigint;
         quantity: number;
     }>;
     amount: number;

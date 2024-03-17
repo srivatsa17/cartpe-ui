@@ -22,16 +22,16 @@ function CartSubTotal() {
             <div className="text-lg">
                 <div className="flex justify-between">
                     <div>Price</div>
-                    <div className="flex">
-                        <RupeeIcon height={22} width={22} size={22} className="my-1" />
+                    <div className="flex items-center ">
+                        <RupeeIcon height={20} width={20} size={20} />
                         {totalMRP.toFixed(2)}
                     </div>
                 </div>
 
                 <div className="flex justify-between pt-1">
                     <div>Price Discount</div>
-                    <div className="flex text-green-600">
-                        <RupeeIcon height={22} width={22} size={22} className="my-1" />
+                    <div className="flex items-center text-green-600">
+                        <RupeeIcon height={20} width={20} size={20} />
                         {totalDiscountPrice.toFixed(2)}
                     </div>
                 </div>
@@ -40,8 +40,8 @@ function CartSubTotal() {
 
                 <div className="flex justify-between text-lg font-semibold">
                     <div>Total Amount</div>
-                    <div className="flex">
-                        <RupeeIcon height={22} width={22} size={22} className="my-1" />
+                    <div className="flex items-center ">
+                        <RupeeIcon height={20} width={20} size={20} />
                         {totalSellingPrice.toFixed(2)}
                     </div>
                 </div>

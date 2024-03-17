@@ -6,14 +6,22 @@ import { throwErrorResponse } from "utils/errorResponse";
 
 const initialState: ProductDetailsState = {
     isLoading: false,
-    product: {},
+    product: null,
     error: null
 };
 
-export const getProductDetails = (id: bigint) => async (dispatch: Dispatch) => {
+export const getProductDetails = (productId: bigint | string) => async (dispatch: Dispatch) => {
+    let typeCastedProductId: bigint;
+
+    if (typeof productId === "string") {
+        typeCastedProductId = BigInt(productId);
+    } else {
+        typeCastedProductId = productId;
+    }
+
     try {
         dispatch(productDetailsRequest());
-        const { data } = await axiosInstance.get(`products/${id}`);
+        const { data } = await axiosInstance.get(`products/${typeCastedProductId}`);
         dispatch(productDetailsSuccess(data));
     } catch (error) {
         const err = error as ErrorResponse;
@@ -27,11 +35,10 @@ const productDetailsSlice = createSlice({
     reducers: {
         productDetailsRequest: (state) => {
             state.isLoading = true;
-            state.product = {};
         },
-        productDetailsSuccess: (state, action: PayloadAction<ProductDetailsState>) => {
+        productDetailsSuccess: (state, action: PayloadAction<Product>) => {
             state.isLoading = false;
-            state.product = action.payload as Partial<Product>;
+            state.product = action.payload;
         },
         productDetailsFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;

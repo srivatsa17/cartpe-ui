@@ -4,14 +4,17 @@ import {
     CardBody,
     CardFooter,
     CardHeader,
+    Code,
     Divider,
     Image,
     Link,
     Spacer,
     Tooltip
 } from "@nextui-org/react";
+import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
 import { ChevronDown } from "icons/ChevronDown";
+import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
@@ -19,6 +22,21 @@ import { RupeeIcon } from "icons/RupeeIcon";
 interface OrderCardProps {
     order: Order;
 }
+
+const displayRefundMessage = (order: Order) => {
+    // Convert date strings to Date objects
+    const today: Date = new Date();
+    const updatedAt: Date = new Date(order.updatedAt);
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds: number = today.getTime() - updatedAt.getTime();
+
+    // Calculate the difference in days
+    const differenceInDays: number = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+    // Check if the payment is UPI and difference is lesser than 7 days
+    return order.method === "UPI" && differenceInDays < 7;
+};
 
 function OrderCard({ order }: OrderCardProps) {
     return (
@@ -31,8 +49,8 @@ function OrderCard({ order }: OrderCardProps) {
                     </div>
                     <div>
                         <div className="text-default-500">Total amount</div>
-                        <div className="flex">
-                            <RupeeIcon width={17} height={17} size={17} className="mt-1" />
+                        <div className="flex items-center">
+                            <RupeeIcon width={17} height={17} size={17} />
                             {order.amount.toFixed(2)}
                         </div>
                     </div>
@@ -77,50 +95,107 @@ function OrderCard({ order }: OrderCardProps) {
                 </CardHeader>
                 <Divider />
                 <CardBody className="px-7">
-                    <div>
-                        Status: <span className="font-semibold">{order.status}</span>
-                    </div>
+                    {order.status === OrderStatus.CANCELLED ? (
+                        <div className="flex gap-2 items-center text-base text-rose-600">
+                            <CloseCircleIcon width={22} height={22} /> Order has been cancelled as
+                            per your request.
+                        </div>
+                    ) : order.status === OrderStatus.RETURNED ? (
+                        <div>Return for your order has been initiated.</div>
+                    ) : null}
                     <Spacer y={3} />
-                    {order.orderItems.map((orderItem) => {
-                        return (
-                            <div key={orderItem.id} className="flex gap-12">
-                                <Image
-                                    src={orderItem.product.featuredImage}
-                                    height={100}
-                                    width={100}
-                                />
-                                <div className="mt-2">
-                                    <div className="font-semibold">{orderItem.product.brand}</div>
-                                    <Link
-                                        href={`/products/${orderItem.product.slug}/${orderItem.product.id}/buy`}
-                                        className="text-default-500"
-                                        underline="hover"
+                    <div>
+                        {order.refundStatus === OrderRefundStatus.NA ? (
+                            <div>
+                                Status:{" "}
+                                <span className="font-semibold text-green-600">{order.status}</span>
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                <div>
+                                    Refund Status:{" "}
+                                    <span
+                                        className={`font-semibold ${
+                                            order.refundStatus === OrderRefundStatus.FAILED
+                                                ? "text-rose-600"
+                                                : "text-green-600"
+                                        }`}
                                     >
-                                        {orderItem.product.name}
-                                    </Link>
-                                    <div>Quantity: {orderItem.quantity}</div>
+                                        {order.refundStatus}
+                                    </span>
+                                </div>
+                                <div>
+                                    {displayRefundMessage(order) && (
+                                        <Code color="warning">
+                                            Refund amount will be credited to the source account
+                                            within 7 working days.
+                                        </Code>
+                                    )}
                                 </div>
                             </div>
-                        );
-                    })}
+                        )}
+                    </div>
+                    <Spacer y={4} />
+                    <div className="space-y-3">
+                        {order.orderItems.map((orderItem) => {
+                            return (
+                                <div key={orderItem.id} className="flex items-center gap-12">
+                                    <Image
+                                        src={orderItem.productVariant.images[0]}
+                                        height={70}
+                                        width={70}
+                                    />
+                                    <div>
+                                        <div className="font-semibold">
+                                            {orderItem.product.brand}
+                                        </div>
+                                        <Link
+                                            href={`/products/${orderItem.product.slug}/${orderItem.product.id}/buy`}
+                                            className="text-default-500"
+                                            underline="hover"
+                                        >
+                                            {orderItem.product.name}
+                                        </Link>
+                                        <div className="capitalize text-base">
+                                            Quantity: {orderItem.quantity}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </CardBody>
                 <CardFooter className="px-7 grid grid-flow-col xs:grid-flow-row">
                     <div>
                         <div>
                             Payment Method: <span className="text-blue-700">{order.method}</span>
                         </div>
-                        <div className="flex">
-                            Total amount:
-                            <span className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="mt-1 ml-1" />
-                                {order.amount.toFixed(2)}
-                            </span>
-                        </div>
-                        <div className="flex text-default-500">
-                            Pending amount:
-                            <RupeeIcon width={17} height={17} size={17} className="mt-1 ml-1" />
-                            {order.pendingAmount.toFixed(2)}
-                        </div>
+                        {order.refundStatus === OrderRefundStatus.NA ? (
+                            <div>
+                                <div className="flex gap-1">
+                                    Amount Paid:
+                                    <span className="flex items-center">
+                                        <RupeeIcon width={17} height={17} size={17} />
+                                        {order.amountPaid.toFixed(2)}
+                                    </span>
+                                </div>
+                                <div className="flex gap-1">
+                                    Amount Due:
+                                    <span className="flex items-center">
+                                        <RupeeIcon width={17} height={17} size={17} />
+                                        {order.amountDue.toFixed(2)}
+                                    </span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex text-default-500 gap-1">
+                                Refundable amount
+                                <span className="flex items-center">
+                                    <RupeeIcon width={17} height={17} size={17} />
+                                    {order.amountRefundable.toFixed(2)}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <Button
                         className="sm:justify-self-end sm:self-end xs:mt-5"

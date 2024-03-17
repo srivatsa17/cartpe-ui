@@ -1,0 +1,18 @@
+export const OrderStatus = {
+    PENDING: "PENDING",
+    CONFIRMED: "CONFIRMED",
+    SHIPPED: "SHIPPED",
+    OUT_FOR_DELIVERY: "OUT_FOR_DELIVERY",
+    DELIVERED: "DELIVERED",
+    CANCELLED: "CANCELLED",
+    RETURNED: "RETURNED",
+    REFUNDED: "REFUNDED"
+};
+
+export const OrderRefundStatus = {
+    NA: "NA",
+    INITIATED: "INITIATED",
+    PARTIAL: "PARTIAL",
+    COMPLETED: "COMPLETED",
+    FAILED: "FAILED"
+};

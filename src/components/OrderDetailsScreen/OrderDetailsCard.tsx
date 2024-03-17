@@ -1,12 +1,43 @@
-import { Button, Card, CardBody, Divider, Image, Link, Spacer } from "@nextui-org/react";
+import { Button, Card, CardBody, Code, Divider, Image, Link, Spacer } from "@nextui-org/react";
+import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
+import { CloseCircleIcon } from "icons/CloseCircleIcon";
+import { Order } from "utils/types";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
-import { useReduxSelector } from "hooks/redux";
+import { cancelOrder } from "redux/OrderService/orderDetailsSlice";
+import { useReduxDispatch } from "hooks/redux";
 
-function OrderDetailsCard() {
-    const { order } = useReduxSelector((state) => state.orderDetails);
-    if (order === null) return null;
+interface OrderDetailsCardProps {
+    order: Order;
+}
+
+const displayRefundMessage = (order: Order) => {
+    // Convert date strings to Date objects
+    const today: Date = new Date();
+    const updatedAt: Date = new Date(order.updatedAt);
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds: number = today.getTime() - updatedAt.getTime();
+
+    // Calculate the difference in days
+    const differenceInDays: number = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+    // Check if the payment is UPI and difference is lesser than 7 days
+    return order.method === "UPI" && differenceInDays < 7;
+};
+
+function OrderDetailsCard({ order }: OrderDetailsCardProps) {
+    const dispatch = useReduxDispatch();
+    const [isCancelled, setIsCancelled] = React.useState(false);
+
+    const handleCancelOrder = () => {
+        setIsCancelled(true);
+        setTimeout(() => {
+            dispatch(cancelOrder(order.id));
+            setIsCancelled(false);
+        }, 1000);
+    };
 
     return (
         <div>
@@ -23,16 +54,22 @@ function OrderDetailsCard() {
                             <div>
                                 <div className="font-semibold">Shipping Address</div>
                                 <Spacer y={1.5} />
-                                <div>{order.userAddress.name}</div>
-                                <div>
-                                    {order.userAddress.address.building},{" "}
-                                    {order.userAddress.address.area},{" "}
-                                    {order.userAddress.address.city},{" "}
-                                    {order.userAddress.address.state},{" "}
-                                    {order.userAddress.address.country},{" "}
-                                    {order.userAddress.address.pinCode}
-                                </div>
-                                <div>Phone number: {order.userAddress.alternatePhone}</div>
+                                {order.refundStatus === OrderRefundStatus.NA ? (
+                                    <div>
+                                        <div>{order.userAddress.name}</div>
+                                        <div>
+                                            {order.userAddress.address.building},{" "}
+                                            {order.userAddress.address.area},{" "}
+                                            {order.userAddress.address.city},{" "}
+                                            {order.userAddress.address.state},{" "}
+                                            {order.userAddress.address.country},{" "}
+                                            {order.userAddress.address.pinCode}
+                                        </div>
+                                        <div>Phone number: {order.userAddress.alternatePhone}</div>
+                                    </div>
+                                ) : (
+                                    <div>N/A</div>
+                                )}
                             </div>
                             <div className="lg:justify-self-center">
                                 <div className="font-semibold">Payment Method</div>
@@ -41,21 +78,61 @@ function OrderDetailsCard() {
                             </div>
                         </div>
                         <Spacer y={5} />
+                        {order.status === OrderStatus.CANCELLED ? (
+                            <div className="flex gap-2 items-center text-base text-rose-600">
+                                <CloseCircleIcon width={22} height={22} /> Order has been cancelled
+                                as per your request.
+                            </div>
+                        ) : order.status === OrderStatus.RETURNED ? (
+                            <div>Return for your order has been initiated.</div>
+                        ) : null}
+                        <Spacer y={3} />
                         <div>
                             <div>
-                                Status: <span className="font-semibold">{order.status}</span>
+                                {order.refundStatus === OrderRefundStatus.NA ? (
+                                    <div>
+                                        Status:{" "}
+                                        <span className="font-semibold text-green-600">
+                                            {order.status}
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-3">
+                                        <div>
+                                            Refund Status:{" "}
+                                            <span
+                                                className={`font-semibold ${
+                                                    order.refundStatus === OrderRefundStatus.FAILED
+                                                        ? "text-rose-600"
+                                                        : "text-green-600"
+                                                }`}
+                                            >
+                                                {order.refundStatus}
+                                            </span>
+                                        </div>
+                                        {displayRefundMessage(order) && (
+                                            <Code color="warning">
+                                                Refund amount will be credited to the source account
+                                                within 7 working days.
+                                            </Code>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                             <Spacer y={5} />
                             <div className="space-y-4">
                                 {order.orderItems.map((orderItem) => {
                                     return (
-                                        <div key={orderItem.id} className="flex gap-12">
+                                        <div
+                                            key={orderItem.id}
+                                            className="flex items-center gap-12"
+                                        >
                                             <Image
-                                                src={orderItem.product.featuredImage}
+                                                src={orderItem.productVariant.images[0]}
                                                 height={100}
                                                 width={100}
                                             />
-                                            <div className="mt-2">
+                                            <div>
                                                 <div className="font-semibold">
                                                     {orderItem.product.brand}
                                                 </div>
@@ -66,6 +143,42 @@ function OrderDetailsCard() {
                                                 >
                                                     {orderItem.product.name}
                                                 </Link>
+                                                <div>
+                                                    {orderItem.productVariant.properties.map(
+                                                        (property) => {
+                                                            return (
+                                                                <div
+                                                                    key={property.id}
+                                                                    className="text-default-500 capitalize text-sm"
+                                                                >
+                                                                    {property.name} -{" "}
+                                                                    {property.value}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    )}
+                                                </div>
+                                                <div className="flex text-base gap-3">
+                                                    <div className="flex items-center font-semibold">
+                                                        <RupeeIcon
+                                                            height={16}
+                                                            width={16}
+                                                            size={16}
+                                                        />{" "}
+                                                        {orderItem.productVariant.sellingPrice}
+                                                    </div>
+                                                    <div className="flex items-center line-through text-default-500 font-semibold">
+                                                        <RupeeIcon
+                                                            height={16}
+                                                            width={16}
+                                                            size={16}
+                                                        />{" "}
+                                                        {orderItem.productVariant.price}
+                                                    </div>
+                                                    <div className="text-rose-500 font-semibold">
+                                                        ({orderItem.productVariant.discount}% Off)
+                                                    </div>
+                                                </div>
                                                 <div>Quantity: {orderItem.quantity}</div>
                                             </div>
                                         </div>
@@ -74,10 +187,33 @@ function OrderDetailsCard() {
                             </div>
                         </div>
                         <Spacer y={8} />
-                        <div className="flex text-default-500">
-                            Pending amount:{" "}
-                            <RupeeIcon height={17} width={17} size={17} className="ml-1 mt-1" />
-                            {order.pendingAmount.toFixed(2)}
+                        <div>
+                            {order.refundStatus === OrderRefundStatus.NA ? (
+                                <div>
+                                    <div className="flex items-center gap-1">
+                                        Amount Paid:
+                                        <span className="flex items-center">
+                                            <RupeeIcon width={17} height={17} size={17} />
+                                            {order.amountPaid.toFixed(2)}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-1">
+                                        Amount Due:
+                                        <span className="flex items-center">
+                                            <RupeeIcon width={17} height={17} size={17} />
+                                            {order.amountDue.toFixed(2)}
+                                        </span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="flex gap-1">
+                                    Refundable amount:
+                                    <span className="flex items-center">
+                                        <RupeeIcon width={17} height={17} size={17} />
+                                        {order.amountRefundable.toFixed(2)}
+                                    </span>
+                                </div>
+                            )}
                         </div>
                         <Spacer y={4} />
                         <Button
@@ -94,24 +230,24 @@ function OrderDetailsCard() {
                         <Spacer y={1.5} />
                         <div className="flex justify-between">
                             <div>Total MRP</div>
-                            <div className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.totalMrp.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
                         <div className="flex justify-between">
                             <div>Discount on MRP</div>
-                            <div className="flex text-green-600">
-                                -<RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center text-green-600">
+                                -<RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.totalDiscountPrice.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={0.5} />
                         <div className="flex justify-between">
                             <div>Convenience Fee</div>
-                            <div className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.convenienceFee.toFixed(2)}
                             </div>
                         </div>
@@ -128,17 +264,13 @@ function OrderDetailsCard() {
                         <div className="flex justify-between">
                             <div>Round Off</div>
                             <div
-                                className={`flex ${
-                                    order.paymentDetails.totalAmount <
-                                        order.paymentDetails.totalSellingPrice && "text-green-600"
+                                className={`flex items-center ${
+                                    order.paymentDetails.roundOffPrice < 0 && "text-green-600"
                                 }`}
                             >
-                                {order.paymentDetails.totalAmount <
-                                order.paymentDetails.totalSellingPrice
-                                    ? "-"
-                                    : ""}
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                                {order.paymentDetails.roundOffPrice.toFixed(2)}
+                                {order.paymentDetails.roundOffPrice < 0 ? "-" : ""}
+                                <RupeeIcon width={17} height={17} size={17} />
+                                {Math.abs(order.paymentDetails.roundOffPrice).toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={2} />
@@ -146,17 +278,43 @@ function OrderDetailsCard() {
                         <Spacer y={2} />
                         <div className="flex justify-between font-semibold">
                             <div>Total Amount</div>
-                            <div className="flex">
-                                <RupeeIcon width={17} height={17} size={17} className="my-1" />
+                            <div className="flex items-center">
+                                <RupeeIcon width={17} height={17} size={17} />
                                 {order.paymentDetails.totalAmount.toFixed(2)}
                             </div>
                         </div>
                         <Spacer y={1} />
-                        <div className="flex text-rose-600">
-                            Your savings:
-                            <RupeeIcon width={17} height={17} size={17} className="my-1" />
-                            {order.paymentDetails.savingsAmount.toFixed(2)} (
-                            {order.paymentDetails.savingsPercent.toFixed(2)}%)
+                        {order.refundStatus === OrderRefundStatus.NA && (
+                            <div className="flex items-center text-rose-600">
+                                Your savings:
+                                <RupeeIcon width={17} height={17} size={17} />
+                                {order.paymentDetails.savingsAmount.toFixed(2)} (
+                                {order.paymentDetails.savingsPercent.toFixed(2)}%)
+                            </div>
+                        )}
+                        <Spacer y={10} />
+                        <div>
+                            <Button
+                                fullWidth
+                                color="danger"
+                                variant="ghost"
+                                // Cancellation available only if order is confirmed.
+                                isDisabled={order.status !== OrderStatus.CONFIRMED}
+                                onPress={handleCancelOrder}
+                                isLoading={isCancelled}
+                            >
+                                Cancel order
+                            </Button>
+                            <Spacer y={5} />
+                            <Button
+                                fullWidth
+                                color="warning"
+                                variant="ghost"
+                                // Return available only if order is delivered.
+                                isDisabled={order.status !== OrderStatus.DELIVERED}
+                            >
+                                Return order
+                            </Button>
                         </div>
                     </div>
                 </CardBody>

@@ -31,11 +31,9 @@ function ProductCard({ product }: ProductCardProps) {
     const dispatch = useReduxDispatch();
     const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
 
-    const featuredImage = product.productImages.find(
-        (productImage) => productImage.isFeatured === true
+    const isProductInWishList = wishListedProducts.find(
+        (p) => p.productVariant.id === product.productVariants[0].id
     );
-
-    const isProductInWishList = wishListedProducts.find((p) => p.product.id === product.id);
 
     const [isWishlisted, setIsWishlisted] = React.useState<boolean>(
         isProductInWishList ? true : false
@@ -46,7 +44,7 @@ function ProductCard({ product }: ProductCardProps) {
         if (isProductInWishList && isWishlisted) {
             dispatch(removeProductFromWishList(isProductInWishList.id));
         } else {
-            dispatch(addProductToWishList(product.id));
+            dispatch(addProductToWishList(product.productVariants[0].id));
         }
     };
 
@@ -79,26 +77,28 @@ function ProductCard({ product }: ProductCardProps) {
                     </Button>
                 </Tooltip>
             </CardHeader>
-            <CardBody className="py-3 px-4">
-                <div className="lg:h-80 xl:h-64 items-center">
+            <CardBody className="py-3 px-4 space-y-2.5">
+                <div className="items-center">
                     <Image
-                        src={featuredImage?.image || PLACEHOLDER_IMAGE}
+                        src={product.productVariants[0].images[0] || PLACEHOLDER_IMAGE}
                         isBlurred
                         alt="product-image"
                     />
                 </div>
                 <div className="line-clamp-2 text-default-500">{product.description}</div>
                 <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
-                <div className="flex">
-                    <div className="flex font-semibold">
-                        <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
-                        {product.sellingPrice}
+                <div className="flex gap-3">
+                    <div className="flex items-center font-semibold">
+                        <RupeeIcon height={18} width={18} size={18} />{" "}
+                        {product.productVariants[0].sellingPrice}
                     </div>
-                    <div className="flex pl-3 line-through text-default-500 font-semibold">
-                        <RupeeIcon height={18} width={18} size={18} className="my-1" />{" "}
-                        {product.price}
+                    <div className="flex items-center line-through text-default-500 font-semibold">
+                        <RupeeIcon height={18} width={18} size={18} />{" "}
+                        {product.productVariants[0].price}
                     </div>
-                    <div className="pl-3 text-green-600 font-medium">({product.discount}% Off)</div>
+                    <div className="text-green-600 font-medium">
+                        ({product.productVariants[0].discount}% Off)
+                    </div>
                 </div>
             </CardBody>
             <Divider />

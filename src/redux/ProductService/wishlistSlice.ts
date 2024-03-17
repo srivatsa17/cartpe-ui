@@ -27,9 +27,9 @@ export const getWishList = () => async (dispatch: Dispatch, getState: () => Root
 };
 
 export const addProductToWishList =
-    (productId: bigint) => async (dispatch: Dispatch, getState: () => RootState) => {
+    (productVariantId: bigint) => async (dispatch: Dispatch, getState: () => RootState) => {
         const wishListData = {
-            product: productId
+            productVariant: productVariantId
         };
 
         try {

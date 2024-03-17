@@ -5,6 +5,8 @@ import {
     Image,
     Input,
     Link,
+    Pagination,
+    Spacer,
     Table,
     TableBody,
     TableCell,
@@ -28,11 +30,12 @@ import { debounce } from "lodash";
 function CartItemDetails() {
     const dispatch = useReduxDispatch();
     const { cartItems, isLoading } = useReduxSelector((state) => state.cart);
+    const cartItemsCount = cartItems.length;
 
     const columns = [
-        { key: "name", label: "Name" },
-        { key: "price", label: "Price" },
-        { key: "quantity", label: "Quantity" }
+        { key: "product", label: "Product" },
+        { key: "quantity", label: "Quantity" },
+        { key: "delete", label: "" }
     ];
 
     const schema = yup.object().shape({
@@ -81,6 +84,7 @@ function CartItemDetails() {
             quantity = Number(quantity);
         }
         setFieldValue("quantity", quantity - 1, true);
+        // cartItem.product.id basically refers to the Product Variant ID.
         dispatch(updateCartItem(cartItem.product.id, quantity - 1));
     };
 
@@ -96,52 +100,62 @@ function CartItemDetails() {
             quantity = Number(quantity);
         }
         setFieldValue("quantity", quantity + 1, true);
+        // cartItem.product.id basically refers to the Product Variant ID.
         dispatch(updateCartItem(cartItem.product.id, quantity + 1));
     };
 
     const handleRemoveCartItem = (cartItem: Cart) => {
+        // cartItem.product.id basically refers to the Product Variant ID.
         dispatch(removeCartItem(cartItem.product.id));
     };
 
     const renderCell = React.useCallback((cartItem: Cart, columnKey: React.Key) => {
-        const featuredImage = cartItem.product.productImages.find(
-            (productImage) => productImage.isFeatured === true
-        );
-
         switch (columnKey) {
-            case "name":
+            case "product":
                 return (
-                    <div className="md:flex">
-                        <Image
-                            src={featuredImage?.image}
-                            width={60}
-                            height={60}
-                            className="self-center"
-                        />
-                        <Link
-                            href={`/products/${cartItem.product.slug}/${cartItem.product.id}/buy`}
-                            isExternal
-                            color="foreground"
-                        >
-                            <div className="md:pl-2 pt-1 text-base">
-                                <div className="uppercase font-semibold">
-                                    {cartItem.product.brand}
-                                </div>
-                                <div className="text-default-500">{cartItem.product.name}</div>
-                            </div>
-                        </Link>
-                    </div>
-                );
-            case "price":
-                return (
-                    <div className="text-base">
-                        <div className="flex font-semibold">
-                            <RupeeIcon height={16} width={16} size={16} className="my-1" />{" "}
-                            {cartItem.product.sellingPrice}
+                    <div className="md:flex gap-4 items-center">
+                        <div>
+                            <Image src={cartItem.product.images[0]} width={75} height={75} />
                         </div>
-                        <div className="flex line-through text-default-500 font-semibold">
-                            <RupeeIcon height={16} width={16} size={16} className="my-1" />{" "}
-                            {cartItem.product.price}
+                        <div>
+                            <Link
+                                href={`/products/${cartItem.product.productSlug}/${cartItem.product.productId}/buy`}
+                                isExternal
+                                color="foreground"
+                            >
+                                <div>
+                                    <div className="uppercase font-semibold">
+                                        {cartItem.product.productBrand}
+                                    </div>
+                                    <div className="text-default-500">
+                                        {cartItem.product.productName}
+                                    </div>
+                                </div>
+                            </Link>
+                            <div className="capitalize text-default-500 text-base">
+                                {cartItem.product.properties.map((property) => {
+                                    return (
+                                        <div key={property.id}>
+                                            {property.name} - {property.value}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <Spacer y={1} />
+                            <div className="flex text-base gap-3">
+                                <div className="flex items-center font-semibold">
+                                    <RupeeIcon height={16} width={16} size={16} />{" "}
+                                    {cartItem.product.sellingPrice}
+                                </div>
+                                <div className="flex items-center line-through text-default-500 font-semibold">
+                                    <RupeeIcon height={16} width={16} size={16} />{" "}
+                                    {cartItem.product.price}
+                                </div>
+                                <div className="text-rose-500 font-semibold">
+                                    ({cartItem.product.discount}% Off)
+                                </div>
+                            </div>
+                            <Spacer y={1} />
                         </div>
                     </div>
                 );
@@ -218,29 +232,60 @@ function CartItemDetails() {
                                 />
                             )}
                         </Formik>
-                        <Tooltip color="foreground" content="Remove Cart Item">
-                            <span
-                                className="text-lg text-danger cursor-pointer active:opacity-50 self-center pl-5"
-                                onClick={() => handleRemoveCartItem(cartItem)}
-                            >
-                                <TrashIcon height={20} width={20} />
-                            </span>
-                        </Tooltip>
                     </div>
+                );
+            case "delete":
+                return (
+                    <Tooltip color="foreground" content="Remove Cart Item">
+                        <div
+                            className="text-lg text-danger cursor-pointer active:opacity-50 self-center"
+                            onClick={() => handleRemoveCartItem(cartItem)}
+                        >
+                            <TrashIcon height={20} width={20} />
+                        </div>
+                    </Tooltip>
                 );
         }
     }, []);
 
+    const [page, setPage] = React.useState(1);
+    const rowsPerPage = 4;
+    const pages = Math.ceil(cartItemsCount / rowsPerPage);
+    const items = React.useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        return cartItems.slice(start, end);
+    }, [page, cartItems]);
+
     return (
-        <Table aria-label="Cart Items" isStriped>
+        <Table
+            aria-label="Cart Items"
+            isStriped
+            bottomContent={
+                cartItemsCount > 0 && (
+                    <div className="flex w-full justify-center">
+                        <Pagination
+                            isCompact
+                            showControls
+                            showShadow
+                            color="secondary"
+                            page={page}
+                            total={pages}
+                            onChange={(page) => setPage(page)}
+                        />
+                    </div>
+                )
+            }
+        >
             <TableHeader columns={columns}>
                 {(column) => (
-                    <TableColumn key={column.key} align="center" className="uppercase">
+                    <TableColumn key={column.key} className="uppercase text-center">
                         {column.label}
                     </TableColumn>
                 )}
             </TableHeader>
-            <TableBody items={cartItems} emptyContent={"Cart is empty."}>
+            <TableBody items={items} emptyContent={"Cart is empty."}>
                 {(cartItem: Cart) => (
                     <TableRow key={cartItem ? cartItem.product.id : "1"}>
                         {(columnKey) => <TableCell>{renderCell(cartItem, columnKey)}</TableCell>}

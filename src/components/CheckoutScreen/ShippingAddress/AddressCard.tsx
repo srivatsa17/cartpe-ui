@@ -63,8 +63,8 @@ function AddressCard({ setSelectedAccordionKeys, selectedAddress }: AddressCardP
             <Divider />
             <CardFooter className="flex justify-between text-xl">
                 <div>Order Total</div>
-                <div className="flex">
-                    <RupeeIcon width={22} height={22} size={22} className="my-1" />
+                <div className="flex items-center">
+                    <RupeeIcon width={22} height={22} size={22} />
                     {totalSellingPrice.toFixed(2)}
                 </div>
             </CardFooter>

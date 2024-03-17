@@ -1,5 +1,5 @@
 import { CART_BY_ID_URI, CART_URI } from "constants/api";
-import { Cart, CartState, ErrorResponse, Product } from "utils/types";
+import { Cart, CartProductData, CartState, ErrorResponse } from "utils/types";
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { CART_ITEMS } from "constants/localStorage";
@@ -28,7 +28,7 @@ export const getCartItems = () => async (dispatch: Dispatch, getState: () => Roo
 
 /* eslint-disable @stylistic/js/indent */
 export const addCartItem =
-    (product: Product, quantity: number = 1) =>
+    (product: CartProductData, quantity: number = 1) =>
     async (dispatch: Dispatch, getState: () => RootState) => {
         const cartData = { product: product, quantity: quantity };
 
