@@ -10,6 +10,21 @@ interface OrderDetailsCardProps {
     order: Order;
 }
 
+const displayRefundMessage = (order: Order) => {
+    // Convert date strings to Date objects
+    const today: Date = new Date();
+    const updatedAt: Date = new Date(order.updatedAt);
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds: number = today.getTime() - updatedAt.getTime();
+
+    // Calculate the difference in days
+    const differenceInDays: number = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+    // Check if the payment is UPI and difference is lesser than 7 days
+    return order.method === "UPI" && differenceInDays < 7;
+};
+
 function OrderDetailsCard({ order }: OrderDetailsCardProps) {
     return (
         <div>
@@ -82,7 +97,7 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                                 {order.refundStatus}
                                             </span>
                                         </div>
-                                        {order.method === "UPI" && (
+                                        {displayRefundMessage(order) && (
                                             <Code color="warning">
                                                 Refund amount will be credited to the source account
                                                 within 7 working days.

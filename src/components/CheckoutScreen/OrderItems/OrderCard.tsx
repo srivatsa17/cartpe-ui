@@ -30,7 +30,6 @@ function OrderCard({ setSelectedAccordionKeys }: OrderCardProps) {
         totalDiscountPrice,
         convenienceFee,
         shippingFee,
-        // totalSellingPrice,
         totalAmount,
         savingsAmount,
         roundOffPrice,

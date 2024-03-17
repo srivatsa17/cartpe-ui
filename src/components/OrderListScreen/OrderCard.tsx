@@ -23,6 +23,21 @@ interface OrderCardProps {
     order: Order;
 }
 
+const displayRefundMessage = (order: Order) => {
+    // Convert date strings to Date objects
+    const today: Date = new Date();
+    const updatedAt: Date = new Date(order.updatedAt);
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds: number = today.getTime() - updatedAt.getTime();
+
+    // Calculate the difference in days
+    const differenceInDays: number = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+    // Check if the payment is UPI and difference is lesser than 7 days
+    return order.method === "UPI" && differenceInDays < 7;
+};
+
 function OrderCard({ order }: OrderCardProps) {
     return (
         <div>
@@ -109,12 +124,14 @@ function OrderCard({ order }: OrderCardProps) {
                                         {order.refundStatus}
                                     </span>
                                 </div>
-                                {order.method === "UPI" && (
-                                    <Code color="warning">
-                                        Refund amount will be credited to the source account within
-                                        7 working days.
-                                    </Code>
-                                )}
+                                <div>
+                                    {displayRefundMessage(order) && (
+                                        <Code color="warning">
+                                            Refund amount will be credited to the source account
+                                            within 7 working days.
+                                        </Code>
+                                    )}
+                                </div>
                             </div>
                         )}
                     </div>
