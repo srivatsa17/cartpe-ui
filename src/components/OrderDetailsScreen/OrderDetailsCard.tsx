@@ -5,6 +5,8 @@ import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
+import { cancelOrder } from "redux/OrderService/orderDetailsSlice";
+import { useReduxDispatch } from "hooks/redux";
 
 interface OrderDetailsCardProps {
     order: Order;
@@ -26,6 +28,17 @@ const displayRefundMessage = (order: Order) => {
 };
 
 function OrderDetailsCard({ order }: OrderDetailsCardProps) {
+    const dispatch = useReduxDispatch();
+    const [isCancelled, setIsCancelled] = React.useState(false);
+
+    const handleCancelOrder = () => {
+        setIsCancelled(true);
+        setTimeout(() => {
+            dispatch(cancelOrder(order.id));
+            setIsCancelled(false);
+        }, 1000);
+    };
+
     return (
         <div>
             <div className="flex h-6 items-center space-x-3">
@@ -287,6 +300,8 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                 variant="ghost"
                                 // Cancellation available only if order is confirmed.
                                 isDisabled={order.status !== OrderStatus.CONFIRMED}
+                                onPress={handleCancelOrder}
+                                isLoading={isCancelled}
                             >
                                 Cancel order
                             </Button>
