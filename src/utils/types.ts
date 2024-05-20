@@ -73,6 +73,17 @@ export type ProductVariant = {
     updatedAt: string;
 };
 
+export type ProductReview = {
+    id: bigint;
+    product: bigint;
+    user: string;
+    headline: string;
+    rating: number;
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
 export type Product = {
     id: bigint;
     name: string;
@@ -82,7 +93,8 @@ export type Product = {
     category: string;
     categorySlug: string;
     productVariants: Array<ProductVariant>;
-    rating: number;
+    productReview: Array<ProductReview>;
+    averageRating: number;
     reviewCount: number;
     createdAt: string;
     updatedAt: string;

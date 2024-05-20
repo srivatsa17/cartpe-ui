@@ -123,7 +123,7 @@ function ProductDetails({
         <div className="mt-3 space-y-3">
             <div className="text-3xl uppercase font-semibold">{product.brand}</div>
             <div className="text-2xl text-default-500 capitalize">{product.name}</div>
-            <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
+            <Rating rating={product.averageRating || 0} reviewCount={product.reviewCount || 0} />
             <div className="flex items-center text-2xl xs:text-lg">
                 <div className="flex items-center font-semibold">
                     <RupeeIcon height={22} width={22} size={22} className="" />{" "}
