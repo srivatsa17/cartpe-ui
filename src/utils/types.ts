@@ -84,6 +84,14 @@ export type ProductReview = {
     updatedAt: string;
 };
 
+export type RatingCounts = {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+}
+
 export type Product = {
     id: bigint;
     name: string;
@@ -96,6 +104,7 @@ export type Product = {
     productReview: Array<ProductReview>;
     averageRating: number;
     reviewCount: number;
+    ratingCounts: RatingCounts;
     createdAt: string;
     updatedAt: string;
 };
