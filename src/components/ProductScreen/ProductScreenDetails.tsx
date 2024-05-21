@@ -1,7 +1,9 @@
-import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import { BreadcrumbItem, Breadcrumbs, Divider, Spacer } from "@nextui-org/react";
 import { CATEGORY_SCREEN, HOME_SCREEN } from "constants/routes";
 import { Product, ProductVariant } from "utils/types";
 
+import CustomerReviews from "./CustomerReviews";
+import OverallReviews from "./OverallReviews";
 import ProductDetails from "./ProductDetails";
 import ProductImages from "./ProductImages";
 import React from "react";
@@ -44,6 +46,23 @@ function ProductScreenDetails({ product }: ProductScreenDetailsProps) {
                     />
                 </div>
             </div>
+            <Spacer y={3} />
+            <div className="space-y-6">
+                <Divider />
+                <div className="grid grid-cols-3 gap-16">
+                    <div className="col-span-1">
+                        <OverallReviews product={product} />
+                    </div>
+                    <div className="col-span-2">
+                        {product.reviewCount === 0 ? (
+                            <div className="text-xl">No reviews made yet.</div>
+                        ) : (
+                            <CustomerReviews product={product} />
+                        )}
+                    </div>
+                </div>
+            </div>
+            <Spacer y={3} />
         </div>
     );
 }

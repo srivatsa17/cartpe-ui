@@ -90,7 +90,7 @@ export type RatingCounts = {
     3: number;
     4: number;
     5: number;
-}
+};
 
 export type Product = {
     id: bigint;
@@ -101,7 +101,7 @@ export type Product = {
     category: string;
     categorySlug: string;
     productVariants: Array<ProductVariant>;
-    productReview: Array<ProductReview>;
+    productReviews: Array<ProductReview>;
     averageRating: number;
     reviewCount: number;
     ratingCounts: RatingCounts;
