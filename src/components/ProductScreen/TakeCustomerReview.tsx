@@ -12,6 +12,7 @@ import {
     Textarea
 } from "@nextui-org/react";
 import { Field, FieldProps, Form, Formik } from "formik";
+import { Toaster, toast } from "sonner";
 
 import { Product } from "utils/types";
 import React from "react";
@@ -80,6 +81,7 @@ function TakeCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerRevie
 
     return (
         <div>
+            <Toaster richColors closeButton />
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -95,12 +97,31 @@ function TakeCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerRevie
                             validationSchema={productReviewSchema}
                             initialValues={initialProductReviewValues}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
+                                const toastId = toast.loading("Submitting your review...", {
+                                    position: "top-right",
+                                    duration: 3000
+                                });
+
                                 setTimeout(() => {
-                                    dispatch(postProductReview(formData));
+                                    dispatch(postProductReview(formData))
+                                        .then(() => {
+                                            toast.success("Posted your review successfully", {
+                                                id: toastId,
+                                                position: "top-right",
+                                                duration: 4000
+                                            });
+                                        })
+                                        .catch(() =>
+                                            toast.error("Failed to post your review", {
+                                                id: toastId,
+                                                position: "top-right",
+                                                duration: 4000
+                                            })
+                                        );
                                     setSubmitting(false);
                                     resetForm();
                                     onClose();
-                                }, 750);
+                                }, 2000);
                             }}
                         >
                             {({

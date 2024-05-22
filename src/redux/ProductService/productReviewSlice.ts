@@ -18,9 +18,11 @@ export const postProductReview =
             await axiosInstance.post(PRODUCT_REVIEW_URI, productReviewData);
             await getProductDetails(productReviewData.product)(dispatch);
             dispatch(postProductReviewSuccess());
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(postProductReviewFailed(throwErrorResponse(err)));
+            return Promise.reject(err);
         }
     };
 
