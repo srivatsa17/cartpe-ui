@@ -16,11 +16,13 @@ import { Field, FieldProps, Form, Formik } from "formik";
 import { Product } from "utils/types";
 import React from "react";
 import { StarFillIcon } from "icons/StarFill";
+import { postProductReview } from "redux/ProductService/productReviewSlice";
+import { useReduxDispatch } from "hooks/redux";
 
 interface TakeCustomerReviewProps {
     isOpen: boolean;
     onOpenChange: () => void;
-    product: Partial<Product>;
+    product: Partial<Product> & { id: bigint };
 }
 
 interface StarRatingProps {
@@ -52,6 +54,8 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange }) => {
 };
 
 function TakeCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReviewProps) {
+    const dispatch = useReduxDispatch();
+
     const productReviewSchema = yup.object().shape({
         headline: yup
             .string()
@@ -92,7 +96,7 @@ function TakeCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerRevie
                             initialValues={initialProductReviewValues}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
                                 setTimeout(() => {
-                                    // dispatch(addShippingAddress(formData));
+                                    dispatch(postProductReview(formData));
                                     setSubmitting(false);
                                     resetForm();
                                     onClose();

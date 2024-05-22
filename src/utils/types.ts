@@ -122,6 +122,11 @@ export type ProductDetailsState = {
     error: Error;
 };
 
+export type ProductReviewState = {
+    isLoading: boolean;
+    error: Error;
+};
+
 export type WishList = {
     id: bigint;
     product: Omit<

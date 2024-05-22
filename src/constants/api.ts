@@ -4,6 +4,7 @@ export const LOGIN_URI = "users/login";
 export const LOGOUT_URI = "users/logout";
 export const SEARCH_CATEGORIES_URI = "products/categories/search";
 export const PRODUCT_LIST_URI = "products";
+export const PRODUCT_REVIEW_URI = "products/review";
 export const CART_URI = "cart/";
 export const WISHLIST_URI = "products/wishlist";
 export const WISHLIST_BY_ID_URI = (wishlistId: bigint) => {
