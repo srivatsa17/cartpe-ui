@@ -54,7 +54,7 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange }) => {
     );
 };
 
-function TakeCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReviewProps) {
+function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReviewProps) {
     const dispatch = useReduxDispatch();
 
     const productReviewSchema = yup.object().shape({
@@ -236,4 +236,4 @@ function TakeCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerRevie
     );
 }
 
-export default TakeCustomerReview;
+export default AddCustomerReview;

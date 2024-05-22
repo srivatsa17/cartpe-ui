@@ -1,9 +1,9 @@
 import { Button, Divider, Progress, Spacer, useDisclosure } from "@nextui-org/react";
 
+import AddCustomerReview from "./AddCustomerReview";
 import CreateRatingStars from "components/CategorySearchScreen/CreateRatingStars";
 import { Product } from "utils/types";
 import React from "react";
-import TakeCustomerReview from "./TakeCustomerReview";
 
 interface OverallReviewsProps {
     product: Product;
@@ -50,7 +50,7 @@ function OverallReviews({ product }: OverallReviewsProps) {
                 >
                     Write a review
                 </Button>
-                <TakeCustomerReview isOpen={isOpen} onOpenChange={onOpenChange} product={product} />
+                <AddCustomerReview isOpen={isOpen} onOpenChange={onOpenChange} product={product} />
             </div>
         </div>
     );

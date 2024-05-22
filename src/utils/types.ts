@@ -77,6 +77,7 @@ export type ProductReview = {
     id: bigint;
     product: bigint;
     user: string;
+    userFullName: string;
     headline: string;
     rating: number;
     comment: string;

@@ -11,11 +11,11 @@ import {
 } from "@nextui-org/react";
 import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
+import AddCustomerReview from "components/ProductScreen/AddCustomerReview";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
 import React from "react";
 import { RupeeIcon } from "icons/RupeeIcon";
-import TakeCustomerReview from "components/ProductScreen/TakeCustomerReview";
 import { cancelOrder } from "redux/OrderService/orderDetailsSlice";
 import { useReduxDispatch } from "hooks/redux";
 
@@ -202,7 +202,7 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                                 >
                                                     Write a review
                                                 </Button>
-                                                <TakeCustomerReview
+                                                <AddCustomerReview
                                                     isOpen={isOpen}
                                                     onOpenChange={onOpenChange}
                                                     product={orderItem.product}

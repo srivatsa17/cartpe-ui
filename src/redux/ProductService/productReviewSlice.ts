@@ -12,7 +12,7 @@ const initialState: ProductReviewState = {
 };
 
 export const postProductReview =
-    (productReviewData: Omit<ProductReview, "id" | "user" | "createdAt" | "updatedAt">) => async (dispatch: Dispatch) => {
+    (productReviewData: Omit<ProductReview, "id" | "user" | "userFullName" | "createdAt" | "updatedAt">) => async (dispatch: Dispatch) => {
         try {
             dispatch(postProductReviewRequest());
             await axiosInstance.post(PRODUCT_REVIEW_URI, productReviewData);
