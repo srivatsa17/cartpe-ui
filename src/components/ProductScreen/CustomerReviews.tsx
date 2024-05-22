@@ -1,4 +1,4 @@
-import { Divider, Spacer, User } from "@nextui-org/react";
+import { Divider, Pagination, Spacer, User } from "@nextui-org/react";
 
 import CreateRatingStars from "components/CategorySearchScreen/CreateRatingStars";
 import { Product } from "utils/types";
@@ -9,9 +9,20 @@ interface CustomerReviewsProps {
 }
 
 function CustomerReviews({ product }: CustomerReviewsProps) {
+    // Pagination for customer reviews
+    const [page, setPage] = React.useState(1);
+    const rowsPerPage = 4;
+    const pages = Math.ceil(product.reviewCount / rowsPerPage);
+    const productReviews = React.useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        return product.productReviews.slice(start, end);
+    }, [page, product.productReviews]);
+
     return (
-        <div>
-            {product.productReviews.map((productReview) => {
+        <div className="space-y-4">
+            {productReviews.map((productReview) => {
                 return (
                     <div key={productReview.id} className="space-y-2">
                         <User
@@ -39,6 +50,19 @@ function CustomerReviews({ product }: CustomerReviewsProps) {
                     </div>
                 );
             })}
+            <Spacer y={3}/>
+            {product.reviewCount > rowsPerPage && (
+                <div className="flex w-full justify-center">
+                    <Pagination
+                        showControls
+                        showShadow
+                        color="secondary"
+                        page={page}
+                        total={pages}
+                        onChange={(page) => setPage(page)}
+                    />
+                </div>
+            )}
         </div>
     );
 }
