@@ -49,7 +49,7 @@ function ProductScreenDetails({ product }: ProductScreenDetailsProps) {
             <Spacer y={3} />
             <div className="space-y-6">
                 <Divider />
-                <div className="grid grid-cols-3 gap-16">
+                <div className="space-y-4 lg:grid lg:grid-cols-3 lg:gap-16 lg:space-y-0">
                     <div className="col-span-1">
                         <OverallReviews product={product} />
                     </div>

@@ -1,8 +1,9 @@
-import { Divider, Progress } from "@nextui-org/react";
+import { Button, Divider, Progress, Spacer, useDisclosure } from "@nextui-org/react";
 
 import CreateRatingStars from "components/CategorySearchScreen/CreateRatingStars";
 import { Product } from "utils/types";
 import React from "react";
+import TakeCustomerReview from "./TakeCustomerReview";
 
 interface OverallReviewsProps {
     product: Product;
@@ -10,6 +11,7 @@ interface OverallReviewsProps {
 
 function OverallReviews({ product }: OverallReviewsProps) {
     const starRatings = [5, 4, 3, 2, 1] as const;
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
         <div className="space-y-2">
@@ -20,7 +22,7 @@ function OverallReviews({ product }: OverallReviewsProps) {
                 <div className="text-lg">{product.averageRating} out of 5</div>
             </div>
             <div className="text-gray-500">
-                {product.reviewCount} {product.reviewCount === 1 ? "Review" : "Reviews"}
+                Based on {product.reviewCount} {product.reviewCount === 1 ? "Review" : "Reviews"}
             </div>
             <div className="space-y-2">
                 {starRatings.map((star) => (
@@ -36,6 +38,19 @@ function OverallReviews({ product }: OverallReviewsProps) {
                         />
                     </div>
                 ))}
+            </div>
+            <Spacer y={5} />
+            <div>
+                <Button
+                    fullWidth
+                    className="max-w-md"
+                    color="primary"
+                    variant="ghost"
+                    onPress={onOpen}
+                >
+                    Write a review
+                </Button>
+                <TakeCustomerReview isOpen={isOpen} onOpenChange={onOpenChange} product={product} />
             </div>
         </div>
     );
