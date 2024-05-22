@@ -143,7 +143,10 @@ function OrderCard({ order }: OrderCardProps) {
                     <div className="space-y-3">
                         {order.orderItems.map((orderItem) => {
                             return (
-                                <div key={orderItem.id} className="xs:space-y-2 sm:flex items-center gap-12">
+                                <div
+                                    key={orderItem.id}
+                                    className="xs:space-y-2 sm:flex items-center gap-12"
+                                >
                                     <Image
                                         src={orderItem.productVariant.images[0]}
                                         height={70}
