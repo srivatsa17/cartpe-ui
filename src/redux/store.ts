@@ -23,6 +23,7 @@ import loginSlice from "./AuthService/loginSlice";
 import orderDetailsSlice from "./OrderService/orderDetailsSlice";
 import orderListSlice from "./OrderService/orderListSlice";
 import productByIdSlice from "./ProductService/productByIdSlice";
+import productRatingSlice from "./ProductService/productRatingSlice";
 import productReviewSlice from "./ProductService/productReviewSlice";
 import productsSlice from "./ProductService/productsSlice";
 import registerSlice from "./AuthService/registerSlice";
@@ -97,7 +98,8 @@ const store = configureStore({
         productList: productsSlice,
         productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice,
-        productReview: productReviewSlice,
+        productReviews: productReviewSlice,
+        productRating: productRatingSlice,
         cart: cartSlice,
         wishlist: wishlistSlice,
         address: shippingAddressSlice,

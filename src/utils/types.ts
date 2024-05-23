@@ -75,7 +75,6 @@ export type ProductVariant = {
 
 export type ProductReview = {
     id: bigint;
-    product: bigint;
     user: string;
     userFullName: string;
     headline: string;
@@ -93,6 +92,12 @@ export type RatingCounts = {
     5: number;
 };
 
+export type ProductRating = {
+    ratingAverage: number;
+    ratingCount: number;
+    ratingDistribution: RatingCounts;
+};
+
 export type Product = {
     id: bigint;
     name: string;
@@ -102,10 +107,6 @@ export type Product = {
     category: string;
     categorySlug: string;
     productVariants: Array<ProductVariant>;
-    productReviews: Array<ProductReview>;
-    averageRating: number;
-    reviewCount: number;
-    ratingCounts: RatingCounts;
     createdAt: string;
     updatedAt: string;
 };
@@ -125,6 +126,13 @@ export type ProductDetailsState = {
 
 export type ProductReviewState = {
     isLoading: boolean;
+    productReviews: Array<ProductReview> | [];
+    error: Error;
+};
+
+export type ProductRatingState = {
+    isLoading: boolean;
+    productRating: ProductRating;
     error: Error;
 };
 
