@@ -9,21 +9,23 @@ import {
     ModalFooter,
     ModalHeader,
     Spacer,
-    Textarea
+    Textarea,
+    Tooltip,
+    useDisclosure
 } from "@nextui-org/react";
 import { Field, FieldProps, Form, Formik } from "formik";
+import { Product, ProductReview } from "utils/types";
 import { Toaster, toast } from "sonner";
 
-import { Product } from "utils/types";
+import { EditIcon } from "icons/EditIcon";
 import React from "react";
 import { StarFillIcon } from "icons/StarFill";
-import { postProductReview } from "redux/ProductService/productReviewSlice";
+import { updateProductReview } from "redux/ProductService/productReviewSlice";
 import { useReduxDispatch } from "hooks/redux";
 
-interface TakeCustomerReviewProps {
-    isOpen: boolean;
-    onOpenChange: () => void;
-    product: Partial<Product> & { id: bigint };
+interface EditCustomerReviewProps {
+    product: Product;
+    productReview: ProductReview;
 }
 
 interface StarRatingProps {
@@ -54,8 +56,9 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange }) => {
     );
 };
 
-function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReviewProps) {
+function EditCustomerReview({ product, productReview }: EditCustomerReviewProps) {
     const dispatch = useReduxDispatch();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const productReviewSchema = yup.object().shape({
         headline: yup
@@ -73,14 +76,19 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
     });
 
     const initialProductReviewValues = {
-        headline: "",
-        rating: 0,
-        comment: ""
+        headline: productReview.headline,
+        rating: productReview.rating,
+        comment: productReview.comment
     };
 
     return (
         <div>
             <Toaster richColors closeButton />
+            <Tooltip color="foreground" content="Edit review">
+                <div className="text-default-500 cursor-pointer" onClick={onOpen}>
+                    <EditIcon width={22} height={22} />
+                </div>
+            </Tooltip>
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -96,22 +104,24 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
                             validationSchema={productReviewSchema}
                             initialValues={initialProductReviewValues}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
-                                const toastId = toast.loading("Submitting your review...", {
+                                const toastId = toast.loading("Updating your review...", {
                                     position: "top-right",
                                     duration: 3000
                                 });
 
                                 setTimeout(() => {
-                                    dispatch(postProductReview(formData, product.id))
+                                    dispatch(
+                                        updateProductReview(formData, product.id, productReview.id)
+                                    )
                                         .then(() => {
-                                            toast.success("Posted your review successfully", {
+                                            toast.success("Updated your review successfully", {
                                                 id: toastId,
                                                 position: "top-right",
                                                 duration: 4000
                                             });
                                         })
                                         .catch(() =>
-                                            toast.error("Failed to post your review", {
+                                            toast.error("Failed to update your review", {
                                                 id: toastId,
                                                 position: "top-right",
                                                 duration: 4000
@@ -131,14 +141,14 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
                                 touched,
                                 errors,
                                 isSubmitting,
-                                isValid
+                                isValid,
+                                dirty
                             }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <ModalHeader className="flex flex-col gap-1 text-2xl">
-                                        Add a review
+                                        Update your review
                                     </ModalHeader>
                                     <ModalBody>
-                                        <div className="text-lg font-semibold">{product.name}</div>
                                         <div>
                                             <label htmlFor="rating" className="text-medium">
                                                 Rating
@@ -211,10 +221,10 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
                                             color="primary"
                                             variant="flat"
                                             type="submit"
-                                            isDisabled={!isValid || isSubmitting}
+                                            isDisabled={!dirty || !isValid || isSubmitting}
                                             isLoading={isSubmitting}
                                         >
-                                            Save review
+                                            Update review
                                         </Button>
                                         <Button
                                             color="danger"
@@ -235,4 +245,4 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
     );
 }
 
-export default AddCustomerReview;
+export default EditCustomerReview;

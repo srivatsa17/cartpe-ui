@@ -7,6 +7,7 @@ import OverallReviews from "./OverallReviews";
 import ProductDetails from "./ProductDetails";
 import ProductImages from "./ProductImages";
 import React from "react";
+import { useReduxSelector } from "hooks/redux";
 
 interface ProductScreenDetailsProps {
     product: Product;
@@ -16,6 +17,8 @@ function ProductScreenDetails({ product }: ProductScreenDetailsProps) {
     const [selectedProductVariant, setSelectedProductVariant] = React.useState<ProductVariant>(
         product.productVariants[0]
     );
+
+    const { productRating } = useReduxSelector((state) => state.productRating);
 
     return (
         <div className="container mx-auto px-6 py-7">
@@ -54,7 +57,7 @@ function ProductScreenDetails({ product }: ProductScreenDetailsProps) {
                         <OverallReviews product={product} />
                     </div>
                     <div className="col-span-2">
-                        {product.reviewCount === 0 ? (
+                        {productRating.ratingCount === 0 ? (
                             <div className="text-xl">No reviews made yet.</div>
                         ) : (
                             <CustomerReviews product={product} />
