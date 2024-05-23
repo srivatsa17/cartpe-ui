@@ -107,6 +107,9 @@ export type Product = {
     category: string;
     categorySlug: string;
     productVariants: Array<ProductVariant>;
+    // ratingAverage and ratingCount will be used only in case of category search screen.
+    ratingAverage: number;
+    ratingCount: number;
     createdAt: string;
     updatedAt: string;
 };
