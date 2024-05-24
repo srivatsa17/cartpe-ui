@@ -13,7 +13,7 @@ interface CustomerReviewsProps {
     product: Product;
 }
 
-function CustomerReviews({ product}: CustomerReviewsProps) {
+function CustomerReviews({ product }: CustomerReviewsProps) {
     const dispatch = useReduxDispatch();
     const { email } = useReduxSelector((state) => state.userLoginDetails);
     const { productReviews } = useReduxSelector((state) => state.productReviews);
