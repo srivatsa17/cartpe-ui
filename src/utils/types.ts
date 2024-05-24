@@ -73,6 +73,31 @@ export type ProductVariant = {
     updatedAt: string;
 };
 
+export type ProductReview = {
+    id: bigint;
+    user: string;
+    userFullName: string;
+    headline: string;
+    rating: number;
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type RatingCounts = {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+};
+
+export type ProductRating = {
+    ratingAverage: number;
+    ratingCount: number;
+    ratingDistribution: RatingCounts;
+};
+
 export type Product = {
     id: bigint;
     name: string;
@@ -82,8 +107,9 @@ export type Product = {
     category: string;
     categorySlug: string;
     productVariants: Array<ProductVariant>;
-    rating: number;
-    reviewCount: number;
+    // ratingAverage and ratingCount will be used only in case of category search screen.
+    ratingAverage: number;
+    ratingCount: number;
     createdAt: string;
     updatedAt: string;
 };
@@ -98,6 +124,18 @@ export type ProductListState = {
 export type ProductDetailsState = {
     isLoading: boolean;
     product: Product | null;
+    error: Error;
+};
+
+export type ProductReviewState = {
+    isLoading: boolean;
+    productReviews: Array<ProductReview> | [];
+    error: Error;
+};
+
+export type ProductRatingState = {
+    isLoading: boolean;
+    productRating: ProductRating;
     error: Error;
 };
 

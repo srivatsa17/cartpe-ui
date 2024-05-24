@@ -43,6 +43,7 @@ function ProductDetails({
     const dispatch = useReduxDispatch();
     const { cartItems } = useReduxSelector((state) => state.cart);
     const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
+    const { productRating } = useReduxSelector((state) => state.productRating);
 
     const isProductVariantInCart = cartItems.some(
         (cartItem) => cartItem.product.id === selectedProductVariant.id
@@ -123,7 +124,7 @@ function ProductDetails({
         <div className="mt-3 space-y-3">
             <div className="text-3xl uppercase font-semibold">{product.brand}</div>
             <div className="text-2xl text-default-500 capitalize">{product.name}</div>
-            <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
+            <Rating rating={productRating.ratingAverage} reviewCount={productRating.ratingCount} />
             <div className="flex items-center text-2xl xs:text-lg">
                 <div className="flex items-center font-semibold">
                     <RupeeIcon height={22} width={22} size={22} className="" />{" "}
@@ -297,7 +298,6 @@ function ProductDetails({
                         })}
                 </ul>
             </div>
-            <div>{/* Todo: Add ratings here */}</div>
         </div>
     );
 }

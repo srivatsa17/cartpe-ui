@@ -10,7 +10,9 @@ function Rating({ rating, reviewCount }: RatingProps) {
     return (
         <div className="flex max-w-xs gap-4">
             <CreateRatingStars rating={rating} />
-            <div>{reviewCount} Reviews</div>
+            <div className="text-base font-medium">
+                {reviewCount} {reviewCount === 1 ? "Review" : "Reviews"}
+            </div>
         </div>
     );
 }

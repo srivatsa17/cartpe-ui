@@ -86,7 +86,7 @@ function ProductCard({ product }: ProductCardProps) {
                     />
                 </div>
                 <div className="line-clamp-2 text-default-500">{product.description}</div>
-                <Rating rating={product.rating || 0} reviewCount={product.reviewCount || 0} />
+                <Rating rating={product.ratingAverage} reviewCount={product.ratingCount} />
                 <div className="flex gap-3">
                     <div className="flex items-center font-semibold">
                         <RupeeIcon height={18} width={18} size={18} />{" "}

@@ -1,3 +1,7 @@
+import { Divider, Spacer } from "@nextui-org/react";
+
+import CustomerReviewsSkeleton from "./CustomerReviewsSkeleton";
+import OverallReviewsSkeleton from "./OverallReviewsSkeleton";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import ProductImagesSkeleton from "./ProductImagesSkeleton";
 import React from "react";
@@ -11,6 +15,17 @@ function ProductScreenSkeleton() {
                 </div>
                 <div>
                     <ProductDetailsSkeleton />
+                </div>
+            </div>
+            <Spacer y={3} />
+            <Divider />
+            <Spacer y={3} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+                <div>
+                    <OverallReviewsSkeleton />
+                </div>
+                <div>
+                    <CustomerReviewsSkeleton />
                 </div>
             </div>
         </div>

@@ -1,6 +1,17 @@
-import { Button, Card, CardBody, Code, Divider, Image, Link, Spacer } from "@nextui-org/react";
+import {
+    Button,
+    Card,
+    CardBody,
+    Code,
+    Divider,
+    Image,
+    Link,
+    Spacer,
+    useDisclosure
+} from "@nextui-org/react";
 import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
+import AddCustomerReview from "components/ProductScreen/AddCustomerReview";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
 import React from "react";
@@ -38,6 +49,8 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
             setIsCancelled(false);
         }, 1000);
     };
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
         <div>
@@ -125,7 +138,7 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                     return (
                                         <div
                                             key={orderItem.id}
-                                            className="flex items-center gap-12"
+                                            className="xs:space-y-3 sm:flex items-center gap-12"
                                         >
                                             <Image
                                                 src={orderItem.productVariant.images[0]}
@@ -181,6 +194,20 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                                 </div>
                                                 <div>Quantity: {orderItem.quantity}</div>
                                             </div>
+                                            <div className="ml-auto self-end">
+                                                <Button
+                                                    color="primary"
+                                                    variant="ghost"
+                                                    onPress={onOpen}
+                                                >
+                                                    Write a review
+                                                </Button>
+                                                <AddCustomerReview
+                                                    isOpen={isOpen}
+                                                    onOpenChange={onOpenChange}
+                                                    product={orderItem.product}
+                                                />
+                                            </div>
                                         </div>
                                     );
                                 })}
@@ -216,14 +243,6 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                             )}
                         </div>
                         <Spacer y={4} />
-                        <Button
-                            fullWidth
-                            className="w-full sm:w-3/5"
-                            color="primary"
-                            variant="ghost"
-                        >
-                            Write a review
-                        </Button>
                     </div>
                     <div className="lg:px-7 lg:pl-40">
                         <div className="font-semibold">Order Summary</div>

@@ -5,6 +5,8 @@ import ProductScreenDetails from "components/ProductScreen/ProductScreenDetails"
 import ProductScreenSkeleton from "components/ProductScreen/ProductScreenSkeleton";
 import React from "react";
 import { getProductDetails } from "redux/ProductService/productByIdSlice";
+import { getProductRating } from "redux/ProductService/productRatingSlice";
+import { getProductReviewList } from "redux/ProductService/productReviewSlice";
 import { useParams } from "react-router-dom";
 
 function ProductScreen() {
@@ -16,6 +18,8 @@ function ProductScreen() {
     React.useEffect(() => {
         if (id) {
             dispatch(getProductDetails(id));
+            dispatch(getProductReviewList(id));
+            dispatch(getProductRating(id));
         }
     }, [dispatch, id]);
 

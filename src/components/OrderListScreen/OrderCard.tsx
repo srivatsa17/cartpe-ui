@@ -9,10 +9,12 @@ import {
     Image,
     Link,
     Spacer,
-    Tooltip
+    Tooltip,
+    useDisclosure
 } from "@nextui-org/react";
 import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 
+import AddCustomerReview from "components/ProductScreen/AddCustomerReview";
 import { ChevronDown } from "icons/ChevronDown";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
@@ -39,6 +41,8 @@ const displayRefundMessage = (order: Order) => {
 };
 
 function OrderCard({ order }: OrderCardProps) {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
     return (
         <div>
             <Card>
@@ -139,7 +143,10 @@ function OrderCard({ order }: OrderCardProps) {
                     <div className="space-y-3">
                         {order.orderItems.map((orderItem) => {
                             return (
-                                <div key={orderItem.id} className="flex items-center gap-12">
+                                <div
+                                    key={orderItem.id}
+                                    className="xs:space-y-2 sm:flex items-center gap-12"
+                                >
                                     <Image
                                         src={orderItem.productVariant.images[0]}
                                         height={70}
@@ -159,6 +166,16 @@ function OrderCard({ order }: OrderCardProps) {
                                         <div className="capitalize text-base">
                                             Quantity: {orderItem.quantity}
                                         </div>
+                                    </div>
+                                    <div className="ml-auto self-end">
+                                        <Button color="primary" variant="ghost" onPress={onOpen}>
+                                            Write a review
+                                        </Button>
+                                        <AddCustomerReview
+                                            isOpen={isOpen}
+                                            onOpenChange={onOpenChange}
+                                            product={orderItem.product}
+                                        />
                                     </div>
                                 </div>
                             );
@@ -197,13 +214,6 @@ function OrderCard({ order }: OrderCardProps) {
                             </div>
                         )}
                     </div>
-                    <Button
-                        className="sm:justify-self-end sm:self-end xs:mt-5"
-                        color="primary"
-                        variant="ghost"
-                    >
-                        Write a review
-                    </Button>
                 </CardFooter>
                 <Spacer y={2} />
             </Card>
