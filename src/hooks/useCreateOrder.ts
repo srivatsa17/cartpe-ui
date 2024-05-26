@@ -1,6 +1,5 @@
 import { ErrorResponse, Payment, PaymentMethods, RazorpaySuccessHandlerArgs } from "utils/types";
 
-/* eslint-disable camelcase */
 import { ORDER_URI } from "constants/api";
 import { axiosInstance } from "utils/axios";
 import { throwErrorResponse } from "utils/errorResponse";

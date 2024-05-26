@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-import { Button, Image, Input, Spacer } from "@nextui-org/react";
+import { Button, Divider, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
 import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { CloseFilledIcon } from "icons/CloseFilledIcon";
 import EmailIcon from "icons/EmailIcon";
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
+import GoogleLoginButton from "components/LoginScreen/GoogleLoginButton";
 import { LOGIN_USER_IMAGE } from "constants/images";
 import LockIcon from "icons/LockIcon";
 import React from "react";
@@ -65,11 +66,11 @@ function LoginScreen() {
                         className="w-full h-auto pointer-events-none"
                     />
                 </div>
-                <div className="xs:w-2/3 sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/2 my-7">
+                <div className="xs:w-2/3 sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/2">
                     <div className="text-5xl text-center lg:text-left xl:text-left antialiased">
                         Login to <span className="font-medium italic text-blue-700">CartPe</span>!
                     </div>
-                    <Spacer y={12} />
+                    <Spacer y={5} />
                     <Formik
                         validationSchema={schema}
                         initialValues={initialFormData}
@@ -119,7 +120,7 @@ function LoginScreen() {
                                     isReadOnly={isSubmitting}
                                     isRequired
                                 />
-                                <Spacer y={8} />
+                                <Spacer y={5} />
                                 <Field
                                     as={Input}
                                     type={isPasswordVisible ? "text" : "password"}
@@ -163,7 +164,7 @@ function LoginScreen() {
                                         </div>
                                     }
                                 />
-                                <Spacer y={10} />
+                                <Spacer y={8} />
                                 <Button
                                     type="submit"
                                     className="max-w-md text-lg bg-default-900 text-white"
@@ -191,6 +192,16 @@ function LoginScreen() {
                         <Link to={RESET_PASSWORD_SCREEN} className="text-blue-700 font-semibold">
                             Reset
                         </Link>
+                    </div>
+                    <Spacer y={2} />
+                    <div className="flex items-center gap-4 ml-1">
+                        <Divider className="max-w-48 xs:max-w-24" />
+                        <div className="font-semibold">OR</div>
+                        <Divider className="max-w-48 xs:max-w-24" />
+                    </div>
+                    <Spacer y={5} />
+                    <div>
+                        <GoogleLoginButton />
                     </div>
                 </div>
             </div>
