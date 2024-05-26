@@ -14,10 +14,13 @@ function GoogleLoginButton() {
             "https://www.googleapis.com/auth/userinfo.profile"
         ].join(" ");
 
-        if(process.env.REACT_APP_GOOGLE_CLIENT_ID && process.env.REACT_APP_BASE_FRONTEND_URL) {
+        if (process.env.REACT_APP_GOOGLE_CLIENT_ID && process.env.REACT_APP_BASE_FRONTEND_URL) {
             queryParams.set("response_type", "code");
             queryParams.set("client_id", process.env.REACT_APP_GOOGLE_CLIENT_ID);
-            queryParams.set("redirect_uri", `${process.env.REACT_APP_BASE_FRONTEND_URL}${GOOGLE_LOGIN_USER_SCREEN}`);
+            queryParams.set(
+                "redirect_uri",
+                `${process.env.REACT_APP_BASE_FRONTEND_URL}${GOOGLE_LOGIN_USER_SCREEN}`
+            );
             queryParams.set("prompt", "select_account");
             queryParams.set("scope", scope);
             setQueryParams(queryParams);
