@@ -1,6 +1,6 @@
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ErrorResponse, LoginState } from "utils/types";
-import { LOGIN_URI, LOGOUT_URI } from "constants/api";
+import { GOOGLE_LOGIN_URI, LOGIN_URI, LOGOUT_URI } from "constants/api";
 import { axiosInstance, publicAxiosInstance } from "utils/axios";
 import { clearStorage, getItemFromStorage, saveItemInStorage } from "utils/localStorage";
 import { registerUserReset, verifyUserSuccess } from "./registerSlice";
@@ -35,6 +35,33 @@ export const loginUser = (loginData: object) => async (dispatch: Dispatch) => {
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(loginUserFailed(throwAuthenticationErrorResponse(err)));
+    }
+};
+
+export const googleLoginUser = (code: string) => async (dispatch: Dispatch) => {
+    const googleLoginData = {
+        code: code
+    };
+
+    try {
+        dispatch(loginUserRequest());
+        const { data } = await publicAxiosInstance.post(GOOGLE_LOGIN_URI, googleLoginData);
+        dispatch(loginUserSuccess(data));
+        dispatch(verifyUserSuccess());
+        const userLoginDetails = {
+            isLoggedIn: true,
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            accessToken: data.tokens.access,
+            refreshToken: data.tokens.refresh
+        };
+        saveItemInStorage(USER_LOGIN_DETAILS, userLoginDetails);
+        return Promise.resolve();
+    } catch (error) {
+        const err = error as ErrorResponse;
+        dispatch(loginUserFailed(throwAuthenticationErrorResponse(err)));
+        return Promise.reject();
     }
 };
 

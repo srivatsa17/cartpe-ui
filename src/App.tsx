@@ -2,6 +2,7 @@ import {
     CART_SCREEN,
     CATEGORY_SEARCH_SCREEN,
     CHECKOUT_SCREEN,
+    GOOGLE_LOGIN_USER_SCREEN,
     HOME_SCREEN,
     LOGIN_USER_SCREEN,
     ORDER_CONFIRMED_SCREEN,
@@ -21,6 +22,7 @@ import AnonymousUserRoute from "routings/AnonymousUserRoute";
 import CartScreen from "screens/CartService/CartScreen";
 import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
 import CheckoutScreen from "screens/OrderService/CheckoutScreen";
+import GoogleLoginScreen from "screens/AuthService/GoogleLoginScreen";
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/AuthService/LoginScreen";
 import OrderConfirmedScreen from "screens/OrderService/OrderConfirmedScreen";
@@ -42,6 +44,7 @@ export default function App() {
             <Routes>
                 <Route element={<AnonymousUserRoute />}>
                     <Route path={LOGIN_USER_SCREEN} element={<LoginScreen />} />
+                    <Route path={GOOGLE_LOGIN_USER_SCREEN} element={<GoogleLoginScreen />} />
                     <Route path={REGISTER_USER_SCREEN} element={<RegisterScreen />} />
                     <Route path={VERIFY_USER_EMAIL_SCREEN} element={<VerifyEmailScreen />} />
                 </Route>
