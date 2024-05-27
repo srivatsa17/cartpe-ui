@@ -1,14 +1,16 @@
 import * as yup from "yup";
 
-import { Button, Image, Input, Spacer } from "@nextui-org/react";
+import { Button, Divider, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner";
 
 import { CloseFilledIcon } from "icons/CloseFilledIcon";
 import EmailIcon from "icons/EmailIcon";
 import { EyeFilledIcon } from "icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "icons/EyeSlashFilledIcon";
+import GoogleRegisterButton from "components/RegisterScreen/GoogleRegisterButton";
 import { LOGIN_USER_SCREEN } from "constants/routes";
-import { Link } from "react-router-dom";
 import LockIcon from "icons/LockIcon";
 import { REGISTER_USER_IMAGE } from "constants/images";
 import React from "react";
@@ -17,9 +19,8 @@ import { registerUser } from "redux/AuthService/registerSlice";
 import { useReduxDispatch } from "hooks/redux";
 
 function RegisterScreen() {
+    const navigate = useNavigate();
     const dispatch = useReduxDispatch();
-    // const navigate = useNavigate();
-    // const { isRegistered, isVerified, isLoading, error } = useReduxSelector((state) => state.userRegisterDetails);
 
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
     const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
@@ -54,6 +55,7 @@ function RegisterScreen() {
 
     return (
         <div className="container mx-auto place-content-center">
+            <Toaster richColors closeButton />
             <div className="flex flex-wrap items-center justify-center">
                 <div className="xs:w-2/3 sm:w-2/3 md:w-2/3 lg:w-1/2 xl:w-1/2">
                     <Image
@@ -72,8 +74,33 @@ function RegisterScreen() {
                         validationSchema={schema}
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
+                            const toastId = toast.loading("Wait while we are registering you.", {
+                                position: "top-right",
+                                duration: 4000
+                            });
+
                             setTimeout(() => {
-                                dispatch(registerUser(formData));
+                                dispatch(registerUser(formData))
+                                    .then(() => {
+                                        toast.success("Successfully registered!", {
+                                            position: "top-right",
+                                            description:
+                                                "A verification email is sent to your registered email. Please verify and login.",
+                                            duration: 10000,
+                                            id: toastId
+                                        });
+                                        setTimeout(() => {
+                                            navigate(LOGIN_USER_SCREEN);
+                                        }, 10000);
+                                    })
+                                    .catch((error) => {
+                                        toast.error("Registration failed!", {
+                                            id: toastId,
+                                            description: error,
+                                            position: "top-right",
+                                            duration: 4000
+                                        });
+                                    });
                                 setSubmitting(false);
                                 resetForm();
                             }, 1000);
@@ -210,6 +237,16 @@ function RegisterScreen() {
                         <Link to={LOGIN_USER_SCREEN} className="text-blue-700 font-semibold">
                             Login
                         </Link>
+                    </div>
+                    <Spacer y={2} />
+                    <div className="flex items-center gap-4 ml-1">
+                        <Divider className="max-w-48 xs:max-w-24" />
+                        <div className="font-semibold">OR</div>
+                        <Divider className="max-w-48 xs:max-w-24" />
+                    </div>
+                    <Spacer y={5} />
+                    <div>
+                        <GoogleRegisterButton />
                     </div>
                 </div>
             </div>
