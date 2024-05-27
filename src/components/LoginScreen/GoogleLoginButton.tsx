@@ -15,11 +15,11 @@ function GoogleLoginButton() {
 
         if (
             process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID &&
-            process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT_URL
+            process.env.REACT_APP_GOOGLE_OAUTH_LOGIN_REDIRECT_URL
         ) {
             queryParams.set("response_type", "code");
             queryParams.set("client_id", process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID);
-            queryParams.set("redirect_uri", process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT_URL);
+            queryParams.set("redirect_uri", process.env.REACT_APP_GOOGLE_OAUTH_LOGIN_REDIRECT_URL);
             queryParams.set("prompt", "select_account");
             queryParams.set("scope", scope);
             setQueryParams(queryParams);
