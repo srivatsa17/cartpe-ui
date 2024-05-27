@@ -4,6 +4,7 @@ import { Button, Divider, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
 import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CloseFilledIcon } from "icons/CloseFilledIcon";
@@ -58,6 +59,7 @@ function LoginScreen() {
 
     return (
         <div className="container mx-auto place-content-center">
+            <Toaster richColors closeButton />
             <div className="flex flex-wrap items-center justify-center">
                 <div className="xs:w-2/3 sm:w-2/3 md:w-2/3 lg:w-1/2 xl:w-1/2">
                     <Image
@@ -75,8 +77,29 @@ function LoginScreen() {
                         validationSchema={schema}
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
+                            const toastId = toast.loading("Wait while we are logging you in.", {
+                                position: "top-right",
+                                duration: 10000
+                            });
+
                             setTimeout(() => {
-                                dispatch(loginUser(formData));
+                                dispatch(loginUser(formData))
+                                    .then(() => {
+                                        toast.success("Successfully logged in!", {
+                                            position: "top-right",
+                                            description: "Redirecting you to the home screen.",
+                                            duration: 10000,
+                                            id: toastId
+                                        });
+                                    })
+                                    .catch((error) => {
+                                        toast.error("Login failed!", {
+                                            id: toastId,
+                                            description: error,
+                                            position: "top-right",
+                                            duration: 10000
+                                        });
+                                    });
                                 setSubmitting(false);
                                 resetForm();
                             }, 1000);
