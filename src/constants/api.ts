@@ -1,5 +1,6 @@
 // Auth service
 export const REGISTER_URI = "users/register";
+export const GOOGLE_REGISTER_URI = "users/register-google";
 export const VERIFY_EMAIL = "users/verify-email";
 export const LOGIN_URI = "users/login";
 export const GOOGLE_LOGIN_URI = "users/google-login";

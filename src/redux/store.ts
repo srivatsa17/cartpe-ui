@@ -57,6 +57,7 @@ const persistedState: {
         firstName: userLoginDetailsFromStorage.firstName || null,
         lastName: userLoginDetailsFromStorage.lastName || null,
         isLoggedIn: userLoginDetailsFromStorage.isLoggedIn || false,
+        profilePicture: userLoginDetailsFromStorage.profilePicture || null,
         isLoading: false,
         error: null
     },

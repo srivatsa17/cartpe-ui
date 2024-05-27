@@ -29,9 +29,10 @@ export type RegisterState = {
 };
 
 export type LoginState = {
-    email?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    profilePicture: string | null;
     isLoading: boolean;
     isLoggedIn: boolean;
     error: Error;
