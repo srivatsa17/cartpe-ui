@@ -106,7 +106,7 @@ const DisplayRazorPayCheckoutForm = ({
                     }
                 },
                 prefill: {
-                    name: firstName && lastName ? firstName + lastName : "",
+                    name: firstName ? (lastName ? firstName + " " + lastName : firstName) : "",
                     email: email ? email : "youremail@example.com"
                     // TODO: Add phone number field once its implemented from backend
                     // contact: "9999999999"

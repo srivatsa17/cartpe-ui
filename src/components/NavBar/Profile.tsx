@@ -24,7 +24,7 @@ function Profile() {
     const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const loginDetails = useReduxSelector((state) => state.userLoginDetails);
-    const { isLoggedIn, email, firstName, lastName } = loginDetails;
+    const { isLoggedIn, email, firstName, lastName, profilePicture } = loginDetails;
 
     const handleUserLogout = () => {
         dispatch(logoutUser());
@@ -45,14 +45,14 @@ function Profile() {
                     showFallback
                     className="transition-transform"
                     color="danger"
-                    name={firstName + " " + lastName}
+                    name={firstName ? (lastName ? firstName + " " + lastName : firstName) : ""}
                     size="sm"
                 />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem isReadOnly showDivider>
                     <User
-                        name={firstName + " " + lastName}
+                        name={firstName ? (lastName ? firstName + " " + lastName : firstName) : ""}
                         description={email}
                         classNames={{
                             name: "text-default-600",
@@ -60,7 +60,7 @@ function Profile() {
                         }}
                         avatarProps={{
                             size: "sm",
-                            src: "https://avatars.githubusercontent.com/u/30373425?v=4"
+                            src: profilePicture || ""
                         }}
                     />
                 </DropdownItem>
