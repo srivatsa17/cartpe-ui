@@ -10,6 +10,7 @@ import {
     useDisclosure
 } from "@nextui-org/react";
 import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
+import { Toaster, toast } from "sonner";
 
 import AddCustomerReview from "components/ProductScreen/AddCustomerReview";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
@@ -44,8 +45,27 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
 
     const handleCancelOrder = () => {
         setIsCancelled(true);
+        const toastId = toast.loading("Please wait a moment while we cancel your order.", {
+            position: "top-right",
+            duration: 3000
+        });
         setTimeout(() => {
-            dispatch(cancelOrder(order.id));
+            dispatch(cancelOrder(order.id))
+                .then(() => {
+                    toast.success("Order has been cancelled!", {
+                        id: toastId,
+                        position: "top-right",
+                        duration: 4000
+                    });
+                })
+                .catch((error) =>
+                    toast.error("Failed to cancel your order.", {
+                        id: toastId,
+                        description: error,
+                        position: "top-right",
+                        duration: 4000
+                    })
+                );
             setIsCancelled(false);
         }, 1000);
     };
@@ -54,6 +74,7 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
 
     return (
         <div>
+            <Toaster richColors closeButton />
             <div className="flex h-6 items-center space-x-3">
                 <div>Ordered on {order.createdAt}</div>
                 <Divider orientation="vertical" />

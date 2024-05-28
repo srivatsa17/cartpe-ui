@@ -39,9 +39,11 @@ export const cancelOrder = (orderId: bigint) => async (dispatch: Dispatch) => {
         };
         const { data } = await axiosInstance.patch(ORDER_BY_ID_URI(orderId), cancelOrderData);
         dispatch(cancelOrderSuccess(data));
+        return Promise.resolve();
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(cancelOrderFailed(throwErrorResponse(err)));
+        return Promise.reject(throwErrorResponse(err));
     }
 };
 
