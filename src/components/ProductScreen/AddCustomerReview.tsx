@@ -96,7 +96,7 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
                             validationSchema={productReviewSchema}
                             initialValues={initialProductReviewValues}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
-                                const toastId = toast.loading("Submitting your review...", {
+                                const toastId = toast.loading("Please wait a moment while we add your review.", {
                                     position: "top-right",
                                     duration: 3000
                                 });
@@ -104,14 +104,14 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
                                 setTimeout(() => {
                                     dispatch(postProductReview(formData, product.id))
                                         .then(() => {
-                                            toast.success("Posted your review successfully", {
+                                            toast.success("Review added successfully! Thank you for your feedback.", {
                                                 id: toastId,
                                                 position: "top-right",
                                                 duration: 4000
                                             });
                                         })
                                         .catch(() =>
-                                            toast.error("Failed to post your review", {
+                                            toast.error("Failed to add review. Please try again later.", {
                                                 id: toastId,
                                                 position: "top-right",
                                                 duration: 4000

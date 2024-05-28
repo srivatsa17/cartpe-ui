@@ -17,7 +17,7 @@ function GoogleRegisterScreen() {
         const code = queryParams.get("code");
 
         if (code) {
-            const toastId = toast.loading("Wait while we are registering you.", {
+            const toastId = toast.loading("Please wait a moment while we complete your registration process.", {
                 position: "top-right",
                 duration: 4000
             });
@@ -25,7 +25,7 @@ function GoogleRegisterScreen() {
             setTimeout(() => {
                 dispatch(googleRegisterUser(code))
                     .then(() => {
-                        toast.success("Successfully registered!", {
+                        toast.success("Registration complete! Welcome to CartPe.", {
                             position: "top-right",
                             description: "Redirecting you to the home screen.",
                             duration: 4000,

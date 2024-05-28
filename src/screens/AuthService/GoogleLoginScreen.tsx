@@ -17,7 +17,7 @@ function GoogleLoginScreen() {
         const code = queryParams.get("code");
 
         if (code) {
-            const toastId = toast.loading("Wait while we are logging you in.", {
+            const toastId = toast.loading("Please wait a moment while we log you in.", {
                 position: "top-right",
                 duration: 4000
             });
@@ -25,7 +25,7 @@ function GoogleLoginScreen() {
             setTimeout(() => {
                 dispatch(googleLoginUser(code))
                     .then(() => {
-                        toast.success("Successfully logged in!", {
+                        toast.success("Login successful! Welcome back.", {
                             position: "top-right",
                             description: "Redirecting you to the home screen.",
                             duration: 4000,

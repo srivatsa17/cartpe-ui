@@ -74,7 +74,7 @@ function RegisterScreen() {
                         validationSchema={schema}
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
-                            const toastId = toast.loading("Wait while we are registering you.", {
+                            const toastId = toast.loading("Please wait a moment while we complete your registration process.", {
                                 position: "top-right",
                                 duration: 4000
                             });
@@ -82,7 +82,7 @@ function RegisterScreen() {
                             setTimeout(() => {
                                 dispatch(registerUser(formData))
                                     .then(() => {
-                                        toast.success("Successfully registered!", {
+                                        toast.success("Registration complete! Welcome to CartPe.", {
                                             position: "top-right",
                                             description:
                                                 "A verification email is sent to your registered email. Please verify and login.",
