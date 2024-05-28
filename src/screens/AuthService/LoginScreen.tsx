@@ -77,10 +77,13 @@ function LoginScreen() {
                         validationSchema={schema}
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
-                            const toastId = toast.loading("Please wait a moment while we log you in.", {
-                                position: "top-right",
-                                duration: 10000
-                            });
+                            const toastId = toast.loading(
+                                "Please wait a moment while we log you in.",
+                                {
+                                    position: "top-right",
+                                    duration: 10000
+                                }
+                            );
 
                             setTimeout(() => {
                                 dispatch(loginUser(formData))

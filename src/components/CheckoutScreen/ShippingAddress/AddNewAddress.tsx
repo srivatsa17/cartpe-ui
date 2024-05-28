@@ -16,6 +16,7 @@ import {
     useDisclosure
 } from "@nextui-org/react";
 import { Field, Form, Formik, getIn } from "formik";
+import { Toaster, toast } from "sonner";
 
 import React from "react";
 import { addShippingAddress } from "redux/OrderService/shippingAddressSlice";
@@ -35,6 +36,7 @@ function AddNewAddress() {
 
     return (
         <React.Fragment>
+            <Toaster richColors closeButton />
             <Button color="secondary" variant="ghost" onPress={onOpen}>
                 Add new address
             </Button>
@@ -53,8 +55,34 @@ function AddNewAddress() {
                             validationSchema={shippingAddressSchema}
                             initialValues={initialAddNewAddressFormData}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
+                                const toastId = toast.loading(
+                                    "Please wait a moment while we add your address.",
+                                    {
+                                        position: "top-right",
+                                        duration: 3000
+                                    }
+                                );
+
                                 setTimeout(() => {
-                                    dispatch(addShippingAddress(formData));
+                                    dispatch(addShippingAddress(formData))
+                                        .then(() => {
+                                            toast.success("Address added successfully!", {
+                                                id: toastId,
+                                                position: "top-right",
+                                                duration: 4000
+                                            });
+                                        })
+                                        .catch((error) =>
+                                            toast.error(
+                                                "Failed to add address. Please try again later.",
+                                                {
+                                                    id: toastId,
+                                                    description: error,
+                                                    position: "top-right",
+                                                    duration: 4000
+                                                }
+                                            )
+                                        );
                                     setSubmitting(false);
                                     resetForm();
                                     onClose();

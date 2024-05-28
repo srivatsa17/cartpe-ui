@@ -74,10 +74,13 @@ function RegisterScreen() {
                         validationSchema={schema}
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
-                            const toastId = toast.loading("Please wait a moment while we complete your registration process.", {
-                                position: "top-right",
-                                duration: 4000
-                            });
+                            const toastId = toast.loading(
+                                "Please wait a moment while we complete your registration process.",
+                                {
+                                    position: "top-right",
+                                    duration: 4000
+                                }
+                            );
 
                             setTimeout(() => {
                                 dispatch(registerUser(formData))

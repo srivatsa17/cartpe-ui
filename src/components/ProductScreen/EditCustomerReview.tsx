@@ -104,10 +104,13 @@ function EditCustomerReview({ product, productReview }: EditCustomerReviewProps)
                             validationSchema={productReviewSchema}
                             initialValues={initialProductReviewValues}
                             onSubmit={(formData, { setSubmitting, resetForm }) => {
-                                const toastId = toast.loading("Please wait a moment while we update your review.", {
-                                    position: "top-right",
-                                    duration: 3000
-                                });
+                                const toastId = toast.loading(
+                                    "Please wait a moment while we update your review.",
+                                    {
+                                        position: "top-right",
+                                        duration: 3000
+                                    }
+                                );
 
                                 setTimeout(() => {
                                     dispatch(
@@ -121,11 +124,14 @@ function EditCustomerReview({ product, productReview }: EditCustomerReviewProps)
                                             });
                                         })
                                         .catch(() =>
-                                            toast.error("Failed to update review. Please try again later.", {
-                                                id: toastId,
-                                                position: "top-right",
-                                                duration: 4000
-                                            })
+                                            toast.error(
+                                                "Failed to update review. Please try again later.",
+                                                {
+                                                    id: toastId,
+                                                    position: "top-right",
+                                                    duration: 4000
+                                                }
+                                            )
                                         );
                                     setSubmitting(false);
                                     resetForm();

@@ -17,10 +17,13 @@ function GoogleRegisterScreen() {
         const code = queryParams.get("code");
 
         if (code) {
-            const toastId = toast.loading("Please wait a moment while we complete your registration process.", {
-                position: "top-right",
-                duration: 4000
-            });
+            const toastId = toast.loading(
+                "Please wait a moment while we complete your registration process.",
+                {
+                    position: "top-right",
+                    duration: 4000
+                }
+            );
 
             setTimeout(() => {
                 dispatch(googleRegisterUser(code))

@@ -17,6 +17,7 @@ import {
     useDisclosure
 } from "@nextui-org/react";
 import { Field, Form, Formik, getIn } from "formik";
+import { Toaster, toast } from "sonner";
 
 import { EditIcon } from "icons/EditIcon";
 import React from "react";
@@ -37,6 +38,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
 
     return (
         <React.Fragment>
+            <Toaster richColors closeButton />
             <Tooltip content="Edit address" color="foreground">
                 <Button isIconOnly className="bg-foreground/0 text-default-400" onPress={onOpen}>
                     <EditIcon height={22} width={22} />
@@ -57,8 +59,34 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                             validationSchema={shippingAddressSchema}
                             initialValues={shippingAddress}
                             onSubmit={(formData, { setSubmitting }) => {
+                                const toastId = toast.loading(
+                                    "Please wait a moment while we update your address.",
+                                    {
+                                        position: "top-right",
+                                        duration: 3000
+                                    }
+                                );
+
                                 setTimeout(() => {
-                                    dispatch(editShippingAddress(formData));
+                                    dispatch(editShippingAddress(formData))
+                                        .then(() => {
+                                            toast.success("Address updated successfully!", {
+                                                id: toastId,
+                                                position: "top-right",
+                                                duration: 4000
+                                            });
+                                        })
+                                        .catch((error) =>
+                                            toast.error(
+                                                "Failed to update address. Please try again later.",
+                                                {
+                                                    id: toastId,
+                                                    description: error,
+                                                    position: "top-right",
+                                                    duration: 4000
+                                                }
+                                            )
+                                        );
                                     setSubmitting(false);
                                     onClose();
                                 }, 750);
