@@ -37,9 +37,11 @@ export const addProductToWishList =
             await axiosInstance.post(WISHLIST_URI, wishListData);
             await getWishList()(dispatch, getState);
             dispatch(addProductToWishlistSuccess());
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(addProductToWishlistFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 
@@ -50,9 +52,11 @@ export const removeProductFromWishList =
             await axiosInstance.delete(WISHLIST_BY_ID_URI(wishlistId));
             await getWishList()(dispatch, getState);
             dispatch(removeProductFromWishListSuccess());
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(removeProductFromWishListFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 

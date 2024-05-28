@@ -1,3 +1,4 @@
+import { Toaster, toast } from "sonner";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { Button } from "@nextui-org/react";
@@ -13,7 +14,20 @@ function CartQuantityDetails() {
     const isCartEmpty = totalCartItemsQuantity === 0;
 
     const handleEmptyCart = () => {
-        dispatch(emptyCart());
+        dispatch(emptyCart())
+            .then(() => {
+                toast.success("Cart has been cleared.", {
+                    position: "top-right",
+                    duration: 4000
+                });
+            })
+            .catch((error) =>
+                toast.error("Failed to clear cart.", {
+                    position: "top-right",
+                    description: error,
+                    duration: 4000
+                })
+            );
     };
 
     return (
@@ -22,6 +36,7 @@ function CartQuantityDetails() {
                 Total Items in Cart - {totalCartItemsQuantity}
             </div>
             <div>
+                <Toaster richColors closeButton />
                 <Button
                     isDisabled={isCartEmpty}
                     variant="ghost"
