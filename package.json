@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@nextui-org/react": "^2.3.6",
+        "@nextui-org/react": "^2.4.0",
         "@reduxjs/toolkit": "^1.9.7",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
@@ -62,7 +62,7 @@
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@stylistic/eslint-plugin-js": "^1.8.1",
         "eslint": "^8.57.0",
-        "eslint-plugin-react": "^7.34.1",
+        "eslint-plugin-react": "^7.34.2",
         "prettier": "^3.2.5",
         "prettier-eslint": "^16.3.0",
         "prettier-eslint-cli": "^8.0.1",
