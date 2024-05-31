@@ -24,7 +24,7 @@ function Profile() {
     const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const loginDetails = useReduxSelector((state) => state.userLoginDetails);
-    const { isLoggedIn, email, firstName, lastName, profilePicture } = loginDetails;
+    const { isLoggedIn, email, firstName, lastName } = loginDetails;
 
     const handleUserLogout = () => {
         dispatch(logoutUser());
@@ -59,8 +59,7 @@ function Profile() {
                             description: "text-default-500"
                         }}
                         avatarProps={{
-                            size: "sm",
-                            src: profilePicture || ""
+                            size: "sm"
                         }}
                     />
                 </DropdownItem>
