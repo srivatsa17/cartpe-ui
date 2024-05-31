@@ -67,7 +67,6 @@ function CategorySearchScreen() {
 
     const handleSort = (a: Product, b: Product) => {
         switch (sortBy) {
-            // Add cases for customer-rating, popularity
             case "whats-new":
                 return a.createdAt.localeCompare(b.createdAt);
             case "better-discount":
@@ -76,6 +75,10 @@ function CategorySearchScreen() {
                 return b.productVariants[0].sellingPrice - a.productVariants[0].sellingPrice;
             case "price-low-to-high":
                 return a.productVariants[0].sellingPrice - b.productVariants[0].sellingPrice;
+            case "customer-rating":
+                return a.ratingAverage - b.ratingAverage;
+            case "popularity":
+                return a.ratingCount - b.ratingCount;
             default:
                 return a.name.localeCompare(b.name);
         }
