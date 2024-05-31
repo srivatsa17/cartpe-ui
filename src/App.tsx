@@ -2,6 +2,7 @@ import {
     CART_SCREEN,
     CATEGORY_SEARCH_SCREEN,
     CHECKOUT_SCREEN,
+    EDIT_PROFILE_SCREEN,
     GOOGLE_LOGIN_USER_SCREEN,
     GOOGLE_REGISTER_USER_SCREEN,
     HOME_SCREEN,
@@ -23,6 +24,7 @@ import AnonymousUserRoute from "routings/AnonymousUserRoute";
 import CartScreen from "screens/CartService/CartScreen";
 import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
 import CheckoutScreen from "screens/OrderService/CheckoutScreen";
+import EditProfileScreen from "screens/AuthService/EditProfileScreen";
 import GoogleLoginScreen from "screens/AuthService/GoogleLoginScreen";
 import GoogleRegisterScreen from "screens/AuthService/GoogleRegisterScreen";
 import HomeScreen from "screens/HomeScreen";
@@ -67,6 +69,7 @@ export default function App() {
                     <Route path={ORDER_SCREEN} element={<OrderListScreen />} />
                     <Route path={ORDER_DETAIL_SCREEN} element={<OrderDetailScreen />} />
                     <Route path={SAVED_ADDRESSES_SCREEN} element={<SavedAddressListScreen />} />
+                    <Route path={EDIT_PROFILE_SCREEN} element={<EditProfileScreen />} />
                 </Route>
             </Routes>
         </Router>
