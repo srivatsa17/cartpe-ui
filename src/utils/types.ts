@@ -21,6 +21,25 @@ export interface ErrorResponse {
 }
 
 /* Auth Service types */
+
+export type User = {
+    id: bigint;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    gender: "Male" | "Female" | "Others" | null;
+    phone: string | null;
+    dateOfBirth: string | null;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type ProfileState = {
+    isLoading: boolean;
+    user: User | null;
+    error: Error;
+};
+
 export type RegisterState = {
     isLoading: boolean;
     isRegistered: boolean;
@@ -32,7 +51,6 @@ export type LoginState = {
     email: string | null;
     firstName: string | null;
     lastName: string | null;
-    profilePicture: string | null;
     isLoading: boolean;
     isLoggedIn: boolean;
     error: Error;
