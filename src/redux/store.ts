@@ -20,6 +20,7 @@ import {
 import cartSlice from "./CartService/cartSlice";
 import checkoutStepsSlice from "./OrderService/checkoutStepsSlice";
 import { configureStore } from "@reduxjs/toolkit";
+import deactivateSlice from "./AuthService/deactivateSlice";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
 import orderDetailsSlice from "./OrderService/orderDetailsSlice";
@@ -106,6 +107,7 @@ const store = configureStore({
         userRegisterDetails: registerSlice,
         userLoginDetails: loginSlice,
         profile: profileSlice,
+        deactivate: deactivateSlice,
         productList: productsSlice,
         productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice,
