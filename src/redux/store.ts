@@ -2,6 +2,7 @@ import {
     ADDRESS_LIST,
     CART_ITEMS,
     PRODUCT_LIST,
+    PROFILE_DETAILS,
     USER_LOGIN_DETAILS,
     USER_REGISTER_DETAILS,
     WISHLIST
@@ -10,6 +11,7 @@ import {
     CartState,
     LoginState,
     ProductListState,
+    ProfileState,
     RegisterState,
     ShippingAddressState,
     WishListState
@@ -26,6 +28,7 @@ import productByIdSlice from "./ProductService/productByIdSlice";
 import productRatingSlice from "./ProductService/productRatingSlice";
 import productReviewSlice from "./ProductService/productReviewSlice";
 import productsSlice from "./ProductService/productsSlice";
+import profileSlice from "./AuthService/profileSlice";
 import registerSlice from "./AuthService/registerSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 import shippingAddressSlice from "./OrderService/shippingAddressSlice";
@@ -33,6 +36,7 @@ import wishlistSlice from "./ProductService/wishlistSlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 const userRegisterDetailsFromStorage = getItemFromStorage(USER_REGISTER_DETAILS) ?? {};
+const profileDetailsFromStorage = getItemFromStorage(PROFILE_DETAILS) ?? {};
 const productListFromStorage = getItemFromStorage(PRODUCT_LIST) ?? {};
 const cartItemsFromStorage = getItemFromStorage(CART_ITEMS) ?? [];
 const wishListFromStorage = getItemFromStorage(WISHLIST) ?? [];
@@ -41,6 +45,7 @@ const addressListFromStorage = getItemFromStorage(ADDRESS_LIST) ?? [];
 const persistedState: {
     userLoginDetails: LoginState;
     userRegisterDetails: RegisterState;
+    profile: ProfileState;
     productList: ProductListState;
     cart: CartState;
     wishlist: WishListState;
@@ -57,7 +62,6 @@ const persistedState: {
         firstName: userLoginDetailsFromStorage.firstName || null,
         lastName: userLoginDetailsFromStorage.lastName || null,
         isLoggedIn: userLoginDetailsFromStorage.isLoggedIn || false,
-        profilePicture: userLoginDetailsFromStorage.profilePicture || null,
         isLoading: false,
         error: null
     },
@@ -71,6 +75,11 @@ const persistedState: {
             userRegisterDetailsFromStorage.isVerified ||
             false,
         isLoading: false,
+        error: null
+    },
+    profile: {
+        isLoading: false,
+        user: profileDetailsFromStorage || null,
         error: null
     },
     cart: {
@@ -96,6 +105,7 @@ const store = configureStore({
     reducer: {
         userRegisterDetails: registerSlice,
         userLoginDetails: loginSlice,
+        profile: profileSlice,
         productList: productsSlice,
         productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice,

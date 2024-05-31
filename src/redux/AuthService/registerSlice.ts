@@ -7,6 +7,7 @@ import { throwAuthenticationErrorResponse, throwErrorResponse } from "utils/erro
 
 import { loginUserSuccess } from "./loginSlice";
 import { publicAxiosInstance } from "utils/axios";
+import { splitFullName } from "utils/getFirstAndLastName";
 
 const initialState: RegisterState = {
     isLoading: false,
@@ -19,21 +20,6 @@ type registerForm = {
     fullName: string;
     email: string;
     password: string;
-};
-
-const splitFullName = (fullName: string) => {
-    const pattern: RegExp = /^([A-Za-z]+)\s+([A-Za-z\s]+?) *$/;
-    const match = pattern.exec(fullName);
-    if (match) {
-        return {
-            firstName: match[1],
-            lastName: match[2]
-        };
-    }
-    return {
-        firstName: "",
-        lastName: ""
-    };
 };
 
 export const registerUser = (registerForm: registerForm) => async (dispatch: Dispatch) => {
@@ -85,7 +71,6 @@ export const googleRegisterUser = (code: string) => async (dispatch: Dispatch) =
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
-            profilePicture: data.profilePicture,
             accessToken: data.tokens.access,
             refreshToken: data.tokens.refresh
         };

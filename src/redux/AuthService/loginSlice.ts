@@ -12,7 +12,6 @@ const initialState: LoginState = {
     email: null,
     firstName: null,
     lastName: null,
-    profilePicture: null,
     isLoading: false,
     isLoggedIn: false,
     error: null
@@ -29,7 +28,6 @@ export const loginUser = (loginData: object) => async (dispatch: Dispatch) => {
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
-            profilePicture: data.profilePicture,
             accessToken: data.tokens.access,
             refreshToken: data.tokens.refresh
         };
@@ -57,7 +55,6 @@ export const googleLoginUser = (code: string) => async (dispatch: Dispatch) => {
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
-            profilePicture: data.profilePicture,
             accessToken: data.tokens.access,
             refreshToken: data.tokens.refresh
         };
@@ -101,7 +98,6 @@ const loginSlice = createSlice({
             state.email = action.payload.email;
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
-            state.profilePicture = action.payload.profilePicture;
         },
         loginUserFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
@@ -116,7 +112,6 @@ const loginSlice = createSlice({
             state.email = null;
             state.firstName = null;
             state.lastName = null;
-            state.profilePicture = null;
         },
         logoutUserFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
