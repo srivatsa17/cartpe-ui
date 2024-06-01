@@ -37,10 +37,10 @@ function GoogleLoginScreen() {
                             dispatch(getWishList());
                         }, 1000);
                     })
-                    .catch(() => {
+                    .catch((error) => {
                         toast.error("Login failed!", {
                             id: toastId,
-                            description: "Redirecting you back to the login screen.",
+                            description: error || "Redirecting you back to the login screen.",
                             position: "top-right",
                             duration: 4000
                         });

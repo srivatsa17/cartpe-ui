@@ -63,7 +63,7 @@ export const googleLoginUser = (code: string) => async (dispatch: Dispatch) => {
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(loginUserFailed(throwAuthenticationErrorResponse(err)));
-        return Promise.reject();
+        return Promise.reject(throwAuthenticationErrorResponse(err));
     }
 };
 

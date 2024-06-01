@@ -15,6 +15,7 @@ import { Field, Form, Formik } from "formik";
 import { Toaster, toast } from "sonner";
 import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 
+import DeactivateAccount from "./DeactivateAccount";
 import { EDIT_PROFILE_IMAGE } from "constants/images";
 import EmailIcon from "icons/EmailIcon";
 import { PhoneIcon } from "icons/PhoneIcon";
@@ -237,6 +238,8 @@ function EditProfileDetails({ user }: EditProfileDetailsProps) {
                             </Form>
                         )}
                     </Formik>
+                    <Spacer y={5} />
+                    <DeactivateAccount />
                 </div>
             </div>
             <div>

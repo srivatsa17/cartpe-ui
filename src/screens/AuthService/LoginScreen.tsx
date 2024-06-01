@@ -23,6 +23,7 @@ function LoginScreen() {
     const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const { isLoggedIn } = useReduxSelector((state) => state.userLoginDetails);
+    const { isDeactivated } = useReduxSelector((state) => state.deactivate);
 
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
     const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
@@ -34,6 +35,18 @@ function LoginScreen() {
             dispatch(getWishList());
         }
     }, [isLoggedIn, navigate, dispatch]);
+
+    // Trigger a toast in login screen when account is deactivated only once.
+    React.useEffect(() => {
+        if (isDeactivated === true) {
+            toast.success("Account Deactivated!", {
+                description:
+                    "Your account has been successfully deactivated, and you have been logged out.",
+                position: "top-right",
+                duration: 4000
+            });
+        }
+    }, [isDeactivated]);
 
     const initialFormData = {
         email: "",
