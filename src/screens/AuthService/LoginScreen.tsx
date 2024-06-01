@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-import { Button, Divider, Image, Input, Spacer } from "@nextui-org/react";
+import { Button, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
 import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
@@ -233,10 +233,10 @@ function LoginScreen() {
                         </Link>
                     </div>
                     <Spacer y={2} />
-                    <div className="flex items-center gap-4 ml-1">
-                        <Divider className="max-w-48 xs:max-w-24" />
+                    <div className="flex items-center gap-4">
+                        <div className="border-t border-gray-300 w-48 xs:flex-grow"></div>
                         <div className="font-semibold">OR</div>
-                        <Divider className="max-w-48 xs:max-w-24" />
+                        <div className="border-t border-gray-300 w-48 xs:flex-grow"></div>
                     </div>
                     <Spacer y={5} />
                     <div>
