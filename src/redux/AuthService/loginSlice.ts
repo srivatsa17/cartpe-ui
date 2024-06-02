@@ -32,9 +32,11 @@ export const loginUser = (loginData: object) => async (dispatch: Dispatch) => {
             refreshToken: data.tokens.refresh
         };
         saveItemInStorage(USER_LOGIN_DETAILS, userLoginDetails);
+        return Promise.resolve();
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(loginUserFailed(throwAuthenticationErrorResponse(err)));
+        return Promise.reject(throwAuthenticationErrorResponse(err));
     }
 };
 
@@ -61,7 +63,7 @@ export const googleLoginUser = (code: string) => async (dispatch: Dispatch) => {
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(loginUserFailed(throwAuthenticationErrorResponse(err)));
-        return Promise.reject();
+        return Promise.reject(throwAuthenticationErrorResponse(err));
     }
 };
 

@@ -23,6 +23,7 @@ export const RESET_PASSWORD_IMAGE = AUTH_FOLDER + "reset-password.jpg";
 export const PLACEHOLDER_IMAGE = MISCELLANEOUS_FOLDER + "placeholder.jpg";
 export const BAD_REQUEST_400 = MISCELLANEOUS_FOLDER + "400_bad_request.jpg";
 export const NOT_FOUND_404 = MISCELLANEOUS_FOLDER + "404_not_found.jpg";
+export const EDIT_PROFILE_IMAGE = MISCELLANEOUS_FOLDER + "edit_profile.jpg";
 
 /* Orders images */
 export const PAYMENT_FAILED_IMAGE = ORDERS_FOLDER + "payment_failed.jpg";

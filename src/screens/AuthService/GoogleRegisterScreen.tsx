@@ -5,10 +5,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import React from "react";
 import { getCartItems } from "redux/CartService/cartSlice";
 import { getWishList } from "redux/ProductService/wishlistSlice";
-import { googleLoginUser } from "redux/AuthService/loginSlice";
+import { googleRegisterUser } from "redux/AuthService/registerSlice";
 import { useReduxDispatch } from "hooks/redux";
 
-function GoogleLoginScreen() {
+function GoogleRegisterScreen() {
     const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const [queryParams] = useSearchParams();
@@ -17,15 +17,18 @@ function GoogleLoginScreen() {
         const code = queryParams.get("code");
 
         if (code) {
-            const toastId = toast.loading("Please wait a moment while we log you in.", {
-                position: "top-right",
-                duration: 4000
-            });
+            const toastId = toast.loading(
+                "Please wait a moment while we complete your registration process.",
+                {
+                    position: "top-right",
+                    duration: 4000
+                }
+            );
 
             setTimeout(() => {
-                dispatch(googleLoginUser(code))
+                dispatch(googleRegisterUser(code))
                     .then(() => {
-                        toast.success("Login successful! Welcome back.", {
+                        toast.success("Registration complete! Welcome to CartPe.", {
                             position: "top-right",
                             description: "Redirecting you to the home screen.",
                             duration: 4000,
@@ -35,29 +38,29 @@ function GoogleLoginScreen() {
                             navigate(HOME_SCREEN);
                             dispatch(getCartItems());
                             dispatch(getWishList());
-                        }, 1000);
+                        }, 2000);
                     })
                     .catch((error) => {
-                        toast.error("Login failed!", {
+                        toast.error("Registration failed!", {
                             id: toastId,
-                            description: error || "Redirecting you back to the login screen.",
+                            description: error,
                             position: "top-right",
                             duration: 4000
                         });
                         setTimeout(() => {
                             navigate(LOGIN_USER_SCREEN);
-                        }, 1000);
+                        }, 3000);
                     });
             }, 2000);
         } else {
-            toast.error("Google Login Error: Missing Authorization Code!", {
+            toast.error("Google Registration Error: Missing Authorization Code!", {
                 description: "Redirecting you back to the login screen.",
                 position: "top-right",
                 duration: 4000
             });
             setTimeout(() => {
                 navigate(LOGIN_USER_SCREEN);
-            }, 2000);
+            }, 3000);
         }
     }, [navigate, dispatch]);
 
@@ -68,4 +71,4 @@ function GoogleLoginScreen() {
     );
 }
 
-export default GoogleLoginScreen;
+export default GoogleRegisterScreen;

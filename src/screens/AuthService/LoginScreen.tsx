@@ -1,9 +1,10 @@
 import * as yup from "yup";
 
-import { Button, Divider, Image, Input, Spacer } from "@nextui-org/react";
+import { Button, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
 import { HOME_SCREEN, REGISTER_USER_SCREEN, RESET_PASSWORD_SCREEN } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CloseFilledIcon } from "icons/CloseFilledIcon";
@@ -22,6 +23,7 @@ function LoginScreen() {
     const dispatch = useReduxDispatch();
     const navigate = useNavigate();
     const { isLoggedIn } = useReduxSelector((state) => state.userLoginDetails);
+    const { isDeactivated } = useReduxSelector((state) => state.deactivate);
 
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
     const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
@@ -33,6 +35,18 @@ function LoginScreen() {
             dispatch(getWishList());
         }
     }, [isLoggedIn, navigate, dispatch]);
+
+    // Trigger a toast in login screen when account is deactivated only once.
+    React.useEffect(() => {
+        if (isDeactivated === true) {
+            toast.success("Account Deactivated!", {
+                description:
+                    "Your account has been successfully deactivated, and you have been logged out.",
+                position: "top-right",
+                duration: 4000
+            });
+        }
+    }, [isDeactivated]);
 
     const initialFormData = {
         email: "",
@@ -58,6 +72,7 @@ function LoginScreen() {
 
     return (
         <div className="container mx-auto place-content-center">
+            <Toaster richColors closeButton />
             <div className="flex flex-wrap items-center justify-center">
                 <div className="xs:w-2/3 sm:w-2/3 md:w-2/3 lg:w-1/2 xl:w-1/2">
                     <Image
@@ -75,8 +90,32 @@ function LoginScreen() {
                         validationSchema={schema}
                         initialValues={initialFormData}
                         onSubmit={(formData, { setSubmitting, resetForm }) => {
+                            const toastId = toast.loading(
+                                "Please wait a moment while we log you in.",
+                                {
+                                    position: "top-right",
+                                    duration: 10000
+                                }
+                            );
+
                             setTimeout(() => {
-                                dispatch(loginUser(formData));
+                                dispatch(loginUser(formData))
+                                    .then(() => {
+                                        toast.success("Login successful! Welcome back.", {
+                                            position: "top-right",
+                                            description: "Redirecting you to the home screen.",
+                                            duration: 10000,
+                                            id: toastId
+                                        });
+                                    })
+                                    .catch((error) => {
+                                        toast.error("Login failed!", {
+                                            id: toastId,
+                                            description: error,
+                                            position: "top-right",
+                                            duration: 10000
+                                        });
+                                    });
                                 setSubmitting(false);
                                 resetForm();
                             }, 1000);
@@ -194,10 +233,10 @@ function LoginScreen() {
                         </Link>
                     </div>
                     <Spacer y={2} />
-                    <div className="flex items-center gap-4 ml-1">
-                        <Divider className="max-w-48 xs:max-w-24" />
+                    <div className="flex items-center gap-4">
+                        <div className="border-t border-gray-300 w-48 xs:flex-grow"></div>
                         <div className="font-semibold">OR</div>
-                        <Divider className="max-w-48 xs:max-w-24" />
+                        <div className="border-t border-gray-300 w-48 xs:flex-grow"></div>
                     </div>
                     <Spacer y={5} />
                     <div>

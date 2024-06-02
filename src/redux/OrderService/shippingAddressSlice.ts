@@ -42,9 +42,11 @@ export const addShippingAddress =
             await getShippingAddressList()(dispatch, getState);
             dispatch(addShippingAddressSuccess());
             saveItemInStorage(ADDRESS_LIST, getState().address.addressList);
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(addShippingAddressFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 /* eslint-enable @stylistic/js/indent */
@@ -60,9 +62,11 @@ export const editShippingAddress =
             await getShippingAddressList()(dispatch, getState);
             dispatch(editShippingAddressSuccess());
             saveItemInStorage(ADDRESS_LIST, getState().address.addressList);
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(editShippingAddressFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 
@@ -74,9 +78,11 @@ export const removeShippingAddress =
             await getShippingAddressList()(dispatch, getState);
             dispatch(removeShippingAddressSuccess());
             saveItemInStorage(ADDRESS_LIST, getState().address.addressList);
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(removeShippingAddressFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 

@@ -45,22 +45,21 @@ function Profile() {
                     showFallback
                     className="transition-transform"
                     color="danger"
-                    name={firstName + " " + lastName}
+                    name={firstName ? (lastName ? firstName + " " + lastName : firstName) : ""}
                     size="sm"
                 />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem isReadOnly showDivider>
                     <User
-                        name={firstName + " " + lastName}
+                        name={firstName ? (lastName ? firstName + " " + lastName : firstName) : ""}
                         description={email}
                         classNames={{
                             name: "text-default-600",
                             description: "text-default-500"
                         }}
                         avatarProps={{
-                            size: "sm",
-                            src: "https://avatars.githubusercontent.com/u/30373425?v=4"
+                            size: "sm"
                         }}
                     />
                 </DropdownItem>

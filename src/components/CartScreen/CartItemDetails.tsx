@@ -16,6 +16,7 @@ import {
     Tooltip
 } from "@nextui-org/react";
 import { Field, Formik } from "formik";
+import { Toaster, toast } from "sonner";
 import { removeCartItem, updateCartItem } from "redux/CartService/cartSlice";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
@@ -55,11 +56,32 @@ function CartItemDetails() {
             // Send API call only if the input is a number from 1-10.
             if (quantity.match(checkIntRegex)) {
                 // Quantity might of type string. Typecase it to a number during API call.
-                dispatch(updateCartItem(cartItem.product.id, Number(quantity)));
+                dispatch(updateCartItem(cartItem.product.id, Number(quantity)))
+                    .then(() => {
+                        toast.success("Cart item updated successfully.", {
+                            position: "top-right",
+                            duration: 4000
+                        });
+                    })
+                    .catch((error) => {
+                        if (error[0] === "New quantity provided is same as previous quantity.") {
+                            toast.info("Not updating cart item.", {
+                                position: "top-right",
+                                description: error,
+                                duration: 4000
+                            });
+                        } else {
+                            toast.error("Failed to update cart item.", {
+                                position: "top-right",
+                                description: error,
+                                duration: 4000
+                            });
+                        }
+                    });
             }
         };
 
-        return debounce(sendRequest, 500);
+        return debounce(sendRequest, 1000);
     }, []);
 
     const handleQuantityInputChange = (
@@ -83,9 +105,22 @@ function CartItemDetails() {
         if (typeof quantity === "string") {
             quantity = Number(quantity);
         }
-        setFieldValue("quantity", quantity - 1, true);
         // cartItem.product.id basically refers to the Product Variant ID.
-        dispatch(updateCartItem(cartItem.product.id, quantity - 1));
+        dispatch(updateCartItem(cartItem.product.id, quantity - 1))
+            .then(() => {
+                toast.success("Cart item updated successfully.", {
+                    position: "top-right",
+                    duration: 4000
+                });
+                setFieldValue("quantity", quantity - 1, true);
+            })
+            .catch((error) =>
+                toast.error("Failed to update cart item.", {
+                    position: "top-right",
+                    description: error,
+                    duration: 4000
+                })
+            );
     };
 
     const handleAddQuantity = (
@@ -99,14 +134,40 @@ function CartItemDetails() {
         if (typeof quantity === "string") {
             quantity = Number(quantity);
         }
-        setFieldValue("quantity", quantity + 1, true);
         // cartItem.product.id basically refers to the Product Variant ID.
-        dispatch(updateCartItem(cartItem.product.id, quantity + 1));
+        dispatch(updateCartItem(cartItem.product.id, quantity + 1))
+            .then(() => {
+                toast.success("Cart item updated successfully.", {
+                    position: "top-right",
+                    duration: 4000
+                });
+                setFieldValue("quantity", quantity + 1, true);
+            })
+            .catch((error) =>
+                toast.error("Failed to update cart item.", {
+                    position: "top-right",
+                    description: error,
+                    duration: 4000
+                })
+            );
     };
 
     const handleRemoveCartItem = (cartItem: Cart) => {
         // cartItem.product.id basically refers to the Product Variant ID.
-        dispatch(removeCartItem(cartItem.product.id));
+        dispatch(removeCartItem(cartItem.product.id))
+            .then(() => {
+                toast.success("Cart item has been removed.", {
+                    position: "top-right",
+                    duration: 4000
+                });
+            })
+            .catch((error) =>
+                toast.error("Failed to remove cart item.", {
+                    position: "top-right",
+                    description: error,
+                    duration: 4000
+                })
+            );
     };
 
     const renderCell = React.useCallback((cartItem: Cart, columnKey: React.Key) => {
@@ -259,40 +320,45 @@ function CartItemDetails() {
     }, [page, cartItems]);
 
     return (
-        <Table
-            aria-label="Cart Items"
-            isStriped
-            bottomContent={
-                cartItemsCount > 0 && (
-                    <div className="flex w-full justify-center">
-                        <Pagination
-                            isCompact
-                            showControls
-                            showShadow
-                            color="secondary"
-                            page={page}
-                            total={pages}
-                            onChange={(page) => setPage(page)}
-                        />
-                    </div>
-                )
-            }
-        >
-            <TableHeader columns={columns}>
-                {(column) => (
-                    <TableColumn key={column.key} className="uppercase text-center">
-                        {column.label}
-                    </TableColumn>
-                )}
-            </TableHeader>
-            <TableBody items={items} emptyContent={"Cart is empty."}>
-                {(cartItem: Cart) => (
-                    <TableRow key={cartItem ? cartItem.product.id : "1"}>
-                        {(columnKey) => <TableCell>{renderCell(cartItem, columnKey)}</TableCell>}
-                    </TableRow>
-                )}
-            </TableBody>
-        </Table>
+        <div>
+            <Toaster richColors closeButton />
+            <Table
+                aria-label="Cart Items"
+                isStriped
+                bottomContent={
+                    cartItemsCount > 0 && (
+                        <div className="flex w-full justify-center">
+                            <Pagination
+                                isCompact
+                                showControls
+                                showShadow
+                                color="secondary"
+                                page={page}
+                                total={pages}
+                                onChange={(page) => setPage(page)}
+                            />
+                        </div>
+                    )
+                }
+            >
+                <TableHeader columns={columns}>
+                    {(column) => (
+                        <TableColumn key={column.key} className="uppercase text-center">
+                            {column.label}
+                        </TableColumn>
+                    )}
+                </TableHeader>
+                <TableBody items={items} emptyContent={"Cart is empty."}>
+                    {(cartItem: Cart) => (
+                        <TableRow key={cartItem ? cartItem.product.id : "1"}>
+                            {(columnKey) => (
+                                <TableCell>{renderCell(cartItem, columnKey)}</TableCell>
+                            )}
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </div>
     );
 }
 

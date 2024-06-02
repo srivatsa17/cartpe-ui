@@ -37,9 +37,11 @@ export const addCartItem =
             await axiosInstance.post(CART_URI, cartData);
             dispatch(addCartItemSuccess(cartData));
             saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(addCartItemFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 /* eslint-enable @stylistic/js/indent */
@@ -58,9 +60,11 @@ export const updateCartItem =
             );
             dispatch(updateCartItemSuccess(data));
             saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(updateCartItemFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 /* eslint-enable @stylistic/js/indent */
@@ -72,9 +76,11 @@ export const removeCartItem =
             const { data } = await axiosInstance.delete(CART_BY_ID_URI(productId));
             dispatch(removeCartItemSuccess(data));
             saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
+            return Promise.resolve();
         } catch (error) {
             const err = error as ErrorResponse;
             dispatch(removeCartItemFailed(throwErrorResponse(err)));
+            return Promise.reject(throwErrorResponse(err));
         }
     };
 
@@ -84,9 +90,11 @@ export const emptyCart = () => async (dispatch: Dispatch, getState: () => RootSt
         await axiosInstance.delete(CART_URI);
         dispatch(emptyCartSuccess());
         saveItemInStorage(CART_ITEMS, getState().cart.cartItems);
+        return Promise.resolve();
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(emptyCartFailed(throwErrorResponse(err)));
+        return Promise.reject(throwErrorResponse(err));
     }
 };
 

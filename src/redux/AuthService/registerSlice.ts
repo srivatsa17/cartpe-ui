@@ -1,11 +1,13 @@
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ErrorResponse, RegisterState } from "utils/types";
-import { REGISTER_URI, VERIFY_EMAIL } from "constants/api";
+import { GOOGLE_REGISTER_URI, REGISTER_URI, VERIFY_EMAIL } from "constants/api";
+import { USER_LOGIN_DETAILS, USER_REGISTER_DETAILS } from "constants/localStorage";
 import { saveItemInStorage, updateItemInStorage } from "utils/localStorage";
+import { throwAuthenticationErrorResponse, throwErrorResponse } from "utils/errorResponse";
 
-import { USER_REGISTER_DETAILS } from "constants/localStorage";
+import { loginUserSuccess } from "./loginSlice";
 import { publicAxiosInstance } from "utils/axios";
-import { throwAuthenticationErrorResponse } from "utils/errorResponse";
+import { splitFullName } from "utils/getFirstAndLastName";
 
 const initialState: RegisterState = {
     isLoading: false,
@@ -18,21 +20,6 @@ type registerForm = {
     fullName: string;
     email: string;
     password: string;
-};
-
-const splitFullName = (fullName: string) => {
-    const pattern: RegExp = /^([A-Za-z]+)\s+([A-Za-z\s]+?) *$/;
-    const match = pattern.exec(fullName);
-    if (match) {
-        return {
-            firstName: match[1],
-            lastName: match[2]
-        };
-    }
-    return {
-        firstName: "",
-        lastName: ""
-    };
 };
 
 export const registerUser = (registerForm: registerForm) => async (dispatch: Dispatch) => {
@@ -55,9 +42,44 @@ export const registerUser = (registerForm: registerForm) => async (dispatch: Dis
             userDetails: data
         };
         saveItemInStorage(USER_REGISTER_DETAILS, storageData);
+        return Promise.resolve();
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(registerUserFailed(throwAuthenticationErrorResponse(err)));
+        return Promise.reject(throwErrorResponse(err));
+    }
+};
+
+export const googleRegisterUser = (code: string) => async (dispatch: Dispatch) => {
+    try {
+        const googleRegisterData = {
+            code: code
+        };
+
+        dispatch(googleRegisterUserRequest());
+        const { data } = await publicAxiosInstance.post(GOOGLE_REGISTER_URI, googleRegisterData);
+        dispatch(googleRegisterUserSuccess());
+        dispatch(loginUserSuccess(data));
+        const userRegisterData = {
+            isRegistered: true,
+            isVerified: true,
+            userDetails: data
+        };
+        saveItemInStorage(USER_REGISTER_DETAILS, userRegisterData);
+        const userLoginDetails = {
+            isLoggedIn: true,
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            accessToken: data.tokens.access,
+            refreshToken: data.tokens.refresh
+        };
+        saveItemInStorage(USER_LOGIN_DETAILS, userLoginDetails);
+        return Promise.resolve();
+    } catch (error) {
+        const err = error as ErrorResponse;
+        dispatch(googleRegisterUserFailed(throwAuthenticationErrorResponse(err)));
+        return Promise.reject(throwErrorResponse(err));
     }
 };
 
@@ -93,6 +115,18 @@ const registerSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        googleRegisterUserRequest: (state) => {
+            state.isLoading = true;
+        },
+        googleRegisterUserSuccess: (state) => {
+            state.isLoading = false;
+            state.isRegistered = true;
+            state.isVerified = true;
+        },
+        googleRegisterUserFailed: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
         verifyUserRequest: (state) => {
             state.isLoading = true;
         },
@@ -117,6 +151,9 @@ export const {
     registerUserRequest,
     registerUserSuccess,
     registerUserFailed,
+    googleRegisterUserRequest,
+    googleRegisterUserSuccess,
+    googleRegisterUserFailed,
     verifyUserRequest,
     verifyUserSuccess,
     verifyUserFailed,

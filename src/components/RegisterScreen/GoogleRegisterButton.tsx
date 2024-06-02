@@ -3,10 +3,10 @@ import { GoogleIcon } from "icons/GoogleIcon";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 
-function GoogleLoginButton() {
+function GoogleRegisterButton() {
     const [queryParams, setQueryParams] = useSearchParams();
 
-    const openGoogleLoginPage = React.useCallback(() => {
+    const openGoogleRegisterPage = React.useCallback(() => {
         const googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
         const scope = [
@@ -16,11 +16,14 @@ function GoogleLoginButton() {
 
         if (
             process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID &&
-            process.env.REACT_APP_GOOGLE_OAUTH_LOGIN_REDIRECT_URL
+            process.env.REACT_APP_GOOGLE_OAUTH_REGISTER_REDIRECT_URL
         ) {
             queryParams.set("response_type", "code");
             queryParams.set("client_id", process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID);
-            queryParams.set("redirect_uri", process.env.REACT_APP_GOOGLE_OAUTH_LOGIN_REDIRECT_URL);
+            queryParams.set(
+                "redirect_uri",
+                process.env.REACT_APP_GOOGLE_OAUTH_REGISTER_REDIRECT_URL
+            );
             queryParams.set("prompt", "select_account");
             queryParams.set("scope", scope);
             setQueryParams(queryParams);
@@ -37,14 +40,14 @@ function GoogleLoginButton() {
             fullWidth
             size="lg"
             variant="flat"
-            onClick={openGoogleLoginPage}
+            onClick={openGoogleRegisterPage}
         >
             <div className="flex items-center justify-center gap-2">
                 <GoogleIcon height={30} width={30} />
-                Sign in with Google
+                Sign up with Google
             </div>
         </Button>
     );
 }
 
-export default GoogleLoginButton;
+export default GoogleRegisterButton;

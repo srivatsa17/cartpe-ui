@@ -1,6 +1,7 @@
 import { Button, Image, Link, Spacer } from "@nextui-org/react";
 import { CART_SCREEN, WISHLIST_SCREEN } from "constants/routes";
 import { CartProductData, Product, ProductVariant } from "utils/types";
+import { Toaster, toast } from "sonner";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { ArrowRightIcon } from "icons/ArrowRightIcon";
@@ -63,12 +64,38 @@ function ProductDetails({
             productCategory: product.category,
             productCategorySlug: product.categorySlug
         };
-        dispatch(addCartItem(cartProductData, 1));
+        dispatch(addCartItem(cartProductData, 1))
+            .then(() => {
+                toast.success("Item added to cart successfully.", {
+                    position: "top-right",
+                    duration: 4000
+                });
+            })
+            .catch((error) =>
+                toast.error("Failed to add item to cart. Please try again later.", {
+                    position: "top-right",
+                    description: error,
+                    duration: 4000
+                })
+            );
     };
 
     const handleAddToWishList = () => {
         if (!isProductInWishList && selectedProductVariant.id) {
-            dispatch(addProductToWishList(selectedProductVariant.id));
+            dispatch(addProductToWishList(selectedProductVariant.id))
+                .then(() => {
+                    toast.success("Item added to wishlist successfully.", {
+                        position: "top-right",
+                        duration: 4000
+                    });
+                })
+                .catch((error) =>
+                    toast.error("Failed to add item to wishlist. Please try again later.", {
+                        position: "top-right",
+                        description: error,
+                        duration: 4000
+                    })
+                );
         }
     };
 
@@ -122,6 +149,7 @@ function ProductDetails({
 
     return (
         <div className="mt-3 space-y-3">
+            <Toaster richColors closeButton />
             <div className="text-3xl uppercase font-semibold">{product.brand}</div>
             <div className="text-2xl text-default-500 capitalize">{product.name}</div>
             <Rating rating={productRating.ratingAverage} reviewCount={productRating.ratingCount} />

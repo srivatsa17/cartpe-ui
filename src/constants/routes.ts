@@ -1,6 +1,7 @@
 /* Auth service routes */
 export const REGISTER_USER_SCREEN = "/user/register";
 export const VERIFY_USER_EMAIL_SCREEN = "/user/verify-email/:id/:token";
+export const GOOGLE_REGISTER_USER_SCREEN = "/user/register/google";
 export const LOGIN_USER_SCREEN = "/user/login";
 export const GOOGLE_LOGIN_USER_SCREEN = "/user/login/google";
 export const RESET_PASSWORD_SCREEN = "/user/reset-password";

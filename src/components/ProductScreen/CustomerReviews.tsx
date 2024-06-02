@@ -31,7 +31,7 @@ function CustomerReviews({ product }: CustomerReviewsProps) {
     }, [page, productReviews]);
 
     const handleDeleteProductReview = (productId: bigint, productReviewId: bigint) => {
-        const toastId = toast.loading("Deleting your review...", {
+        const toastId = toast.loading("Please wait a moment while we delete your review.", {
             position: "top-right",
             duration: 3000
         });
@@ -39,14 +39,14 @@ function CustomerReviews({ product }: CustomerReviewsProps) {
         setTimeout(() => {
             dispatch(deleteProductReview(productId, productReviewId))
                 .then(() => {
-                    toast.success("Deleted your review successfully", {
+                    toast.success("Review deleted successfully.", {
                         id: toastId,
                         position: "top-right",
                         duration: 4000
                     });
                 })
                 .catch(() =>
-                    toast.error("Failed to delete your review", {
+                    toast.error("Failed to delete review. Please try again later.", {
                         id: toastId,
                         position: "top-right",
                         duration: 4000

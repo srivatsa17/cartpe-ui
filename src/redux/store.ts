@@ -2,6 +2,7 @@ import {
     ADDRESS_LIST,
     CART_ITEMS,
     PRODUCT_LIST,
+    PROFILE_DETAILS,
     USER_LOGIN_DETAILS,
     USER_REGISTER_DETAILS,
     WISHLIST
@@ -10,6 +11,7 @@ import {
     CartState,
     LoginState,
     ProductListState,
+    ProfileState,
     RegisterState,
     ShippingAddressState,
     WishListState
@@ -18,6 +20,7 @@ import {
 import cartSlice from "./CartService/cartSlice";
 import checkoutStepsSlice from "./OrderService/checkoutStepsSlice";
 import { configureStore } from "@reduxjs/toolkit";
+import deactivateSlice from "./AuthService/deactivateSlice";
 import { getItemFromStorage } from "utils/localStorage";
 import loginSlice from "./AuthService/loginSlice";
 import orderDetailsSlice from "./OrderService/orderDetailsSlice";
@@ -26,6 +29,7 @@ import productByIdSlice from "./ProductService/productByIdSlice";
 import productRatingSlice from "./ProductService/productRatingSlice";
 import productReviewSlice from "./ProductService/productReviewSlice";
 import productsSlice from "./ProductService/productsSlice";
+import profileSlice from "./AuthService/profileSlice";
 import registerSlice from "./AuthService/registerSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 import shippingAddressSlice from "./OrderService/shippingAddressSlice";
@@ -33,6 +37,7 @@ import wishlistSlice from "./ProductService/wishlistSlice";
 
 const userLoginDetailsFromStorage = getItemFromStorage(USER_LOGIN_DETAILS) ?? {};
 const userRegisterDetailsFromStorage = getItemFromStorage(USER_REGISTER_DETAILS) ?? {};
+const profileDetailsFromStorage = getItemFromStorage(PROFILE_DETAILS) ?? {};
 const productListFromStorage = getItemFromStorage(PRODUCT_LIST) ?? {};
 const cartItemsFromStorage = getItemFromStorage(CART_ITEMS) ?? [];
 const wishListFromStorage = getItemFromStorage(WISHLIST) ?? [];
@@ -41,6 +46,7 @@ const addressListFromStorage = getItemFromStorage(ADDRESS_LIST) ?? [];
 const persistedState: {
     userLoginDetails: LoginState;
     userRegisterDetails: RegisterState;
+    profile: ProfileState;
     productList: ProductListState;
     cart: CartState;
     wishlist: WishListState;
@@ -72,6 +78,11 @@ const persistedState: {
         isLoading: false,
         error: null
     },
+    profile: {
+        isLoading: false,
+        user: profileDetailsFromStorage || null,
+        error: null
+    },
     cart: {
         isLoading: false,
         cartItems: cartItemsFromStorage,
@@ -95,6 +106,8 @@ const store = configureStore({
     reducer: {
         userRegisterDetails: registerSlice,
         userLoginDetails: loginSlice,
+        profile: profileSlice,
+        deactivate: deactivateSlice,
         productList: productsSlice,
         productDetails: productByIdSlice,
         searchedCategories: searchedCategorySlice,
