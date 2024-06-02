@@ -18,6 +18,7 @@ import {
 } from "utils/types";
 
 import cartSlice from "./CartService/cartSlice";
+import changePasswordSlice from "./AuthService/changePasswordSlice";
 import checkoutStepsSlice from "./OrderService/checkoutStepsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import deactivateSlice from "./AuthService/deactivateSlice";
@@ -107,6 +108,7 @@ const store = configureStore({
         userRegisterDetails: registerSlice,
         userLoginDetails: loginSlice,
         profile: profileSlice,
+        changePassword: changePasswordSlice,
         deactivate: deactivateSlice,
         productList: productsSlice,
         productDetails: productByIdSlice,

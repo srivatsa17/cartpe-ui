@@ -56,6 +56,12 @@ export type LoginState = {
     error: Error;
 };
 
+export type ChangePasswordState = {
+    isLoading: boolean;
+    isPasswordChanged: boolean;
+    error: Error;
+};
+
 /* Product Service Types */
 export type Category = {
     name?: string | undefined;

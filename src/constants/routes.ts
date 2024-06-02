@@ -13,6 +13,7 @@ export const WISHLIST_SCREEN = "/wishlist";
 export const CONTACT_US_SCREEN = "/contact-us";
 export const SAVED_ADDRESSES_SCREEN = "/addresses";
 export const EDIT_PROFILE_SCREEN = "/edit-profile";
+export const CHANGE_PASSWORD_SCREEN = "/change-password";
 
 /* Product service routes */
 export const CATEGORY_SCREEN = "/categories";

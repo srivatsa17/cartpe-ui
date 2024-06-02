@@ -7,6 +7,7 @@ export const GOOGLE_LOGIN_URI = "users/google-login";
 export const LOGOUT_URI = "users/logout";
 export const PROFILE_URI = "users/edit-profile";
 export const DEACTIVATE_URI = "users/deactivate";
+export const CHANGE_PASSWORD_URI = "users/change-password";
 
 // Product service
 export const SEARCH_CATEGORIES_URI = "products/categories/search";

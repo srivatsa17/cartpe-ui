@@ -18,6 +18,7 @@ export const EMAIL_VERIFICATION_FAILURE_IMAGE = AUTH_FOLDER + "email-verify-fail
 export const EMAIL_VERIFICATION_SUCCESS_IMAGE = AUTH_FOLDER + "email-verify-success.jpg";
 export const RESET_PASSWORD_CONFIRM_IMAGE = AUTH_FOLDER + "reset-password-confirm.jpg";
 export const RESET_PASSWORD_IMAGE = AUTH_FOLDER + "reset-password.jpg";
+export const CHANGE_PASSWORD_IMAGE = AUTH_FOLDER + "change_password.jpg";
 
 /* Miscellaneous images */
 export const PLACEHOLDER_IMAGE = MISCELLANEOUS_FOLDER + "placeholder.jpg";
