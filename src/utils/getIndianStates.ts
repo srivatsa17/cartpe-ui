@@ -36,7 +36,7 @@ export function getIndianStates() {
         "Delhi",
         "Lakshadweep",
         "Puducherry"
-    ];
+    ].sort();
 
     return {
         indianStates

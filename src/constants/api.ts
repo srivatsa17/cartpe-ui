@@ -44,3 +44,6 @@ export const ORDER_URI = "orders/";
 export const ORDER_BY_ID_URI = (orderId: bigint) => {
     return `orders/${orderId}`;
 };
+
+// Customer service
+export const CONTACT_US = "customer-service/contact-us";

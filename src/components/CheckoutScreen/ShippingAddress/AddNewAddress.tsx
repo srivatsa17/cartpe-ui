@@ -201,7 +201,9 @@ function AddNewAddress() {
                                                 }
                                                 variant="flat"
                                                 isClearable
-                                                onClear={() => setFieldValue("address.building", "")}
+                                                onClear={() =>
+                                                    setFieldValue("address.building", "")
+                                                }
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"

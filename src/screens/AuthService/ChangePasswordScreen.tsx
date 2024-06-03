@@ -229,14 +229,20 @@ function ChangePasswordScreen() {
                                     name="confirmNewPassword"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    isInvalid={touched.confirmNewPassword && errors.confirmNewPassword}
-                                    isValid={touched.confirmNewPassword && !errors.confirmNewPassword}
+                                    isInvalid={
+                                        touched.confirmNewPassword && errors.confirmNewPassword
+                                    }
+                                    isValid={
+                                        touched.confirmNewPassword && !errors.confirmNewPassword
+                                    }
                                     variant="flat"
                                     labelPlacement="outside"
                                     className="max-w-md"
                                     size="lg"
                                     autoComplete="off"
-                                    errorMessage={touched.confirmNewPassword && errors.confirmNewPassword}
+                                    errorMessage={
+                                        touched.confirmNewPassword && errors.confirmNewPassword
+                                    }
                                     color={
                                         touched.confirmNewPassword
                                             ? errors.confirmNewPassword

@@ -3,6 +3,7 @@ import {
     CATEGORY_SEARCH_SCREEN,
     CHANGE_PASSWORD_SCREEN,
     CHECKOUT_SCREEN,
+    CONTACT_US_SCREEN,
     EDIT_PROFILE_SCREEN,
     GOOGLE_LOGIN_USER_SCREEN,
     GOOGLE_REGISTER_USER_SCREEN,
@@ -26,6 +27,7 @@ import CartScreen from "screens/CartService/CartScreen";
 import CategorySearchScreen from "screens/ProductService/CategorySearchScreen";
 import ChangePasswordScreen from "screens/AuthService/ChangePasswordScreen";
 import CheckoutScreen from "screens/OrderService/CheckoutScreen";
+import ContactUsScreen from "screens/CustomerService/ContactUsScreen";
 import EditProfileScreen from "screens/AuthService/EditProfileScreen";
 import GoogleLoginScreen from "screens/AuthService/GoogleLoginScreen";
 import GoogleRegisterScreen from "screens/AuthService/GoogleRegisterScreen";
@@ -73,6 +75,7 @@ export default function App() {
                     <Route path={SAVED_ADDRESSES_SCREEN} element={<SavedAddressListScreen />} />
                     <Route path={EDIT_PROFILE_SCREEN} element={<EditProfileScreen />} />
                     <Route path={CHANGE_PASSWORD_SCREEN} element={<ChangePasswordScreen />} />
+                    <Route path={CONTACT_US_SCREEN} element={<ContactUsScreen />} />
                 </Route>
             </Routes>
         </Router>
