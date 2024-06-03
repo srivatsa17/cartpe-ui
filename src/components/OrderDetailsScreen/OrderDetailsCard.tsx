@@ -145,7 +145,7 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                             </span>
                                         </div>
                                         {displayRefundMessage(order) && (
-                                            <Code color="warning">
+                                            <Code className="whitespace-normal" color="warning">
                                                 Refund amount will be credited to the source account
                                                 within 7 working days.
                                             </Code>
