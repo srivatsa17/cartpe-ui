@@ -113,6 +113,7 @@ function RegisterScreen() {
                             handleBlur,
                             handleSubmit,
                             handleChange,
+                            setFieldValue,
                             touched,
                             errors,
                             isValid,
@@ -144,6 +145,7 @@ function RegisterScreen() {
                                     }
                                     startContent={<UserIcon height={24} width={24} size={24} />}
                                     isClearable
+                                    onClear={() => setFieldValue("fullName", "")}
                                     isReadOnly={isSubmitting}
                                     isRequired
                                 />
@@ -172,6 +174,7 @@ function RegisterScreen() {
                                     }
                                     startContent={<EmailIcon height={24} width={24} size={24} />}
                                     isClearable
+                                    onClear={() => setFieldValue("email", "")}
                                     isReadOnly={isSubmitting}
                                     isRequired
                                 />
@@ -201,6 +204,7 @@ function RegisterScreen() {
                                     isRequired
                                     isReadOnly={isSubmitting}
                                     isClearable
+                                    onClear={() => setFieldValue("password", "")}
                                     startContent={<LockIcon height={24} width={24} size={24} />}
                                     endContent={
                                         <div className="flex">

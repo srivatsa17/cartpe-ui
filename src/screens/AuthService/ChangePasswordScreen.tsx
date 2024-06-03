@@ -124,6 +124,7 @@ function ChangePasswordScreen() {
                             handleBlur,
                             handleSubmit,
                             handleChange,
+                            setFieldValue,
                             touched,
                             errors,
                             isValid,
@@ -156,6 +157,7 @@ function ChangePasswordScreen() {
                                     isRequired
                                     isReadOnly={isSubmitting}
                                     isClearable
+                                    onClear={() => setFieldValue("oldPassword", "")}
                                     startContent={<LockIcon height={24} width={24} size={24} />}
                                     endContent={
                                         <div className="flex">
@@ -200,6 +202,7 @@ function ChangePasswordScreen() {
                                     isRequired
                                     isReadOnly={isSubmitting}
                                     isClearable
+                                    onClear={() => setFieldValue("newPassword", "")}
                                     startContent={<LockIcon height={24} width={24} size={24} />}
                                     endContent={
                                         <div className="flex">
@@ -244,6 +247,7 @@ function ChangePasswordScreen() {
                                     isRequired
                                     isReadOnly={isSubmitting}
                                     isClearable
+                                    onClear={() => setFieldValue("confirmNewPassword", "")}
                                     startContent={<LockIcon height={24} width={24} size={24} />}
                                     endContent={
                                         <div className="flex">

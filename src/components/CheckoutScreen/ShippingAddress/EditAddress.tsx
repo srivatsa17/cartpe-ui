@@ -96,6 +96,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                 handleSubmit,
                                 handleBlur,
                                 handleChange,
+                                setFieldValue,
                                 touched,
                                 errors,
                                 values,
@@ -124,6 +125,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 isValid={touched.name && !errors.name}
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("name", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -154,6 +156,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("alternatePhone", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -202,6 +205,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.building", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -237,6 +241,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.area", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -275,6 +280,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.city", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -350,6 +356,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.pinCode", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"

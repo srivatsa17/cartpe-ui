@@ -154,6 +154,7 @@ function EditProfileDetails({ user }: EditProfileDetailsProps) {
                                     }
                                     startContent={<UserIcon height={24} width={24} size={24} />}
                                     isClearable
+                                    onClear={() => setFieldValue("fullName", "")}
                                     isReadOnly={isSubmitting}
                                     isRequired
                                 />
@@ -181,6 +182,7 @@ function EditProfileDetails({ user }: EditProfileDetailsProps) {
                                         </div>
                                     }
                                     isClearable
+                                    onClear={() => setFieldValue("phone", "")}
                                     isReadOnly={isSubmitting}
                                 />
                                 <Spacer y={5} />
