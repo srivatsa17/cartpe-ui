@@ -3,7 +3,8 @@ const AUTH_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Authentication+I
 const CARTPE_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/CartPe+Images/";
 const MISCELLANEOUS_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Miscellaneous+Images/";
 const ORDERS_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Orders/";
-const CUSTOMER_SERVICE_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Customer+Service+Images/";
+const CUSTOMER_SERVICE_FOLDER =
+    "https://cartpe.s3.ap-south-1.amazonaws.com/Customer+Service+Images/";
 
 /* CartPe images */
 export const CARTPE_ICON = CARTPE_FOLDER + "cartpe-icon.png";

@@ -62,6 +62,12 @@ export type ChangePasswordState = {
     error: Error;
 };
 
+export type ResetPasswordRequestState = {
+    isLoading: boolean;
+    isResetPasswordRequested: boolean;
+    error: Error;
+};
+
 /* Product Service Types */
 export type Category = {
     name?: string | undefined;

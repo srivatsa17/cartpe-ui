@@ -16,6 +16,7 @@ import {
     ORDER_SCREEN,
     PRODUCT_SCREEN,
     REGISTER_USER_SCREEN,
+    RESET_PASSWORD_SCREEN,
     SAVED_ADDRESSES_SCREEN,
     VERIFY_USER_EMAIL_SCREEN,
     WISHLIST_SCREEN
@@ -42,6 +43,7 @@ import ProductScreen from "screens/ProductService/ProductScreen";
 import ProtectedUserRoute from "routings/ProtectedUserRoute";
 import React from "react";
 import RegisterScreen from "screens/AuthService/RegisterScreen";
+import ResetPasswordRequestScreen from "screens/AuthService/ResetPasswordRequestScreen";
 import SavedAddressListScreen from "screens/SavedAddressListScreen";
 import VerifyEmailScreen from "screens/AuthService/VerifyEmailScreen";
 import WishListScreen from "screens/ProductService/WishListScreen";
@@ -56,6 +58,7 @@ export default function App() {
                     <Route path={REGISTER_USER_SCREEN} element={<RegisterScreen />} />
                     <Route path={GOOGLE_REGISTER_USER_SCREEN} element={<GoogleRegisterScreen />} />
                     <Route path={VERIFY_USER_EMAIL_SCREEN} element={<VerifyEmailScreen />} />
+                    <Route path={RESET_PASSWORD_SCREEN} element={<ResetPasswordRequestScreen />} />
                 </Route>
                 <Route element={<ProtectedUserRoute />}>
                     <Route path={HOME_SCREEN} element={<HomeScreen />} />

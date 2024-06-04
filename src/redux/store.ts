@@ -32,6 +32,7 @@ import productReviewSlice from "./ProductService/productReviewSlice";
 import productsSlice from "./ProductService/productsSlice";
 import profileSlice from "./AuthService/profileSlice";
 import registerSlice from "./AuthService/registerSlice";
+import resetPasswordSlice from "./AuthService/resetPasswordSlice";
 import searchedCategorySlice from "./ProductService/searchedCategorySlice";
 import shippingAddressSlice from "./OrderService/shippingAddressSlice";
 import wishlistSlice from "./ProductService/wishlistSlice";
@@ -109,6 +110,7 @@ const store = configureStore({
         userLoginDetails: loginSlice,
         profile: profileSlice,
         changePassword: changePasswordSlice,
+        resetPassword: resetPasswordSlice,
         deactivate: deactivateSlice,
         productList: productsSlice,
         productDetails: productByIdSlice,

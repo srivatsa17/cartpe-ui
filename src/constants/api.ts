@@ -8,6 +8,8 @@ export const LOGOUT_URI = "users/logout";
 export const PROFILE_URI = "users/edit-profile";
 export const DEACTIVATE_URI = "users/deactivate";
 export const CHANGE_PASSWORD_URI = "users/change-password";
+export const RESET_PASSWORD_URI = "users/reset-password";
+export const RESET_PASSWORD_CONFIRM_URI = "users/reset-password-confirm";
 
 // Product service
 export const SEARCH_CATEGORIES_URI = "products/categories/search";
