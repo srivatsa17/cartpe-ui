@@ -64,7 +64,6 @@ export type ChangePasswordState = {
 
 export type ResetPasswordRequestState = {
     isLoading: boolean;
-    isResetPasswordRequested: boolean;
     error: Error;
 };
 

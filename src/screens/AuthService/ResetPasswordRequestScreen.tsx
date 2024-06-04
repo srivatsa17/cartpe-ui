@@ -1,10 +1,11 @@
 import * as yup from "yup";
 
-import { Button, Image, Input, Spacer } from "@nextui-org/react";
+import { BreadcrumbItem, Breadcrumbs, Button, Image, Input, Spacer } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
 import { Toaster, toast } from "sonner";
 
 import EmailIcon from "icons/EmailIcon";
+import { LOGIN_USER_SCREEN } from "constants/routes";
 import { RESET_PASSWORD_IMAGE } from "constants/images";
 import React from "react";
 import { resetPasswordRequest } from "redux/AuthService/resetPasswordSlice";
@@ -27,8 +28,14 @@ function ResetPasswordRequestScreen() {
     };
 
     return (
-        <div className="container mx-auto place-content-center">
+        <div className="container mx-auto px-6 py-7">
             <Toaster richColors closeButton />
+            <Breadcrumbs size="lg">
+                <BreadcrumbItem href={LOGIN_USER_SCREEN}>Login</BreadcrumbItem>
+                <BreadcrumbItem isCurrent isLast>
+                    Reset Password Request
+                </BreadcrumbItem>
+            </Breadcrumbs>
             <div className="flex flex-wrap items-center justify-center">
                 <div className="xs:w-2/3 sm:w-2/3 md:w-2/3 lg:w-1/2 xl:w-1/2">
                     <Image
@@ -128,7 +135,7 @@ function ResetPasswordRequestScreen() {
                                     isLoading={isSubmitting}
                                     isDisabled={!dirty || !isValid || isSubmitting}
                                 >
-                                    Reset password
+                                    Send reset link
                                 </Button>
                             </Form>
                         )}
