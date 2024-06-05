@@ -11,7 +11,7 @@ function ContactUsScreen() {
             <Breadcrumbs className="mb-3" size="lg">
                 <BreadcrumbItem href={HOME_SCREEN}>Home</BreadcrumbItem>
                 <BreadcrumbItem isCurrent isLast>
-                    Your Addresses
+                    Contact Us
                 </BreadcrumbItem>
             </Breadcrumbs>
             <Spacer y={5} />
