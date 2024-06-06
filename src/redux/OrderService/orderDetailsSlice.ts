@@ -47,6 +47,22 @@ export const cancelOrder = (orderId: bigint) => async (dispatch: Dispatch) => {
     }
 };
 
+export const returnOrder = (orderId: bigint) => async (dispatch: Dispatch) => {
+    try {
+        dispatch(returnOrderRequest());
+        const returnOrderData = {
+            status: OrderStatus.RETURNED
+        };
+        const { data } = await axiosInstance.patch(ORDER_BY_ID_URI(orderId), returnOrderData);
+        dispatch(returnOrderSuccess(data));
+        return Promise.resolve();
+    } catch (error) {
+        const err = error as ErrorResponse;
+        dispatch(returnOrderFailed(throwErrorResponse(err)));
+        return Promise.reject(throwErrorResponse(err));
+    }
+};
+
 const orderDetailsSlice = createSlice({
     name: "orderDetails",
     initialState: initialState,
@@ -72,6 +88,17 @@ const orderDetailsSlice = createSlice({
         cancelOrderFailed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        returnOrderRequest: (state) => {
+            state.isLoading = true;
+        },
+        returnOrderSuccess: (state, action: PayloadAction<Order>) => {
+            state.isLoading = false;
+            state.order = action.payload;
+        },
+        returnOrderFailed: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 });
@@ -82,6 +109,9 @@ export const {
     getOrderDetailsFailed,
     cancelOrderRequest,
     cancelOrderSuccess,
-    cancelOrderFailed
+    cancelOrderFailed,
+    returnOrderRequest,
+    returnOrderSuccess,
+    returnOrderFailed
 } = orderDetailsSlice.actions;
 export default orderDetailsSlice.reducer;

@@ -11,13 +11,14 @@ import {
 } from "@nextui-org/react";
 import { OrderRefundStatus, OrderStatus } from "utils/getOrderStatus";
 import { Toaster, toast } from "sonner";
+import { cancelOrder, returnOrder } from "redux/OrderService/orderDetailsSlice";
 
 import AddCustomerReview from "components/ProductScreen/AddCustomerReview";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
 import React from "react";
+import { ReturnTruckIcon } from "icons/ReturnTruckIcon";
 import { RupeeIcon } from "icons/RupeeIcon";
-import { cancelOrder } from "redux/OrderService/orderDetailsSlice";
 import { useReduxDispatch } from "hooks/redux";
 
 interface OrderDetailsCardProps {
@@ -42,6 +43,7 @@ const displayRefundMessage = (order: Order) => {
 function OrderDetailsCard({ order }: OrderDetailsCardProps) {
     const dispatch = useReduxDispatch();
     const [isCancelled, setIsCancelled] = React.useState(false);
+    const [isReturned, setIsReturned] = React.useState(false);
 
     const handleCancelOrder = () => {
         setIsCancelled(true);
@@ -67,6 +69,36 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                     })
                 );
             setIsCancelled(false);
+        }, 1000);
+    };
+
+    const handleReturnOrder = () => {
+        setIsReturned(true);
+        const toastId = toast.loading(
+            "Please wait a moment while we request for your order return.",
+            {
+                position: "top-right",
+                duration: 3000
+            }
+        );
+        setTimeout(() => {
+            dispatch(returnOrder(order.id))
+                .then(() => {
+                    toast.success("Your order is returned successfully!", {
+                        id: toastId,
+                        position: "top-right",
+                        duration: 4000
+                    });
+                })
+                .catch((error) =>
+                    toast.error("Failed to request for your order return.", {
+                        id: toastId,
+                        description: error,
+                        position: "top-right",
+                        duration: 4000
+                    })
+                );
+            setIsReturned(false);
         }, 1000);
     };
 
@@ -118,7 +150,10 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                 as per your request.
                             </div>
                         ) : order.status === OrderStatus.RETURNED ? (
-                            <div>Return for your order has been initiated.</div>
+                            <div className="flex gap-2 items-center text-base text-rose-600">
+                                <ReturnTruckIcon width={26} height={26} /> Order has been returned
+                                as per your request.
+                            </div>
                         ) : null}
                         <Spacer y={3} />
                         <div>
@@ -352,6 +387,8 @@ function OrderDetailsCard({ order }: OrderDetailsCardProps) {
                                 variant="ghost"
                                 // Return available only if order is delivered.
                                 isDisabled={order.status !== OrderStatus.DELIVERED}
+                                onPress={handleReturnOrder}
+                                isLoading={isReturned}
                             >
                                 Return order
                             </Button>

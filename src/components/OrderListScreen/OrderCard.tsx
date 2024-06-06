@@ -19,6 +19,7 @@ import { ChevronDown } from "icons/ChevronDown";
 import { CloseCircleIcon } from "icons/CloseCircleIcon";
 import { Order } from "utils/types";
 import React from "react";
+import { ReturnTruckIcon } from "icons/ReturnTruckIcon";
 import { RupeeIcon } from "icons/RupeeIcon";
 
 interface OrderCardProps {
@@ -105,7 +106,10 @@ function OrderCard({ order }: OrderCardProps) {
                             per your request.
                         </div>
                     ) : order.status === OrderStatus.RETURNED ? (
-                        <div>Return for your order has been initiated.</div>
+                        <div className="flex gap-2 items-center text-base text-rose-600">
+                            <ReturnTruckIcon width={26} height={26} /> Order has been returned as
+                            per your request.
+                        </div>
                     ) : null}
                     <Spacer y={3} />
                     <div>
