@@ -1,4 +1,6 @@
 import {
+    Autocomplete,
+    AutocompleteItem,
     Avatar,
     Button,
     Checkbox,
@@ -10,8 +12,6 @@ import {
     ModalHeader,
     Radio,
     RadioGroup,
-    Select,
-    SelectItem,
     Spacer,
     useDisclosure
 } from "@nextui-org/react";
@@ -297,13 +297,18 @@ function AddNewAddress() {
                                                 }
                                             />
                                             <Field
-                                                as={Select}
+                                                as={Autocomplete}
                                                 name="address.state"
                                                 id="address.state"
                                                 label="State"
                                                 placeholder="Select your State."
                                                 onBlur={handleBlur}
-                                                onChange={handleChange}
+                                                defaultItems={indianStates}
+                                                selectedKey={values.address.state}
+                                                onSelectionChange={(key: React.Key) =>
+                                                    setFieldValue("address.state", key)
+                                                }
+                                                onInputChange={handleChange}
                                                 isInvalid={
                                                     getIn(touched, "address.state") &&
                                                     getIn(errors, "address.state")
@@ -325,10 +330,10 @@ function AddNewAddress() {
                                                         : "default"
                                                 }
                                             >
-                                                {indianStates.map((state: string) => (
-                                                    <SelectItem key={state} value={state}>
-                                                        {state}
-                                                    </SelectItem>
+                                                {indianStates.map((state) => (
+                                                    <AutocompleteItem key={state.key}>
+                                                        {state.label}
+                                                    </AutocompleteItem>
                                                 ))}
                                             </Field>
                                             <Field

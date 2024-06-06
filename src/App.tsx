@@ -61,7 +61,10 @@ export default function App() {
                     <Route path={GOOGLE_REGISTER_USER_SCREEN} element={<GoogleRegisterScreen />} />
                     <Route path={VERIFY_USER_EMAIL_SCREEN} element={<VerifyEmailScreen />} />
                     <Route path={RESET_PASSWORD_SCREEN} element={<ResetPasswordRequestScreen />} />
-                    <Route path={RESET_PASSWORD_CONFIRM_SCREEN} element={<ResetPasswordConfirmScreen />} />
+                    <Route
+                        path={RESET_PASSWORD_CONFIRM_SCREEN}
+                        element={<ResetPasswordConfirmScreen />}
+                    />
                 </Route>
                 <Route element={<ProtectedUserRoute />}>
                     <Route path={HOME_SCREEN} element={<HomeScreen />} />
