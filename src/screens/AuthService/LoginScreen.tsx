@@ -125,6 +125,7 @@ function LoginScreen() {
                             handleBlur,
                             handleSubmit,
                             handleChange,
+                            setFieldValue,
                             touched,
                             errors,
                             isValid,
@@ -156,6 +157,7 @@ function LoginScreen() {
                                     }
                                     startContent={<EmailIcon height={24} width={24} size={24} />}
                                     isClearable
+                                    onClear={() => setFieldValue("email", "")}
                                     isReadOnly={isSubmitting}
                                     isRequired
                                 />
@@ -185,6 +187,7 @@ function LoginScreen() {
                                     isRequired
                                     isReadOnly={isSubmitting}
                                     isClearable
+                                    onClear={() => setFieldValue("password", "")}
                                     startContent={<LockIcon height={24} width={24} size={24} />}
                                     endContent={
                                         <div className="flex">

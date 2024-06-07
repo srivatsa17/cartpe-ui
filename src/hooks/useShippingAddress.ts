@@ -31,6 +31,10 @@ export function useShippingAddress() {
         }
     };
 
+    const indianStateKeys = indianStates.map((state) => {
+        return state.key;
+    });
+
     const shippingAddressSchema = yup.object().shape({
         name: yup
             .string()
@@ -74,7 +78,7 @@ export function useShippingAddress() {
             state: yup
                 .string()
                 .trim()
-                .oneOf(indianStates, "Enter a valid Indian state.")
+                .oneOf(indianStateKeys, "Enter a valid Indian state.")
                 .required("State is required."),
             pinCode: yup
                 .string()
@@ -89,6 +93,7 @@ export function useShippingAddress() {
         shippingAddressSchema,
         initialAddNewAddressFormData,
         addressTypeOptions,
-        indianStates
+        indianStates,
+        indianStateKeys
     };
 }

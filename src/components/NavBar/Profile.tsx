@@ -7,6 +7,7 @@ import {
     User
 } from "@nextui-org/react";
 import {
+    CHANGE_PASSWORD_SCREEN,
     CONTACT_US_SCREEN,
     EDIT_PROFILE_SCREEN,
     LOGIN_USER_SCREEN,
@@ -75,8 +76,15 @@ function Profile() {
                 <DropdownItem href={SAVED_ADDRESSES_SCREEN} className="text-default-600">
                     Saved Addresses
                 </DropdownItem>
-                <DropdownItem href={EDIT_PROFILE_SCREEN} showDivider className="text-default-600">
+                <DropdownItem href={EDIT_PROFILE_SCREEN} className="text-default-600">
                     Edit Profile
+                </DropdownItem>
+                <DropdownItem
+                    href={CHANGE_PASSWORD_SCREEN}
+                    showDivider
+                    className="text-default-600"
+                >
+                    Change Password
                 </DropdownItem>
                 <DropdownItem color="danger" className="text-danger" onClick={handleUserLogout}>
                     Logout

@@ -3,14 +3,14 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@nextui-org/react": "^2.4.0",
+        "@nextui-org/react": "^2.4.1",
         "@reduxjs/toolkit": "^1.9.7",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
         "@types/jest": "^27.5.2",
         "@types/lodash": "^4.17.4",
-        "@types/node": "^16.18.97",
+        "@types/node": "^16.18.98",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -63,9 +63,9 @@
         "@stylistic/eslint-plugin-js": "^1.8.1",
         "eslint": "^8.57.0",
         "eslint-plugin-react": "^7.34.2",
-        "prettier": "^3.2.5",
+        "prettier": "^3.3.1",
         "prettier-eslint": "^16.3.0",
         "prettier-eslint-cli": "^8.0.1",
-        "tailwindcss": "^3.4.3"
+        "tailwindcss": "^3.4.4"
     }
 }

@@ -1,4 +1,6 @@
 import {
+    Autocomplete,
+    AutocompleteItem,
     Avatar,
     Button,
     Checkbox,
@@ -10,8 +12,6 @@ import {
     ModalHeader,
     Radio,
     RadioGroup,
-    Select,
-    SelectItem,
     Spacer,
     Tooltip,
     useDisclosure
@@ -96,6 +96,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                 handleSubmit,
                                 handleBlur,
                                 handleChange,
+                                setFieldValue,
                                 touched,
                                 errors,
                                 values,
@@ -124,6 +125,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 isValid={touched.name && !errors.name}
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("name", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -154,6 +156,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("alternatePhone", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -202,6 +205,9 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() =>
+                                                    setFieldValue("address.building", "")
+                                                }
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -237,6 +243,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.area", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -275,6 +282,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.city", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"
@@ -293,18 +301,18 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                             />
                                             <Field
-                                                as={Select}
+                                                as={Autocomplete}
                                                 name="address.state"
                                                 id="address.state"
                                                 label="State"
                                                 placeholder="Select your State."
-                                                selectedKeys={
-                                                    values.address.state
-                                                        ? [values.address.state]
-                                                        : []
-                                                }
                                                 onBlur={handleBlur}
-                                                onChange={handleChange}
+                                                defaultItems={indianStates}
+                                                selectedKey={values.address.state}
+                                                onSelectionChange={(key: React.Key) =>
+                                                    setFieldValue("address.state", key)
+                                                }
+                                                onInputChange={handleChange}
                                                 isInvalid={
                                                     getIn(touched, "address.state") &&
                                                     getIn(errors, "address.state")
@@ -326,10 +334,10 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                         : "default"
                                                 }
                                             >
-                                                {indianStates.map((state: string) => (
-                                                    <SelectItem key={state} value={state}>
-                                                        {state}
-                                                    </SelectItem>
+                                                {indianStates.map((state) => (
+                                                    <AutocompleteItem key={state.key}>
+                                                        {state.label}
+                                                    </AutocompleteItem>
                                                 ))}
                                             </Field>
                                             <Field
@@ -350,6 +358,7 @@ function EditAddress({ shippingAddress }: EditAddressProps) {
                                                 }
                                                 variant="flat"
                                                 isClearable
+                                                onClear={() => setFieldValue("address.pinCode", "")}
                                                 isReadOnly={isSubmitting}
                                                 isRequired
                                                 labelPlacement="outside"

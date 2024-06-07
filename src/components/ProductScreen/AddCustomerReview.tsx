@@ -182,6 +182,7 @@ function AddCustomerReview({ isOpen, onOpenChange, product }: TakeCustomerReview
                                             isValid={touched.headline && !errors.headline}
                                             variant="flat"
                                             isClearable
+                                            onClear={() => setFieldValue("headline", "")}
                                             isReadOnly={isSubmitting}
                                             isRequired
                                             labelPlacement="outside"

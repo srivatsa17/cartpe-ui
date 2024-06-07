@@ -3,6 +3,8 @@ const AUTH_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Authentication+I
 const CARTPE_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/CartPe+Images/";
 const MISCELLANEOUS_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Miscellaneous+Images/";
 const ORDERS_FOLDER = "https://cartpe.s3.ap-south-1.amazonaws.com/Orders/";
+const CUSTOMER_SERVICE_FOLDER =
+    "https://cartpe.s3.ap-south-1.amazonaws.com/Customer+Service+Images/";
 
 /* CartPe images */
 export const CARTPE_ICON = CARTPE_FOLDER + "cartpe-icon.png";
@@ -18,6 +20,7 @@ export const EMAIL_VERIFICATION_FAILURE_IMAGE = AUTH_FOLDER + "email-verify-fail
 export const EMAIL_VERIFICATION_SUCCESS_IMAGE = AUTH_FOLDER + "email-verify-success.jpg";
 export const RESET_PASSWORD_CONFIRM_IMAGE = AUTH_FOLDER + "reset-password-confirm.jpg";
 export const RESET_PASSWORD_IMAGE = AUTH_FOLDER + "reset-password.jpg";
+export const CHANGE_PASSWORD_IMAGE = AUTH_FOLDER + "change_password.jpg";
 
 /* Miscellaneous images */
 export const PLACEHOLDER_IMAGE = MISCELLANEOUS_FOLDER + "placeholder.jpg";
@@ -28,3 +31,6 @@ export const EDIT_PROFILE_IMAGE = MISCELLANEOUS_FOLDER + "edit_profile.jpg";
 /* Orders images */
 export const PAYMENT_FAILED_IMAGE = ORDERS_FOLDER + "payment_failed.jpg";
 export const ORDER_CONFIRMED = ORDERS_FOLDER + "order_confirmed.jpg";
+
+/* Customer Service images */
+export const CONTACT_US_IMAGE = CUSTOMER_SERVICE_FOLDER + "contact_us.jpg";
