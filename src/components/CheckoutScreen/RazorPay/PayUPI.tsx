@@ -16,7 +16,6 @@ import useRazorpay, { Razorpay } from "hooks/useRazorpay";
 import { useReduxDispatch, useReduxSelector } from "hooks/redux";
 
 import { CARTPE_ICON_BLACK } from "constants/images";
-import { RAZORPAY_API_TEST_KEY } from "constants/razorpay";
 import { RAZORPAY_ORDER_URI } from "constants/api";
 import React from "react";
 import { ReduxDispatch } from "redux/store";
@@ -72,7 +71,7 @@ const DisplayRazorPayCheckoutForm = ({
         .then((response: RazorpaySuccessResponse) => {
             const razorpayOrder = response.data;
             const options = {
-                key: RAZORPAY_API_TEST_KEY,
+                key: process.env.REACT_APP_RAZORPAY_API_TEST_KEY ?? "",
                 amount: amount * 100,
                 currency: "INR",
                 name: "CartPe",

@@ -28,7 +28,7 @@ function NavBar() {
     const totalWishListedProducts = wishListedProducts.length;
 
     return (
-        <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+        <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} height="70px">
             <NavbarContent justify="start">
                 {/* Hide the menu toggle switch for lg and bigger screens */}
                 <NavbarMenuToggle
