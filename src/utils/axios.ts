@@ -5,7 +5,7 @@ import { clearStorage, getItemFromStorage, updateItemInStorage } from "./localSt
 import { LOGIN_USER_SCREEN } from "constants/routes";
 
 export const publicAxiosInstance = axios.create({
-    baseURL: "http://localhost:8000/api/v1/",
+    baseURL: "http://localhost:80/api/v1/",
     headers: {
         "Content-Type": "application/json"
     }
@@ -13,7 +13,7 @@ export const publicAxiosInstance = axios.create({
 
 // Create the axios instance.
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:8000/api/v1/"
+    baseURL: "http://localhost:80/api/v1/"
 });
 
 // Using axios interceptor before sending a http request
