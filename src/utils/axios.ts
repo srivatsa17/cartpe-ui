@@ -4,8 +4,10 @@ import { clearStorage, getItemFromStorage, updateItemInStorage } from "./localSt
 
 import { LOGIN_USER_SCREEN } from "constants/routes";
 
+const backendAPIBaseURL = process.env.REACT_APP_BACKEND_API_BASE_URL || "http://localhost:80/api/v1/";
+
 export const publicAxiosInstance = axios.create({
-    baseURL: "http://localhost:80/api/v1/",
+    baseURL: backendAPIBaseURL,
     headers: {
         "Content-Type": "application/json"
     }
@@ -13,7 +15,7 @@ export const publicAxiosInstance = axios.create({
 
 // Create the axios instance.
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:80/api/v1/"
+    baseURL: backendAPIBaseURL
 });
 
 // Using axios interceptor before sending a http request
