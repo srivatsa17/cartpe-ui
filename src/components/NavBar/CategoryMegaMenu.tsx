@@ -62,7 +62,7 @@ function CategoryMegaMenu() {
                                                     classNames={{
                                                         base: "text-center"
                                                     }}
-                                                    href={`/categories/${child.slug}`}
+                                                    href={`/categories/${child.slug}?rawQuery=${child.label}`}
                                                 >
                                                     {child.label}
                                                 </DropdownItem>
