@@ -13,6 +13,10 @@ export const CARTPE_LOGO_BLACK =
     CARTPE_FOLDER + "cartpe-high-resolution-logo-black-transparent.svg";
 export const CARTPE_ICON_BLACK = CARTPE_FOLDER + "cartpe-favicon-black.png";
 
+/* Home Screen images */
+export const HOME_SCREEN_IMAGE =
+    "https://cartpe.s3.ap-south-1.amazonaws.com/Home+Screen/home_screen.jpg";
+
 /* Authentication images */
 export const LOGIN_USER_IMAGE = AUTH_FOLDER + "login.png";
 export const REGISTER_USER_IMAGE = AUTH_FOLDER + "register.jpg";
