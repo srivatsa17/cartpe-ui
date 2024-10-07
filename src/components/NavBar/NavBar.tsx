@@ -11,6 +11,7 @@ import {
 } from "@nextui-org/react";
 import { CART_SCREEN, HOME_SCREEN, WISHLIST_SCREEN } from "constants/routes";
 
+import AnonymousUserProfile from "./AnonymousUserProfile";
 import { CARTPE_LOGO_BLACK } from "constants/images";
 import { CartIcon } from "icons/CartIcon";
 import CategoryMegaMenu from "./CategoryMegaMenu";
@@ -22,6 +23,7 @@ import { useReduxSelector } from "hooks/redux";
 
 function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const { isLoggedIn } = useReduxSelector((state) => state.userLoginDetails);
     const { cartItems } = useReduxSelector((state) => state.cart);
     const { wishListedProducts } = useReduxSelector((state) => state.wishlist);
     const totalCartItemsQuantity = cartItems.length;
@@ -53,7 +55,7 @@ function NavBar() {
             </NavbarContent>
 
             <NavbarContent justify="end">
-                <Profile />
+                {isLoggedIn ? <Profile /> : <AnonymousUserProfile />}
 
                 <Tooltip content="Wishlist" color="foreground">
                     <Link

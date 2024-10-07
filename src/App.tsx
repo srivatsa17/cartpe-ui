@@ -54,6 +54,7 @@ export default function App() {
     return (
         <Router>
             <Routes>
+                <Route path={HOME_SCREEN} element={<HomeScreen />} />
                 <Route element={<AnonymousUserRoute />}>
                     <Route path={LOGIN_USER_SCREEN} element={<LoginScreen />} />
                     <Route path={GOOGLE_LOGIN_USER_SCREEN} element={<GoogleLoginScreen />} />
@@ -67,7 +68,6 @@ export default function App() {
                     />
                 </Route>
                 <Route element={<ProtectedUserRoute />}>
-                    <Route path={HOME_SCREEN} element={<HomeScreen />} />
                     <Route path={CATEGORY_SEARCH_SCREEN} element={<CategorySearchScreen />} />
                     <Route path={PRODUCT_SCREEN} element={<ProductScreen />} />
                     <Route path={WISHLIST_SCREEN} element={<WishListScreen />} />
