@@ -1,10 +1,12 @@
+import { Divider, Spacer } from "@nextui-org/react";
+
+import Footer from "components/Footer/Footer";
 import { HOME_SCREEN_IMAGE } from "constants/images";
 import NavBar from "components/NavBar/NavBar";
 import React from "react";
 import ShopByBestDeals from "components/HomeScreen/ShopByBestDeals";
 import ShopByBrand from "components/HomeScreen/ShopByBrand";
 import ShopByCategories from "components/HomeScreen/ShopByCategories";
-import { Spacer } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
 const container = (delay: number) => ({
@@ -64,6 +66,8 @@ function HomeScreen() {
                 </div>
                 <Spacer y={12} />
             </div>
+            <Divider />
+            <Footer />
         </div>
     );
 }
