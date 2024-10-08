@@ -37,13 +37,13 @@ const categoriesToShop = [
     },
     {
         key: "electronics-cameras-and-accessories",
-        name: "Cameras and accessories",
+        name: "Cameras",
         image: "https://cartpe.s3.ap-south-1.amazonaws.com/Home+Screen/Shop+by+categories/shop_by_camera.jpg",
         slug: "electronics-cameras"
     },
     {
         key: "electronics-phones",
-        name: "Mobile Phones",
+        name: "Phones",
         image: "https://cartpe.s3.ap-south-1.amazonaws.com/Home+Screen/Shop+by+categories/shop_by_phones.jpg",
         slug: "electronics-phones"
     },
