@@ -79,9 +79,11 @@ export const logoutUser = () => async (dispatch: Dispatch) => {
         dispatch(logoutUserSuccess());
         dispatch(registerUserReset());
         clearStorage();
+        return Promise.resolve();
     } catch (error) {
         const err = error as ErrorResponse;
         dispatch(logoutUserFailed(throwAuthenticationErrorResponse(err)));
+        return Promise.reject(throwAuthenticationErrorResponse(err));
     }
 };
 
