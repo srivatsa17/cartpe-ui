@@ -27,7 +27,7 @@ function ShopByBestDeals() {
                     return (
                         <Link
                             key={product.key}
-                            href={`/categories/${product.slug}?rawQuery=${product.name}`}
+                            href={`/products/${product.slug}/${product.id}/buy`}
                         >
                             <Card isPressable>
                                 <CardHeader className="text-2xl justify-center p-2.5">
